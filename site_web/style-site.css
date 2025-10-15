@@ -1,29 +1,38 @@
 
-	body {font-family: Arial, sans-serif;margin: 0;padding: 0;}
-	
-	h1 {text-align: center;margin: 20px 0;}
-	
-	.navigation {background-color: #26D14E;padding: 10px 20px;text-align: right;}
-	
-	.navigation ul {list-style: none;margin: 0;padding: 0;display: flex;}
-    
-    .navigation li {position: relative;margin-right: 20px;}
-    
-    .btn-menu {background: none;border: none;color: white;cursor: pointer; padding: 8px 12px;font-size: 16px;}
-    
-    .btn-menu:hover {background-color: #131C1C;border-radius: 4px;}
-    
-    .sousmenu {display: none;position: absolute;top: 100%;left: 0;background-color: #0C8743;list-style: none;
-				min-width: 180px;box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);z-index: 1000;border-radius: 4px;}
-    
-    .sousmenu li {margin: 0;}
-	.sousmenu.sousmenu-open {
-    display: block;
-}
-    
+body {font-family: Arial, sans-serif;margin: 0; padding: 5rem;}
+
+h1 {text-align: center; margin: 20px 0;}
+
+.navigation {background-color: #26D14E;padding: 10px 20px;text-align: right;}
+
+    .navigation ul {list-style: none;margin: 0;padding: 0; display: flex;}
+
+    .navigation li { position: relative; margin-right: 20px;}
+
+        .navigation li:nth-last-child(2) {margin-left: auto;} /* Pour pousser les deux derniers à droite */
+
+.btn-menu {background: none; border: none;color: white;cursor: pointer;padding: 8px 12px;font-size: 16px;}
+
+    .btn-menu:hover { background-color: #131C1C; border-radius: 4px;}
+
+/* Sous-menu */
+.menu-deroulant .sousmenu {display: none; position: absolute;background-color: #0C8743; min-width: 150px; border-radius: 10px;}
+
+.menu-deroulant:hover .sousmenu {display: block;opacity: 0.8;}
+
     .sousmenu li .btn-menu {width: 100%;text-align: left;padding: 10px 15px;color: white;}
+
+        .sousmenu li .btn-menu:hover {background-color: #04692A;}
+
+#fleche_verticale {margin-left: 5px;font-size: 18px; }
+
+#consommation_responsable {color: #26D14E;}
+#seconde_vie {color: #26D14E;}
+
+#presentation ul{display : flex ; padding: 8px 12px;  list-style: none ; text-align:left ;  cursor: pointer; }
     
-    .sousmenu li .btn-menu:hover { background-color: #04692A;}
-   
-    .fleche {margin-left: 5px;font-size: 14px;}
-  
+
+.services {padding: 15px ; text-align: right;}
+    .services ul {display: flex;list-style: none; }
+        .services ul li{padding: 15px; font-size: 18px ; cursor:pointer ;}
+#fleche_horisontale {margin-left: 5px;font-size: 10px;}

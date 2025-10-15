@@ -1,86 +1,75 @@
-<!doctype html>
-<html lang= "fr-ca">
+<!DOCTYPE html>
+<html lang="fr-ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Web</title>
+    <link rel="stylesheet" href="style-site.css">
+</head>
+<body>
 
-	<head> 
-		<title>  site Web </title>
-		<meta  charset = "utf-8"  />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel = "stylesheet" href = "style-site.css">			
-		
-	</head>
+    <header>
+        <h1>Conception du site</h1>
+        <nav class="navigation">
+            <ul>
+                <li><button id="reparation" class="btn-menu">Réparation</button></li>
+                <li><button id="recyclage" class="btn-menu">Recycler</button></li>
+                <li><button id="magasiner" class="btn-menu">Magasiner</button></li>
+                <li class="menu-deroulant">
+                    <button id="aPropos" class="btn-menu">
+                        À propos <span id="fleche_verticale">&#9662;</span>
+                    </button>
+                    <ul class="sousmenu">
+                        <li><button class="btn-menu">Notre histoire</button></li>
+                        <li><button class="btn-menu">Équipe</button></li>
+                        <li><button class="btn-menu">Contact</button></li>
+                    </ul>
+                </li>
+                <li><button id="inscrire" class="btn-menu">S'inscrire</button></li>
+                <li><button id="connecter" class="btn-menu">Se connecter</button></li>
+            </ul>
+        </nav>
+    </header>
 
-
-	<body>
-	
-		<header>
-		
-			<h1> conception du site </h1>
-			<nav class = "navigation"> 
-				<ul>
-					<li> <button id = "reparation" class="btn-menu">Reparation</button></li>
-					<li> <button id = "recyclage" class="btn-menu">Recycler </button></li>
-					<li> <button id= "magasiner" class="btn-menu">Magasiner </button></li>
-					<li>
-					<button id = "aPropos" class="btn-menu"> À propos <span id="fleche"> &#9662;</span></button>
-					<ul class="sousmenu">
-						<li><button id = "histoire" class="btn-menu">Notre histoire</button></li>
-						<li><button id = "equipe" class="btn-menu">Équipe</button></li>
-						<li><button id = "contact" class="btn-menu"> Contact </button></li>
-					</ul>
-					</li>
-					<li><button id = "inscrire" class="btn-menu"> S'inscrire </button></li>
-					<li><button id = "connecter" class="btn-menu"> Se connecter </button></li>
-				</ul>
-		    </nav>
-		</header>
-		
-		
-		<main>
-		
-			<section id= "presentation"> 
-				<p id="introduction " > consommation responsable </p>
-				<h2> Donnez une <span id="seconde_vie"> seconde vie </span> à vos vêtements, chaussures et 
+    <main>
+        
+        <section id= "presentation"> 
+				<p id="consommation_responsable" > consommation responsable </p>
+				<h2> Donnez une <span id="seconde_vie"> seconde <br> vie </span> à vos vêtements, 
+                      <br> chaussures et 
 				     appareils 
 				</h2>
 
 				<p> 
-					Réparez, recyclez, revendez. Rejoignez la communauté de Saguenay 
-					qui lutte contre le gaspillage vestimentaire et promeut une mode durable.
+					Réparez, recyclez, revendez. Rejoignez la  <br> communauté de Saguenay 
+					qui lutte contre le <br> gaspillage vestimentaire et promeut une mode durable.
 			    </p>
 
 				<ul>
-					<li> Service de réparation </li>
+					<li> Service de réparation <span id="fleche_horizontale">&#8594;</span> </li>
 					<li> Prix accessibles </li>
-					<li> Impact environnemental </li>
+					
 
 				</ul>
 
 
 			</section>
-		
-		</main>
-	
-	
-		<footer>
-			&copy tout droit réservé
-		</footer>
-	
-	
-	
-	
-	
-	
-	
-	
-	<script src="script-site.js"> </script>
-	
-	
-	</body>
 
+        <section class="services" >   
 
+            <ul>
+                <li id="reservation_reparation">  Réserver réparation </li>
+                <li id="Réserver_rdv"> Prendre rendez-vous </li>
+            </ul>
 
+        </section> 
 
+    </main>
 
+    <footer>
+        &copy; Tout droit réservé
+    </footer>
 
-
+    <script src="script-site.js"></script>
+</body>
 </html>
