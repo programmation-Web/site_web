@@ -6,45 +6,116 @@
     --couleur-bordure: #e5e7eb;
     --couleur-texte: #374151;
     --couleur-danger: #ef4444;
-    --couleur-succes: #10b981;
+    --couleur-succes: #62df45;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: var(--couleur-texte);
     background-color: #ffffff;
+    margin:10px;
 }
 
+header .conteneur{
+    background-color: var(--gris-clair);
+}
 .conteneur {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
+.logo{display:flex ; gap:10px;}
+.logo img{ margin-top:1.6rem ;}
 
-/* Responsive Design */
+.menu-deroulant {
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 3s;
+}
+
+    .menu-deroulant:hover {
+        background-color: #059669;
+    }
+
+    .menu-deroulant option {
+        background-color: var(--couleur-primaire);
+    }
+
+        .menu-deroulant option:hover {
+            background-color: var(--couleur-secondaire);
+        }
+
+#compte button {
+    font-size: 16px;
+    background-color: var(--gris-clair);
+    cursor: pointer;
+    transition: background-color 1s;
+    border-radius:5px ;
+}
+
+#compte button:hover{background-color:var(--couleur-succes) ; }
+
+
+#sous-entete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+#section1 {
+    flex: 1; 
+}
+
+    #section1 h2 { margin-bottom: 0;  }
+
+    #section1 p { margin-top: 0; }
+
+
+.actions-entete {
+    display: flex;
+    gap: 10px;
+}
+
+
+
 @media (max-width: 1024px) {
-    .hero h1 {
-        font-size: 2.5rem;
+    .hero h2{
+        font-size: 1rem;
     }
     
     .services h2 {
-        font-size: 2rem;
+        font-size: 1rem;
     }
 }
 
 /* Hero Section */
+
+#entete-hero{display:flex;}
+
+    #entete-hero img{margin-top:1.7rem ; margin-right:0.5px;}
 .hero {
-    background: linear-gradient(135deg, var(--couleur-primaire) 0%, var(--couleur-secondaire) 100%);
-    color: white;
-    padding: 4rem 0;
+    background: linear-gradient(135deg, #62df45, #0b6749, #a0f0a5, #3dbf7f);
+    background-size: 400% 400%; 
+    color: black;
+    padding: 2rem 1rem;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    animation: gradientAnim 10s ease infinite; 
 }
+
+@keyframes gradientAnim {
+    0% {   background-position: 0% 50%;}
+
+    50% {  background-position: 100% 50%;}
+
+    100% {  background-position: 0% 50%;}
+}
+
 
 .contenu-hero {
     display: flex;

@@ -1,3 +1,21 @@
+
+
+//Entete
+//menu deroulant
+
+const selectMenu = document.querySelector(".menu-deroulant");
+
+selectMenu.addEventListener("change", function () {
+    const cible = this.value;
+    if (cible) {
+        const section = document.querySelector(cible);
+        if (section) {
+            section.scrollIntoView({ behavior: "smooth" });
+        }
+    }
+});
+
+
 // Données des produits
 const produits = [
     {
@@ -9,7 +27,7 @@ const produits = [
         description: "Magnifique veste en jean vintage, style années 90...",
         qualite: "Très bon",
         rabais: 72,
-        image: "https://via.placeholder.com/250x200?text=Veste+Jean"
+        image:"../images/veste.jpg"
     },
     {
         id: 2,
@@ -20,7 +38,7 @@ const produits = [
         description: "Magnifique chemise pour tous les jours...",
         qualite: "Excellent",
         rabais: 71,
-        image: "https://via.placeholder.com/250x200?text=Chemise+Homme"
+        image: "../images/rayon-homme.jpg"
     },
     {
         id: 3,
@@ -31,7 +49,7 @@ const produits = [
         description: "Couleurs vives et matières confortables...",
         qualite: "Très bon",
         rabais: 73,
-        image: "https://via.placeholder.com/250x200?text=Vetements+Enfant"
+        image: "../images/ensmble-enfant.jpg"
     },
     {
         id: 4,
@@ -42,7 +60,7 @@ const produits = [
         description: "Imperméables et chaudes, parfaites pour l'hiver...",
         qualite: "Très bon",
         rabais: 72,
-        image: "https://via.placeholder.com/250x200?text=Bottes+Hiver"
+        image: "../images/botte-hivers.jpg"
     },
     {
         id: 5,
@@ -53,7 +71,7 @@ const produits = [
         description: "Très chaud et élégant pour les hivers du Québec...",
         qualite: "Excellent",
         rabais: 70,
-        image: "https://via.placeholder.com/250x200?text=Manteau+Hiver"
+        image: "../images/rayon-femme-hivers.jpg"
     },
     {
         id: 6,
@@ -64,7 +82,7 @@ const produits = [
         description: "Jolie robe d'été à motifs floraux, style années 80...",
         qualite: "Bon",
         rabais: 69,
-        image: "https://via.placeholder.com/250x200?text=Robe+Ete"
+        image: "../images/rayon-ete-vintage.jpg"
     }
 ];
 

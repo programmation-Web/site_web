@@ -11,43 +11,78 @@
     <header class="entete">
         <div class="conteneur">
             <div class="logo">
-                <h1>Friperie Éco</h1>
+                <img src="../images/logo.png" alt="loge" height="25">
+                <h2> ÉcoRevive </h2>
             </div>
             <nav class="menu-nav">
-                <a href="#accueil" class="lien-nav">Accueil</a>
-                <a href="#boutique" class="lien-nav">Boutique</a>
-                <a href="#services" class="lien-nav">Services</a>
-                <a href="#reparation" class="lien-nav">Réparation</a>
-                <a href="#don" class="lien-nav">Faire un don</a>
-                <a href="#contact" class="lien-nav">Contact</a>
+                <a href="#accueil" class="lien-nav">Réparations</a>
+                <a href="#boutique" class="lien-nav">Recycler</a>
+                <a href="#services" class="lien-nav">Magasiner</a>
+
+                <select class="menu-deroulant">
+                    <option value="#reparation">Nos services</option>
+                    <option value="#footer">À propos</option>
+                    <option value="#don">Faire un don</option>
+                    <option value="#contact">Nous joindre</option>
+                </select>
             </nav>
-            <div class="actions-entete">
-                <button class="btn-panier" onclick="ouvrirPanier()">
-                    🛒 Panier
-                    <span class="compteur-panier">0</span>
-                </button>
-            </div>
-            <button class="btn-menu-mobile" onclick="basculerMenuMobile()">☰</button>
+
+
+            <section id="compte">
+
+                <button id="inscription"> inscription </button>
+                <button id="connexion"> connexion </button>
+
+            </section>
+
         </div>
     </header>
+
+
+    <div id="sous-entete">
+        <section id="section1">
+            <h2>  Boutique EcoRevive </h2>
+            <p> Vêtements et accessoires de seconde main </p>
+        </section>
+
+        <section class="actions-entete">
+            <button class="btn-panier" onclick="ouvrirPanier()">
+                🛒 Panier
+                <span class="compteur-panier">0</span>
+            </button>
+
+            <button class="btn-menu-mobile" onclick="basculerMenuMobile()">☰</button>
+        </section>
+
+
+    </div>
+
+
+
 
     <!-- Section Héro -->
     <section id="accueil" class="hero">
         <div class="conteneur contenu-hero">
             <div class="texte-hero">
-                <h1>Consommation Responsable</h1>
-                <p>Donnez une seconde vie à vos vêtements, chaussures et appareils</p>
-                <p class="sous-texte-hero">Réparez, recyclez, revendez. Rejoignez la communauté de Saguenay qui lutte contre le gaspillage vestimentaire.</p>
-                <div class="boutons-hero">
-                    <button class="btn-primaire" onclick="scrollToSection('reparation')">Réserver une réparation</button>
-                    <button class="btn-secondaire" onclick="scrollToSection('magasiner')">Explorer le marché</button>
+                <div id="entete-hero">
+                    <img src="../images/logo2.png" alt="logo2" 
+                         height="25">
+                    <h2>Chaque achat fait la différence</h2>
                 </div>
+
+                <p class="sous-texte-hero">
+                    En achetant les articles de seconde main, vous réduisez l'
+                    impact environnemental tout en soutenant l'économie circulaire de
+                    <br>Saguenay.
+                </p>
+
             </div>
-            <div class="image-hero">
-                <img src="https://via.placeholder.com/400x300?text=Vêtements+Durables" alt="Mode Durable">
-            </div>
+
         </div>
     </section>
+
+
+  
 
     <!-- Section Services -->
     <section id="services" class="services">
@@ -65,7 +100,7 @@
                         <li>Devis gratuit</li>
                     </ul>
                     <button class="btn-primaire" onclick="scrollToSection('reparation')">Trouver un Technicien</button>
-                    </div>
+                </div>
                 <div class="carte-service">
                     <div class="icone-service">🛍️</div>
                     <h3>Marché d'Occasion</h3>
@@ -77,7 +112,7 @@
                         <li>Garantie qualité</li>
                     </ul>
                     <button class="btn-primaire" onclick="scrollToSection('magasiner')">Explorer le marché</button>
-                
+
                 </div>
                 <div class="carte-service">
                     <div class="icone-service">💚</div>
@@ -232,7 +267,7 @@
                 <div class="formulaire-checkout">
                     <form id="formulaireCheckout">
                         <h3>Informations de livraison</h3>
-                        
+
                         <div class="rangee-formulaire">
                             <div class="groupe-formulaire">
                                 <label for="prenom">Prénom *</label>
@@ -288,7 +323,7 @@
                         </div>
 
                         <h3>Mode de paiement</h3>
-                        
+
                         <div class="groupe-formulaire">
                             <label>
                                 <input type="radio" name="modePaiement" value="carte" checked>
@@ -323,7 +358,7 @@
                         <button type="submit" class="btn-confirmer-commande">Confirmer la commande</button>
                     </form>
                 </div>
-                
+
                 <div class="recapitulatif-checkout">
                     <div id="recapitulatifCommande">
                         <!-- Le récapitulatif sera généré par JavaScript -->
@@ -343,7 +378,7 @@
     </section>
 
     <!-- Pied de page -->
-    <footer class="pied-page">
+    <footer class="pied-page" id="footer">
         <div class="conteneur contenu-pied-page">
             <div class="section-pied-page">
                 <h4>EcoRevive</h4>
