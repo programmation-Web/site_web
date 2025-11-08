@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boutique de Vêtements d'Occasion</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        (function () { if (!window.chatbase || window.chatbase("getState") !== "initialized") { window.chatbase = (...arguments) => { if (!window.chatbase.q) { window.chatbase.q = [] } window.chatbase.q.push(arguments) }; window.chatbase = new Proxy(window.chatbase, { get(target, prop) { if (prop === "q") { return target.q } return (...args) => target(prop, ...args) } }) } const onLoad = function () { const script = document.createElement("script"); script.src = "https://www.chatbase.co/embed.min.js"; script.id = "JvjdjMkUsOiaeayyZoCnX"; script.domain = "www.chatbase.co"; document.body.appendChild(script) }; if (document.readyState === "complete") { onLoad() } else { window.addEventListener("load", onLoad) } })();
+    </script>
+
+</head>
+<body>
+    <!-- En-tête -->
+    <header class="entete">
+        <div class="conteneur">
+            <div class="logo">
+                <img src="images/logo.png" alt="logo" height="25">
+                <h2> ÉcoRevive </h2>
+            </div>
+            <nav class="menu-nav">
+                <a href="#accueil" class="lien-nav">Réparations</a>
+                <a href="#boutique" class="lien-nav">Recycler</a>
+                <a href="#services" class="lien-nav">Magasiner</a>
+
+                <select class="menu-deroulant">
+                    <option value="#reparation">Nos services</option>
+                    <option value="#footer">À propos</option>
+                    <option value="#don">Faire un don</option>
+                    <option value="#contact">Nous joindre</option>
+                </select>
+            </nav>
+
+
+            <section id="compte">
+
+                <button id="inscription"> inscription </button>
+                <button id="connexion"> connexion </button>
+
+            </section>
+
+        </div>
+    </header>
+
+
+    <div id="sous-entete">
+        <section id="section1">
+            <h2>  Boutique EcoRevive </h2>
+            <p> Vêtements et accessoires de seconde main </p>
+        </section>
+
+        <section class="actions-entete">
+            <button class="btn-panier" onclick="ouvrirPanier()">
+                🛒 Panier
+                <span class="compteur-panier">0</span>
+            </button>
+
+            <button class="btn-menu-mobile" onclick="basculerMenuMobile()">☰</button>
+        </section>
+
+
+    </div>
+
+
+
+
+    <!-- Section Héro -->
+    <section id="accueil" class="hero">
+        <div class="conteneur contenu-hero">
+            <div class="texte-hero">
+                <div id="entete-hero">
+                    <img src="images/logo2.png" alt="logo2" 
+                         height="25">
+                    <h2>Chaque achat fait la différence</h2>
+                </div>
+
+                <p class="sous-texte-hero">
+                    En achetant les articles de seconde main, vous réduisez l'
+                    impact environnemental tout en soutenant l'économie circulaire de
+                    <br>Saguenay.
+                </p>
+
+            </div>
+
+        </div>
+    </section>
+
+
+  
+
+    <!-- Section Services -->
+    <section id="services" class="services">
+        <div class="conteneur">
+            <h2 class="titre-section">Nos Services</h2>
+            <div class="grille-services">
+                <div class="carte-service">
+                    <div class="icone-service">♻️</div>
+                    <h3>Services de Réparation</h3>
+                    <p>Nos techniciens qualifiés donnent une nouvelle vie à vos vêtements et accessoires préférés.</p>
+                    <ul class="liste-serv">
+                        <li>Réparation de vêtements</li>
+                        <li>Retouches sur mesure</li>
+                        <li>Rénovation de chaussures</li>
+                        <li>Devis gratuit</li>
+                    </ul>
+                    <button class="btn-primaire" onclick="scrollToSection('reparation')">Trouver un Technicien</button>
+                </div>
+                <div class="carte-service">
+                    <div class="icone-service">🛍️</div>
+                    <h3>Marché d'Occasion</h3>
+                    <p>Achetez et vendez des vêtements de qualité à prix abordables dans notre marketplace.</p>
+                    <ul class="liste-serv">
+                        <li>Articles vérifiés</li>
+                        <li>Prix compétitifs</li>
+                        <li>Livraison locale</li>
+                        <li>Garantie qualité</li>
+                    </ul>
+                    <button class="btn-primaire" onclick="scrollToSection('magasiner')">Explorer le marché</button>
+
+                </div>
+                <div class="carte-service">
+                    <div class="icone-service">💚</div>
+                    <h3>Réseau de Partenaires</h3>
+                    <p>Connectons magasins, techniciens et clients pour un écosystème durable et profitable.</p>
+                    <ul class="liste-serv">
+                        <li>Partenariats magasins</li>
+                        <li>Réseau techniciens</li>
+                        <li>Publicité ciblée</li>
+                        <li>Support commercial</li>
+                    </ul>
+                    <button class="btn-primaire">Devenir partenaire</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Boutique -->
+    <section id="boutique" class="boutique">
+        <div class="conteneur">
+            <h2 class="titre-section">Notre Collection</h2>
+            <div id="grilleProduits" class="grille-produits">
+                <!-- Les produits seront générés par JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Réparation -->
+    <section id="reparation" class="reparation">
+        <div class="conteneur">
+            <h2 class="titre-section">Service de Réparation</h2>
+            <div class="conteneur-formulaire">
+                <form id="formulaireReparation">
+                    <div class="groupe-formulaire">
+                        <label for="nomReparation">Nom complet</label>
+                        <input type="text" id="nomReparation" name="nom" required>
+                    </div>
+                    <div class="groupe-formulaire">
+                        <label for="emailReparation">Courriel</label>
+                        <input type="email" id="emailReparation" name="email" required>
+                    </div>
+                    <div class="groupe-formulaire">
+                        <label for="telephoneReparation">Téléphone</label>
+                        <input type="tel" id="telephoneReparation" name="telephone" required>
+                    </div>
+                    <div class="groupe-formulaire">
+                        <label for="typeVetement">Type de vêtement</label>
+                        <select id="typeVetement" name="typeVetement" required>
+                            <option value="">Sélectionnez...</option>
+                            <option value="chemise">Chemise</option>
+                            <option value="pantalon">Pantalon</option>
+                            <option value="veste">Veste</option>
+                            <option value="robe">Robe</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </div>
+                    <div class="groupe-formulaire">
+                        <label for="descriptionReparation">Description du problème</label>
+                        <textarea id="descriptionReparation" name="description" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-soumettre">Soumettre la demande</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Don -->
+    <section id="don" class="don">
+        <div class="conteneur">
+            <h2 class="titre-section">Faire un Don</h2>
+            <div class="conteneur-formulaire">
+                <form id="formulaireDon">
+                    <div class="groupe-formulaire">
+                        <label for="nomDon">Nom complet</label>
+                        <input type="text" id="nomDon" name="nom" required>
+                    </div>
+                    <div class="groupe-formulaire">
+                        <label for="emailDon">Courriel</label>
+                        <input type="email" id="emailDon" name="email" required>
+                    </div>
+                    <div class="groupe-formulaire">
+                        <label for="telephoneDon">Téléphone</label>
+                        <input type="tel" id="telephoneDon" name="telephone" required>
+                    </div>
+                    <div class="groupe-formulaire">
+                        <label for="adresseDon">Adresse de collecte</label>
+                        <input type="text" id="adresseDon" name="adresse" required>
+                    </div>
+                    <div class="groupe-formulaire">
+                        <label for="descriptionDon">Description des articles</label>
+                        <textarea id="descriptionDon" name="description" rows="4" required placeholder="Décrivez les articles que vous souhaitez donner..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-soumettre">Planifier la collecte</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact" class="contact">
+        <div class="conteneur">
+            <h2 class="titre-section">Contactez-nous</h2>
+            <div class="info-contact">
+                <div class="element-contact">
+                    <h3>📍 Adresse</h3>
+                    <p>123 Rue Principale<br>Saguenay, QC G7H 1A1</p>
+                </div>
+                <div class="element-contact">
+                    <h3>📞 Téléphone</h3>
+                    <p>(418) 555-1234</p>
+                </div>
+                <div class="element-contact">
+                    <h3>✉️ Courriel</h3>
+                    <p>info@friperieeco.ca</p>
+                </div>
+                <div class="element-contact">
+                    <h3>🕒 Horaires</h3>
+                    <p>Lun-Ven: 9h-18h<br>Sam: 10h-17h<br>Dim: Fermé</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Panier -->
+    <div id="modalPanier" class="modal">
+        <div class="contenu-modal">
+            <div class="entete-modal">
+                <h2>Votre Panier</h2>
+                <button class="btn-fermer" onclick="fermerPanier()">×</button>
+            </div>
+            <div class="contenu-panier" id="contenuPanier">
+                <!-- Les articles du panier seront ajoutés ici -->
+            </div>
+            <div class="total-panier" id="totalPanier">
+                <!-- Le total sera calculé ici -->
+            </div>
+            <div class="actions-panier">
+                <button class="btn-continuer" onclick="fermerPanier()">Continuer mes achats</button>
+                <button class="btn-checkout" onclick="allerAuCheckout()">Passer à la caisse</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Checkout -->
+    <div id="modalCheckout" class="modal">
+        <div class="contenu-modal modal-checkout">
+            <div class="entete-modal">
+                <h2>Finaliser la Commande</h2>
+                <button class="btn-fermer" onclick="fermerCheckout()">×</button>
+            </div>
+            <div class="contenu-checkout">
+                <div class="formulaire-checkout">
+                    <form id="formulaireCheckout">
+                        <h3>Informations de livraison</h3>
+
+                        <div class="rangee-formulaire">
+                            <div class="groupe-formulaire">
+                                <label for="prenom">Prénom *</label>
+                                <input type="text" id="prenom" name="prenom" required>
+                            </div>
+                            <div class="groupe-formulaire">
+                                <label for="nom">Nom *</label>
+                                <input type="text" id="nom" name="nom" required>
+                            </div>
+                        </div>
+
+                        <div class="groupe-formulaire">
+                            <label for="email">Courriel *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+
+                        <div class="groupe-formulaire">
+                            <label for="telephone">Téléphone *</label>
+                            <input type="tel" id="telephone" name="telephone" required>
+                        </div>
+
+                        <div class="groupe-formulaire">
+                            <label for="adresse">Adresse *</label>
+                            <input type="text" id="adresse" name="adresse" required>
+                        </div>
+
+                        <div class="rangee-formulaire">
+                            <div class="groupe-formulaire">
+                                <label for="ville">Ville *</label>
+                                <input type="text" id="ville" name="ville" required>
+                            </div>
+                            <div class="groupe-formulaire">
+                                <label for="province">Province *</label>
+                                <select id="province" name="province" required>
+                                    <option value="">Sélectionnez...</option>
+                                    <option value="QC">Québec</option>
+                                    <option value="ON">Ontario</option>
+                                    <option value="BC">Colombie-Britannique</option>
+                                    <option value="AB">Alberta</option>
+                                    <option value="MB">Manitoba</option>
+                                    <option value="SK">Saskatchewan</option>
+                                    <option value="NS">Nouvelle-Écosse</option>
+                                    <option value="NB">Nouveau-Brunswick</option>
+                                    <option value="NL">Terre-Neuve-et-Labrador</option>
+                                    <option value="PE">Île-du-Prince-Édouard</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="groupe-formulaire">
+                            <label for="codePostal">Code postal *</label>
+                            <input type="text" id="codePostal" name="codePostal" required>
+                        </div>
+
+                        <h3>Mode de paiement</h3>
+
+                        <div class="groupe-formulaire">
+                            <label>
+                                <input type="radio" name="modePaiement" value="carte" checked>
+                                Carte de crédit/débit
+                            </label>
+                            <label>
+                                <input type="radio" name="modePaiement" value="paypal">
+                                PayPal
+                            </label>
+                            <label>
+                                <input type="radio" name="modePaiement" value="interac">
+                                Virement Interac
+                            </label>
+                        </div>
+
+                        <div class="groupe-formulaire">
+                            <label for="numerocarte">Numéro de carte</label>
+                            <input type="text" id="numerocarte" name="numeroCard" placeholder="1234 5678 9012 3456">
+                        </div>
+
+                        <div class="rangee-formulaire">
+                            <div class="groupe-formulaire">
+                                <label for="expiration">Date d'expiration</label>
+                                <input type="text" id="expiration" name="expiration" placeholder="MM/AA">
+                            </div>
+                            <div class="groupe-formulaire">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" name="cvv" placeholder="123">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-confirmer-commande">Confirmer la commande</button>
+                    </form>
+                </div>
+
+                <div class="recapitulatif-checkout">
+                    <div id="recapitulatifCommande">
+                        <!-- Le récapitulatif sera généré par JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="conteneur">
+            <h2>Rejoignez la Révolution Durable</h2>
+            <p>Plus de 2,000 personnes à Saguenay ont déjà adopté une approche plus responsable de la mode. Et vous ?</p>
+            <button class="btn-primaire btn-large">Commencer maintenant</button>
+        </div>
+    </section>
+
+    <!-- Pied de page -->
+    <footer class="pied-page" id="footer">
+        <div class="conteneur contenu-pied-page">
+            <div class="section-pied-page">
+                <h4>EcoRevive</h4>
+                <p>Votre plateforme locale pour une mode durable à Saguenay.</p>
+            </div>
+            <div class="section-pied-page">
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="#reparation">Réparation de vêtements</a></li>
+                    <li><a href="#magasiner">Marché d'occasion</a></li>
+                    <li><a href="#services">Réseau de techniciens</a></li>
+                    <li>Partenariats magasins</li>
+                </ul>
+            </div>
+            <div class="section-pied-page">
+                <h4>Support</h4>
+                <ul>
+                    <li>Centre d'aide</li>
+                    <li>Comment ça marche</li>
+                    <li>Politique de retour</li>
+                    <li>FAQ</li>
+                </ul>
+            </div>
+            <div class="section-pied-page">
+                <h4>Contact</h4>
+                <p>Saguenay, Québec</p>
+                <p>(418) 555-0123</p>
+                <p>contact@ecorevive.ca</p>
+            </div>
+        </div>
+        <div class="bas-pied-page">
+            <p>&copy; 2025 EcoRevive. Tous droits réservés. | <a href="#">Politique de confidentialité</a> | <a href="#">Conditions d'utilisation</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
