@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faire un don - Donnez une seconde vie à vos vêtements</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>💚Faire un don</h1>
+            <p class="subtitle">Donnez une seconde vie à vos vêtements et accessoires</p>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>🎁Votre geste compte !</h2>
+                <p>En donnant vos vêtements et accessoires, vous aidez des familles de Saguenay tout en réduisant l'impact environnemental. Chaque don contribue à construire une communauté plus durable et solidaire.</p>
+            </div>
+        </section>
+
+        <section class="process">
+            <div class="container">
+                <h2>Comment faire un don ?</h2>
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Décrire</h3>
+                        <p>Listez vos articles avec descriptions détaillées</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Photographier</h3>
+                        <p>Ajoutez des photos pour montrer l'état des articles</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Planifier</h3>
+                        <p>Choisir le mode de collecte qui vous convient</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Donner</h3>
+                        <p>Votre don aide la communauté et l'environnement</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <div class="feature-grid">
+                    <div class="feature-card1">
+                        <h3>♻Impact environnemental</h3>
+                        <ul>
+                            <li>Réduction des déchets vestimentaires</li>
+                            <li>Économie de ressources naturelles</li>
+                            <li>Diminution de l'empreinte carbone</li>
+                            <li>Promotion de l'économie circulaire</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card2">
+                        <h3>🚚Service de collecte</h3>
+                        <ul>
+                            <li>Collecte gratuite à domicile</li>
+                            <li>Points de dépôt dans Saguenay</li>
+                            <li>Horaires flexibles</li>
+                            <li>Service rapide et professionnel</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card3">
+                        <h3>👥Impact social</h3>
+                        <ul>
+                            <li>Aide aux familles à revenus modestes</li>
+                            <li>Accès à des vêtements de qualité</li>
+                            <li>Soutien à l'économie locale</li>
+                            <li>Création d'emplois durables</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card4">
+                        <h3>📍Articles acceptés</h3>
+                        <ul>
+                            <li>Vêtements pour tous âges</li>
+                            <li>Chaussures en bon état</li>
+                            <li>Sacs et accessoires</li>
+                            <li>Textiles de maison</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tax-receipt">
+            <div class="container">
+                <h2>🎁Reçu fiscal disponible</h2>
+                <p>Pour les dons d'une valeur estimée de 20$ et plus, nous pouvons émettre un reçu fiscal officiel. Cela vous permettra de bénéficier d'un crédit d'impôt.</p>
+                
+            </div>
+        </section>
+
+<section class="articles-section">
+    <div class="container">
+        <div class="articles-container" id="articlesContainer">
+            <div class="article-form-container" data-article="1">
+                <form class="article-form">
+                    <div class="article-header">
+                        <span class="article-number">Article 1</span>
+                        <h2>Décrivez votre article</h2>
+                    </div>
+                    
+                    <div class="article-content">
+                        <div class="form-row">
+                            <div class="form-group-half">
+                                <label for="category-1" class="required-field">Catégorie</label>
+                                <div class="select-wrapper">
+                                    <select id="category-1" name="category" required>
+                                        <option value="">Sélectionnez une catégorie</option>
+                                        <option value="vetements">Vêtements</option>
+                                        <option value="chaussures">Chaussures</option>
+                                        <option value="accessoires">Accessoires</option>
+                                        <option value="textiles">Textiles de maison</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group-half">
+                                <label for="condition-1" class="required-field">État</label>
+                                <div class="select-wrapper">
+                                    <select id="condition-1" name="condition" required>
+                                        <option value="">État de l'article</option>
+                                        <option value="neuf">Neuf avec étiquette</option>
+                                        <option value="tres-bon">Très bon état</option>
+                                        <option value="bon">Bon état</option>
+                                        <option value="correct">État correct</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="separator"></div>
+                        
+                        <div class="form-group-full">
+                            <label for="description-1">Description détaillée</label>
+                            <textarea 
+                                id="description-1" 
+                                name="description" 
+                                placeholder="Ex: Manteau d'hiver noir, taille M, marque XYZ, très peu porté..." 
+                                required
+                            ></textarea>
+                        </div>
+                        
+                        <div class="separator"></div>
+                        
+                        <div class="form-row">
+                            <div class="form-group-half">
+                                <label for="quantity-1">Quantité</label>
+                                <input 
+                                    type="number" 
+                                    id="quantity-1" 
+                                    name="quantity" 
+                                    value="1" 
+                                    min="1" 
+                                    max="100"
+                                >
+                            </div>
+                            
+                            <div class="form-group-half">
+                                <label for="estimated-value-1">Valeur estimée (CAD)</label>
+                                <input 
+                                    type="number" 
+                                    id="estimated-value-1" 
+                                    name="estimated-value" 
+                                    placeholder="Ex: 25" 
+                                    min="0" 
+                                    step="0.01"
+                                >
+                            </div>
+                        </div>
+                        
+                        <div class="separator"></div>
+                        
+                        <div class="photos-section">
+                            <h3>Photos des articles (optionnel)</h3>
+                            <button type="button" class="upload-btn" data-article="1">
+                                Ajouter des photos
+                            </button>
+                            <p class="upload-hint">Cliquez pour sélectionner des photos depuis votre appareil</p>
+                            
+                            <div class="photo-preview-container" id="photo-preview-1">
+                                <div class="photo-preview-grid" id="photo-grid-1">
+                                    <!-- Les prévisualisations de photos apparaîtront ici -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <button type="button" class="add-article-btn" id="addArticleBtn">
+            Ajouter un autre article
+        </button>
+    </div>
+</section>
+        
+<!-- Section Mode de Collecte -->
+<section class="collection-section">
+    <div class="container">
+        <div class="section-container">
+            <h2>2. Comment souhaitez-vous donner vos articles ?</h2>
+            
+            <div class="collection-options">
+                <label class="collection-option">
+                    <input type="radio" name="collection-method" value="home" required>
+                    <div class="option-card">
+                        <div class="option-icon">🏠</div>
+                        <div class="option-content">
+                            <h3>Collecte à domicile</h3>
+                            <p>Notre équipe passe récupérer vos articles à votre domicile</p>
+                            <span class="option-badge">Gratuit</span>
+                            
+                            <!-- Champs pour la collecte à domicile -->
+                            <div class="schedule-fields home-schedule">
+                                <div class="form-row">
+                                    <div class="form-group-half">
+                                        <label for="collection-date" class="required-field">Date de collecte souhaitée</label>
+                                        <input type="date" id="collection-date" name="collection-date" min="" required>
+                                    </div>
+                                    
+                                    <div class="form-group-half">
+                                        <label for="time-slot" class="required-field">Créneau horaire préféré</label>
+                                        <div class="select-wrapper">
+                                            <select id="time-slot" name="time-slot" required>
+                                                <option value="">Choisir un créneau</option>
+                                                <option value="morning">Matin (8h-12h)</option>
+                                                <option value="afternoon">Après-Midi (13h-17h)</option>
+                                                <option value="evening">Soirée (18h-20h)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </label>
+                
+                <label class="collection-option">
+                    <input type="radio" name="collection-method" value="dropoff" required>
+                    <div class="option-card">
+                        <div class="option-icon">📍</div>
+                        <div class="option-content">
+                            <h3>Dépôt en point de collecte</h3>
+                            <p>Déposez vos articles dans l'un de nos points de collecte à Saguenay</p>
+                            <span class="option-badge">Gratuit</span>
+                            
+                            <!-- Champs pour le dépôt en point de collecte -->
+                            <div class="schedule-fields dropoff-schedule">
+                                <div class="form-group-full">
+                                    <label for="dropoff-location" class="required-field">Point de collecte</label>
+                                    <div class="select-wrapper">
+                                        <select id="dropoff-location" name="dropoff-location" required>
+                                            <option value="">Choisir un point de collecte</option>
+                                            <option value="centre-ville">Centre-ville de Saguenay</option>
+                                            <option value="jonquiere">Jonquière</option>
+                                            <option value="chicoutimi">Chicoutimi</option>
+                                            <option value="la-baie">La Baie</option>
+                                            <option value="laterriere">Laterrière</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group-half">
+                                        <label for="dropoff-date" class="required-field">Date de dépôt souhaitée</label>
+                                        <input type="date" id="dropoff-date" name="dropoff-date" min="" required>
+                                    </div>
+                                    
+                                    <div class="form-group-half">
+                                        <label for="dropoff-time" class="required-field">Créneau horaire préféré</label>
+                                        <div class="select-wrapper">
+                                            <select id="dropoff-time" name="dropoff-time" required>
+                                                <option value="">Choisir un créneau</option>
+                                                <option value="morning">Matin (8h-12h)</option>
+                                                <option value="afternoon">Après-Midi (13h-17h)</option>
+                                                <option value="evening">Soirée (18h-20h)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Informations de Contact -->
+<section class="contact-section">
+    <div class="container">
+        <div class="section-container">
+            <h2>3. Vos informations de contact</h2>
+            
+            <div class="contact-form">
+                <div class="form-row">
+                    <div class="form-group-half">
+                        <label for="firstName" class="required-field">Prénom</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    
+                    <div class="form-group-half">
+                        <label for="lastName" class="required-field">Nom</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group-half">
+                        <label for="email" class="required-field">Adresse email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group-half">
+                        <label for="phone" class="required-field">Téléphone</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                </div>
+                
+                <div class="form-group-full">
+                    <label for="address" class="required-field">Adresse complète</label>
+                    <input type="text" id="address" name="address" placeholder="Numéro, rue, ville, code postal" required>
+                </div>
+                
+                <div class="form-group-full">
+                    <label for="instructions">Instructions spéciales pour la collecte</label>
+                    <textarea id="instructions" name="instructions" rows="3" placeholder="Ex: Sonner à l'interphone, code de porte, etc."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Reçu Fiscal -->
+<section class="tax-section">
+    <div class="container">
+        <div class="section-container">
+            <h2>4. Reçu fiscal (optionnel)</h2>
+            
+            <div class="checkbox-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="tax-receipt">
+                    <span class="checkmark"></span>
+                    Je souhaite recevoir un reçu fiscal pour déduction d'impôt (pour dons de 20$ et plus)
+                </label>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section Confirmation avec Cases à Cocher -->
+<section class="confirmation-section">
+    <div class="container">
+        <div class="confirmation-container">
+            <div class="confirmation-content">
+                <div class="confirmation-header">
+                    <div class="confirmation-icon">☑</div>
+                    <h3>Merci pour votre générosité !</h3>
+                </div>
+                
+                <div class="confirmation-benefits">
+                    <div class="benefit-item">
+                        <span class="benefit-bullet">•</span>
+                        <span>Votre don aidera des familles de Saguenay</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="benefit-bullet">•</span>
+                        <span>Vous contribuez à réduire l'impact environnemental</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="benefit-bullet">•</span>
+                        <span>Vous recevrez une confirmation dans les 24h</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="benefit-bullet">•</span>
+                        <span>Notre équipe vous contactera pour organiser la collecte</span>
+                    </div>
+                </div>
+                
+                <!-- Cases à cocher supplémentaires -->
+                <div class="final-checkboxes">
+                    <label class="checkbox-label required">
+                        <input type="checkbox" id="terms-conditions" required>
+                        <span class="checkmark"></span>
+                        J'accepte les conditions d'utilisation et confirme que les articles donnés sont ma propriété et en état d'être redistribués.*
+                    </label>
+                    
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="newsletter">
+                        <span class="checkmark"></span>
+                        Je souhaite recevoir des nouvelles d'EcoRevive et des conseils pour une consommation responsable.
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Séparateur -->
+<div class="final-separator">
+    <div class="container">
+        <div class="separator-line"></div>
+    </div>
+</div>
+
+<!-- Section Bouton de Soumission -->
+<section class="submit-section">
+    <div class="container">
+        <div class="submit-container">
+            <button type="submit" class="final-submit-btn" id="finalSubmitBtn">
+                Soumettre mon don
+            </button>
+        </div>
+    </div>
+</section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Association de dons de Saguenay. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    
+    <script src="script.js"></script>
+</body>
+</html>
