@@ -34,3 +34,11 @@ Le client peut choisir l'un des services suivants :
 * Il a le choix entre déposer son article dans un de nos magasins, ou solliciter qu'un de nos employés passe le récupérer directement chez lui
 * Si la valeur de son don est égale ou supérieure à 20$, il peut solliciter un recu pour ses déclarations fiscales
 
+## Technologies utilisées 
+
+#### HTML5 , java script, Css
+#### PHP 8.2 (à venir)
+#### MySQL 8.2 (à venir)
+#### git 
+
+
