@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service de Réparation - EcoRevive</title>
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/reparation.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header sera inséré ici dynamiquement -->
+    <header id="header-placeholder"></header>
+
+
+    <main class="reparation-page">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-icon">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h1>Service de Réparation</h1>
+                    <p class="subtitle">Planifiez votre rendez-vous avec un technicien qualifié</p>
+                </div>
+
+                <!-- Étapes du processus -->
+                <div class="process-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>Décrivez votre problème</h3>
+                            <p>Type d'objet et description détaillée</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>Choisissez vos préférences</h3>
+                            <p>Date, heure et lieu du rendez-vous</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>Confirmation</h3>
+                            <p>Recevez la confirmation par courriel</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Informations Section -->
+        <section class="info-section">
+            <div class="container">
+                <div class="info-grid">
+                    <div class="info-card disponibilites">
+                        <i class="fas fa-clock"></i>
+                        <h3>Disponibilités</h3>
+                        <ul>
+                            <li><strong>Lundi au vendredi:</strong> 8h00 - 18h00</li>
+                            <li><strong>Samedi:</strong> 9h00 - 16h00</li>
+                            <li><strong>Dimanche:</strong> Sur demande</li>
+                        </ul>
+                    </div>
+                    <div class="info-card zones">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Zones desservies</h3>
+                        <p>Saguenay et région</p>
+                        <p>Service à domicile disponible</p>
+                        <p><strong>Atelier:</strong> 1234 Rue Principale, Saguenay</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Formulaire Section -->
+        <section class="form-section">
+            <div class="container">
+                <form id="reparationForm" class="reparation-form">
+                    
+                    <!-- Question 1: Type d'objet -->
+                    <div class="form-group">
+                        <div class="question-header">
+                            <i class="fas fa-wrench"></i>
+                            <h2>1. Quel type d'objet souhaitez-vous faire réparer ?</h2>
+                        </div>
+                        <select id="typeObjet" name="typeObjet" required>
+                            <option value="">Sélectionnez un objet</option>
+                            <option value="vetement">Vêtement</option>
+                            <option value="chaussure">Chaussure</option>
+                            <option value="meuble">Meuble</option>
+                            <option value="electromenager">Électroménager</option>
+                            <option value="accessoire">Accessoire</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </div>
+
+                    <!-- Question 2: Description du problème -->
+                    <div class="form-group">
+                        <h2>2. Décrivez le problème en détail</h2>
+                        
+                        <label for="description">Description du problème *</label>
+                        <textarea 
+                            id="description" 
+                            name="description" 
+                            rows="5" 
+                            placeholder="Ex: Fermeture éclair cassée, trou dans le tissu, courroie de la machine défectueuse..."
+                            required
+                        ></textarea>
+
+                        <div class="urgence-group">
+                            <label>Niveau d'urgence</label>
+                            <div class="radio-group">
+                                <label class="radio-label">
+                                    <input type="radio" name="urgence" value="pas-urgent">
+                                    <span>Pas urgent</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="urgence" value="normal" checked>
+                                    <span>Normal</span>
+                                </label>
+                                <label class="radio-label">
+                                    <input type="radio" name="urgence" value="urgent">
+                                    <span>Urgent</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="photo-upload">
+                            <label>Photos</label>
+                            <div class="upload-area" id="uploadArea">
+                                <i class="fas fa-camera"></i>
+                                <p>Ajoutez une photo pour mieux illustrer le problème</p>
+                                <button type="button" class="btn-upload" onclick="document.getElementById('photoInput').click()">
+                                    <i class="fas fa-upload"></i> Choisir des photos
+                                </button>
+                                <input type="file" id="photoInput" accept="image/*" multiple hidden>
+                            </div>
+                            <div id="photoPreview" class="photo-preview"></div>
+                        </div>
+                    </div>
+
+                    <!-- Question 3: Où et quand -->
+                    <div class="form-group">
+                        <div class="question-header">
+                            <i class="fas fa-calendar-alt"></i>
+                            <h2>3. Où et quand souhaitez-vous la réparation ?</h2>
+                        </div>
+
+                        <label>Lieu du Service</label>
+                        <div class="radio-group lieu-group">
+                            <label class="radio-label">
+                                <input type="radio" name="lieu" value="atelier" checked>
+                                <span>En atelier (1234 rue des roitelets, Saguenay)</span>
+                            </label>
+                            <label class="radio-label">
+                                <input type="radio" name="lieu" value="domicile">
+                                <span>À domicile (20$ de frais de déplacement)</span>
+                            </label>
+                        </div>
+
+                        <div class="date-time-group">
+                            <div class="input-wrapper">
+                                <label for="date">Date</label>
+                                <input type="date" id="date" name="date" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="heure">Heure</label>
+                                <select id="heure" name="heure" required>
+                                    <option value="">Sélectionnez une heure</option>
+                                    <option value="08:00">08:00</option>
+                                    <option value="09:00">09:00</option>
+                                    <option value="10:00">10:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="13:00">13:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="15:00">15:00</option>
+                                    <option value="16:00">16:00</option>
+                                    <option value="17:00">17:00</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Question 4: Informations de contact -->
+                    <div class="form-group">
+                        <div class="question-header">
+                            <i class="fas fa-user"></i>
+                            <h2>4. Vos informations de contact</h2>
+                        </div>
+
+                        <div class="contact-grid">
+                            <div class="input-wrapper">
+                                <label for="prenom">Prénom *</label>
+                                <input type="text" id="prenom" name="prenom" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="nom">Nom *</label>
+                                <input type="text" id="nom" name="nom" required>
+                            </div>
+                        </div>
+
+                        <div class="contact-grid">
+                            <div class="input-wrapper">
+                                <label for="courriel">Courriel *</label>
+                                <input type="email" id="courriel" name="courriel" required>
+                            </div>
+                            <div class="input-wrapper">
+                                <label for="telephone">Téléphone *</label>
+                                <input type="tel" id="telephone" name="telephone" placeholder="(418) 543-4567" required>
+                            </div>
+                        </div>
+
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="conditions" required>
+                                <span>J'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#">politique de confidentialité</a> d'EcoRevive. *</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="newsletter">
+                                <span>Je souhaite recevoir des informations sur les services d'EcoRevive et des conseils pour une consommation responsable.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Prochaines étapes -->
+                    <div class="next-steps">
+                        <i class="fas fa-info-circle"></i>
+                        <h3>Prochaines étapes</h3>
+                        <ul>
+                            <li>Vous recevrez une confirmation par courriel dans les 24h</li>
+                            <li>Un technicien vous contactera pour confirmer les détails</li>
+                            <li>Le coût estimé vous sera communiqué avant la réparation</li>
+                            <li>Paiement après réparation, satisfaction garantie</li>
+                        </ul>
+                    </div>
+
+                    <!-- Bouton de soumission -->
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-paper-plane"></i>
+                        Soumettre ma demande de réparation
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer sera inséré ici dynamiquement -->
+    <footer id="footer-placeholder"> </footer>
+   
+
+    <script src="js/components.js"></script>
+    <script src="js/reparation.js"></script>
+</body>
+</html>

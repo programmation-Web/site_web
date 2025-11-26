@@ -1,19 +1,20 @@
-
-
 //Entete
 //menu deroulant
 
 const selectMenu = document.querySelector(".menu-deroulant");
 
-selectMenu.addEventListener("change", function () {
-    const cible = this.value;
-    if (cible) {
-        const section = document.querySelector(cible);
-        if (section) {
-            section.scrollIntoView({ behavior: "smooth" });
+// Vérifier que l'élément existe avant d'ajouter l'événement
+if (selectMenu) {
+    selectMenu.addEventListener("change", function () {
+        const cible = this.value;
+        if (cible) {
+            const section = document.querySelector(cible);
+            if (section) {
+                section.scrollIntoView({ behavior: "smooth" });
+            }
         }
-    }
-});
+    });
+}
 
 
 // Données des produits
@@ -27,7 +28,7 @@ const produits = [
         description: "Magnifique veste en jean vintage, style années 90...",
         qualite: "Très bon",
         rabais: 72,
-        image:"../images/veste.jpg"
+        image:"images/veste.jpg"
     },
     {
         id: 2,
@@ -38,7 +39,7 @@ const produits = [
         description: "Magnifique chemise pour tous les jours...",
         qualite: "Excellent",
         rabais: 71,
-        image: "../images/rayon-homme.jpg"
+        image: "images/rayon-homme.jpg"
     },
     {
         id: 3,
@@ -49,7 +50,7 @@ const produits = [
         description: "Couleurs vives et matières confortables...",
         qualite: "Très bon",
         rabais: 73,
-        image: "../images/ensmble-enfant.jpg"
+        image: "images/ensmble-enfant.jpg"
     },
     {
         id: 4,
@@ -60,7 +61,7 @@ const produits = [
         description: "Imperméables et chaudes, parfaites pour l'hiver...",
         qualite: "Très bon",
         rabais: 72,
-        image: "../images/botte-hivers.jpg"
+        image: "images/botte-hivers.jpg"
     },
     {
         id: 5,
@@ -71,7 +72,7 @@ const produits = [
         description: "Très chaud et élégant pour les hivers du Québec...",
         qualite: "Excellent",
         rabais: 70,
-        image: "../images/rayon-femme-hivers.jpg"
+        image: "images/rayon-femme-hivers.jpg"
     },
     {
         id: 6,
@@ -82,7 +83,7 @@ const produits = [
         description: "Jolie robe d'été à motifs floraux, style années 80...",
         qualite: "Bon",
         rabais: 69,
-        image: "../images/rayon-ete-vintage.jpg"
+        image: "images/rayon-ete-vintage.jpg"
     }
 ];
 
@@ -252,31 +253,51 @@ function calculerTotal() {
     if (elementsTotal.taxes) elementsTotal.taxes.textContent = `${taxes.toFixed(2)}$`;
     if (elementsTotal.total) elementsTotal.total.textContent = `${total.toFixed(2)}$`;
     
+    const totalPanier = document.getElementById('totalPanier');
+    if (totalPanier) {
+        totalPanier.innerHTML = `
+            <div class="ligne-total">
+                <span>Sous-total:</span>
+                <span id="sousTotal">${sousTotal.toFixed(2)}$</span>
+            </div>
+            <div class="ligne-total">
+                <span>Taxes (15%):</span>
+                <span id="taxes">${taxes.toFixed(2)}$</span>
+            </div>
+            <div class="ligne-total total-final">
+                <span>Total:</span>
+                <span id="total">${total.toFixed(2)}$</span>
+            </div>
+        `;
+    }
+    
     return { sousTotal, taxes, total };
 }
 
-// Ouvrir le modal du panier
+// Ouvrir le panier
 function ouvrirPanier() {
-    const modalPanier = document.getElementById('modalPanier');
-    if (modalPanier) {
-        modalPanier.style.display = 'flex';
+    const modal = document.getElementById('modalPanier');
+    if (modal) {
         afficherContenuPanier();
         calculerTotal();
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
     }
 }
 
-// Fermer le modal du panier
+// Fermer le panier
 function fermerPanier() {
-    const modalPanier = document.getElementById('modalPanier');
-    if (modalPanier) {
-        modalPanier.style.display = 'none';
+    const modal = document.getElementById('modalPanier');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
     }
 }
 
-// Ouvrir la page de checkout
+// Ouvrir le checkout
 function allerAuCheckout() {
     if (panier.length === 0) {
-        afficherNotification('Votre panier est vide!');
+        afficherNotification('Votre panier est vide!', 'erreur');
         return;
     }
     
@@ -284,12 +305,22 @@ function allerAuCheckout() {
     const modalCheckout = document.getElementById('modalCheckout');
     if (modalCheckout) {
         modalCheckout.style.display = 'flex';
-        afficherRecapitulatifCommande();
+        document.body.style.overflow = 'hidden';
+        afficherRecapitulatifCheckout();
     }
 }
 
-// Afficher le récapitulatif de la commande
-function afficherRecapitulatifCommande() {
+// Fermer le checkout
+function fermerCheckout() {
+    const modal = document.getElementById('modalCheckout');
+    if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
+
+// Afficher le récapitulatif du checkout
+function afficherRecapitulatifCheckout() {
     const recapitulatif = document.getElementById('recapitulatifCommande');
     if (!recapitulatif) return;
     
@@ -297,34 +328,32 @@ function afficherRecapitulatifCommande() {
     
     recapitulatif.innerHTML = `
         <h3>Récapitulatif de la commande</h3>
-        ${panier.map(item => `
-            <div class="ligne-recapitulatif">
-                <span>${item.titre} (x${item.quantite})</span>
-                <span>${(item.prix * item.quantite).toFixed(2)}$</span>
+        <div class="liste-articles-checkout">
+            ${panier.map(item => `
+                <div class="article-checkout">
+                    <div class="info-article-checkout">
+                        <span>${item.titre}</span>
+                        <span>x${item.quantite}</span>
+                    </div>
+                    <span>${(item.prix * item.quantite).toFixed(2)}$</span>
+                </div>
+            `).join('')}
+        </div>
+        <div class="totaux-checkout">
+            <div class="ligne-total">
+                <span>Sous-total:</span>
+                <span>${sousTotal.toFixed(2)}$</span>
             </div>
-        `).join('')}
-        <hr>
-        <div class="ligne-recapitulatif">
-            <span>Sous-total:</span>
-            <span>${sousTotal.toFixed(2)}$</span>
-        </div>
-        <div class="ligne-recapitulatif">
-            <span>Taxes (15%):</span>
-            <span>${taxes.toFixed(2)}$</span>
-        </div>
-        <div class="ligne-recapitulatif total-commande">
-            <span><strong>Total:</strong></span>
-            <span><strong>${total.toFixed(2)}$</strong></span>
+            <div class="ligne-total">
+                <span>Taxes (15%):</span>
+                <span>${taxes.toFixed(2)}$</span>
+            </div>
+            <div class="ligne-total total-final">
+                <span>Total:</span>
+                <span>${total.toFixed(2)}$</span>
+            </div>
         </div>
     `;
-}
-
-// Fermer le modal de checkout
-function fermerCheckout() {
-    const modalCheckout = document.getElementById('modalCheckout');
-    if (modalCheckout) {
-        modalCheckout.style.display = 'none';
-    }
 }
 
 // Traiter la commande
@@ -423,6 +452,11 @@ function faireDefilerVers(idSection) {
     }
 }
 
+// Fonction pour scroller vers une section (utilisée par les boutons)
+function scrollToSection(sectionId) {
+    faireDefilerVers(sectionId);
+}
+
 // Validation des formulaires
 function validerEmail(email) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -489,13 +523,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialiser les produits
     initialiserProduits();
     
-    // Gestionnaires d'événements pour les liens de navigation
-    document.querySelectorAll('.lien-nav').forEach(lien => {
-        lien.addEventListener('click', function() {
-            document.querySelectorAll('.lien-nav').forEach(l => l.style.borderBottom = 'none');
-            this.style.borderBottom = '2px solid var(--couleur-primaire)';
+    // CORRECTION: Vérifier que les liens existent avant d'ajouter les événements
+    const liensNav = document.querySelectorAll('.lien-nav');
+    if (liensNav.length > 0) {
+        liensNav.forEach(lien => {
+            lien.addEventListener('click', function() {
+                liensNav.forEach(l => l.style.borderBottom = 'none');
+                this.style.borderBottom = '2px solid var(--couleur-primaire)';
+            });
         });
-    });
+    }
     
     // Défilement fluide pour tous les liens d'ancrage
     document.querySelectorAll('a[href^="#"]').forEach(ancre => {
