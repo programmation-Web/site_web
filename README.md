@@ -57,4 +57,11 @@ Le client qui souhaite faire un don est la bienvenue. Il doit
 #### MySQL 8.2 (à venir)
 #### git 
 
+* Finalement, toutes les fonctionnalités en dehors de chatbase qui a été utilisé pour intégrer un agent virtuel, aucun package externe, ni cadriciel n'a été utilisé.
+* La gestion du panier a été et l'import des photos pour la boutique ont été généré directement avec du javascript.  Nous avons entièrement utilisés les API's intégrées par le compilateur
+* Le site a été hébergé directement sur git hub.
+*  Ce n'est pas encore fait à l'état actuel des choses, mais nous utiliserons Superbase pour gérer notre base des données.
+  
+
+
 
