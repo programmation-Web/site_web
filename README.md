@@ -19,6 +19,8 @@ Via la page d'acceuil, on peut accéder à l'un de nos services en selectionnant
 
 * vers le bas de la page, on a l'option Reserver une réparation. qui est un racourci vers la page de réparations (Le lien n'est pas encore fonctionnel)
 * De mème, l'option magasiner les articles est un racourcis vers la page des boutiques. (le lien n'est pas encore fonctionnel)
+* Étant sur n'importe quelle page, on a la possibilit de revenir vers la page d'acceuil en cliquant sur notre logo qui se trouve en haut à gauche.
+  Il s'agit d'une fleur verte, dans un fond blanc, suivant du mot EcoRevive
 * Finalement, nous avons intégré un chatbot dans notre site, dans le but de répondre aux questions régulièrement posées par les usagers
 
 
