@@ -60,6 +60,12 @@ Le client qui souhaite faire un don est la bienvenue. Il doit
 #### git 
 
 * Finalement, toutes les fonctionnalités en dehors de chatbase qui a été utilisé pour intégrer un agent virtuel, aucun package externe, ni cadriciel n'a été utilisé.
+* Quant à Chatbase, nous utilisons la version gratuite qui nous permet d'utiliser ses fonctionnalités de base : entrainement de l'agent avec le lien de notre site web,
+  prise en charge d'un maximum de 300 questions réponses par mois, design de l'interface du Chat.
+  Quand l'entreprise sera mieux implantée, nous passerons à la version payante, où nous pourrons
+  *  ajouter des foires aux questions pour améliorer ses réponses
+  *  augmenter le nombre d'interaction mensuelles
+  *  paramétrer le style de réponse pour avoir des réponses plus précises et concises
 * La gestion du panier a été et l'import des photos pour la boutique ont été généré directement avec du javascript.  Nous avons entièrement utilisés les API's intégrées par le compilateur
 * Le site a été hébergé directement sur git hub.
 *  Ce n'est pas encore fait à l'état actuel des choses, mais nous utiliserons Superbase pour gérer notre base des données.
