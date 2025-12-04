@@ -28,7 +28,7 @@ const produits = [
         description: "Magnifique veste en jean vintage, style années 90...",
         qualite: "Très bon",
         rabais: 72,
-        image:"images/veste.jpg"
+        image:"images/veste-femme.png"
     },
     {
         id: 2,
@@ -84,6 +84,36 @@ const produits = [
         qualite: "Bon",
         rabais: 69,
         image: "images/rayon-ete-vintage.jpg"
+    },
+    {
+        id: 7,
+        titre: "machine à coudre",
+        prix: 45,
+        prixOriginal: 50,
+        description: "Machine à coudre pour ",
+        qualite: "Excellent",
+        rabais: 10,
+        image: "images/machine-coudre.png"
+    },
+    {
+        id: 8,
+        titre: "casquette homme",
+        prix: 25,
+        prixOriginal: 10,
+        description: "casquette pour hommes ",
+        qualite: "Excellent",
+        rabais: 10,
+        image: "images/casquette.png"
+    },
+    {
+        id: 9,
+        titre: "lit enfant",
+        prix: 100,
+        prixOriginal: 150,
+        description: "Lit patpatrouille ",
+        qualite: "Excellent",
+        rabais: 30,
+        image: "images/lit-enfant.png"
     }
 ];
 
