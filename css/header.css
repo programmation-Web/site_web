@@ -13,14 +13,17 @@
     --hover-green: #45a049;
 }
 
+
 /* Header principal */
+
 .main-header {
     background-color: var(--white);
     border-bottom: 1px solid var(--border-color);
-    position: sticky;
+    position: fixed;
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: 100%;
 }
 
 .header-container {

@@ -8,7 +8,7 @@ const headerTemplate = `
 <header class="main-header">
     <div class="header-container">
         <div class="header-logo">
-            <a href="acceuil.html">
+            <a href="index.html">
                 <img src="images/logo.png" alt="EcoRevive Logo" class="logo-img">
                 <span class="logo-text">EcoRevive</span>
             </a>
@@ -27,9 +27,10 @@ const headerTemplate = `
                         </svg>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#about">Notre Mission</a></li>
-                        <li><a href="#impact">Notre Impact</a></li>
-                        <li><a href="#contact">Nous Contacter</a></li>
+                        <li><a href="index.html#services">Nos services </a></li>
+                        <li><a href="index.html#impact">Notre Impact</a></li>
+                        <li><a href="#footer">Nous Contacter</a></li>
+                        <li><a href="index.html#Avis">Avis</a></li>
                     </ul>
                 </li>
             </ul>
@@ -52,7 +53,7 @@ const headerTemplate = `
 // ========== TEMPLATE FOOTER ==========
 const footerTemplate = `
 <footer class="main-footer">
-    <div class="footer-container">
+    <div class="footer-container" id="footer">
         <!-- Section À propos -->
         <div class="footer-section footer-about">
             <div class="footer-logo">

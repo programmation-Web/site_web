@@ -2,6 +2,7 @@
    HEADER JAVASCRIPT - EcoRevive
    ======================================== */
 
+
 document.addEventListener('DOMContentLoaded', function() {
     
     // ========== MENU MOBILE ==========
@@ -76,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const header = document.querySelector('.main-header');
     
     window.addEventListener('scroll', function() {
-        const currentScroll = window.pageYOffset;
+        const currentScroll = window.window.scrollY;
         
         if (currentScroll > 50) {
             header.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';

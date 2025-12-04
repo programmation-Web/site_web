@@ -50,7 +50,7 @@ const produits = [
         description: "Couleurs vives et matières confortables...",
         qualite: "Très bon",
         rabais: 73,
-        image: "images/ensmble-enfant.jpg"
+        image: "images/ensemble-enfant.jpg"
     },
     {
         id: 4,

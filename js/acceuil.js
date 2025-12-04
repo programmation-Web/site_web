@@ -57,7 +57,7 @@ let lastScroll = 0;
 const header = document.querySelector('.entete');
 
 window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
+    const currentScroll = window.scrollY;
     
     if (currentScroll > lastScroll && currentScroll > 100) {
         // Défilement vers le bas - cacher le header

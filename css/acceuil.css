@@ -9,6 +9,7 @@
     --couleur-succes: #10b981;
 }
 body {
+    padding-top: 5px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
     color: var(--couleur-texte);
@@ -558,7 +559,6 @@ padding-bottom: 5px;
 
 
     .impact-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr) ;
     }
 
-}
