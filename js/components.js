@@ -148,6 +148,79 @@ const footerTemplate = `
 </footer>
 `;
 
+// ========== MENU MOBILE HAMBURGER ==========
+function initMobileMenu() {
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+    const headerActions = document.querySelector('.header-actions');
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+    if (!mobileToggle) {
+        console.warn('⚠️ Bouton menu mobile non trouvé');
+        return;
+    }
+
+    // Toggle du menu principal
+    mobileToggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        this.classList.toggle('active');
+
+        if (mainNav) {
+            mainNav.classList.toggle('active');
+        }
+
+        if (headerActions) {
+            headerActions.classList.toggle('active');
+        }
+    });
+
+    // Gestion des dropdowns en mobile
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', function (e) {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                const dropdown = this.closest('.dropdown');
+                dropdown.classList.toggle('active');
+            }
+        });
+    });
+
+    // Fermer le menu si on clique en dehors
+    document.addEventListener('click', function (e) {
+        if (!e.target.closest('.main-header')) {
+            mobileToggle.classList.remove('active');
+
+            if (mainNav) {
+                mainNav.classList.remove('active');
+            }
+
+            if (headerActions) {
+                headerActions.classList.remove('active');
+            }
+        }
+    });
+
+    // Fermer le menu quand on clique sur un lien (sauf dropdown)
+    const navLinks = document.querySelectorAll('.nav-link:not(.dropdown-toggle)');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function () {
+            if (window.innerWidth <= 768) {
+                mobileToggle.classList.remove('active');
+
+                if (mainNav) {
+                    mainNav.classList.remove('active');
+                }
+
+                if (headerActions) {
+                    headerActions.classList.remove('active');
+                }
+            }
+        });
+    });
+
+    console.log('✅ Menu mobile initialisé avec succès');
+}
+
 // ========== FONCTION DE CHARGEMENT ==========
 function loadComponents() {
     // Injecter le header
@@ -155,6 +228,9 @@ function loadComponents() {
     if (headerPlaceholder) {
         headerPlaceholder.innerHTML = headerTemplate;
         console.log('✅ Header chargé avec succès');
+
+        // IMPORTANT: Initialiser le menu mobile après l'injection du HTML
+        setTimeout(initMobileMenu, 100);
     } else {
         console.warn('⚠️ Placeholder "header-placeholder" introuvable');
     }
@@ -180,5 +256,5 @@ if (document.readyState === 'loading') {
 
 // Export pour utilisation dans d'autres scripts (optionnel)
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { headerTemplate, footerTemplate, loadComponents };
+    module.exports = { headerTemplate, footerTemplate, loadComponents, initMobileMenu };
 }

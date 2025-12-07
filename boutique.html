@@ -3,62 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boutique de Vêtements d'Occasion</title>
+    <title>Boutique de Vêtements d'Occasion - EcoRevive</title>
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/boutique.css">
-    <script>
-        (function () { if (!window.chatbase || window.chatbase("getState") !== "initialized") { window.chatbase = (...arguments) => { if (!window.chatbase.q) { window.chatbase.q = [] } window.chatbase.q.push(arguments) }; window.chatbase = new Proxy(window.chatbase, { get(target, prop) { if (prop === "q") { return target.q } return (...args) => target(prop, ...args) } }) } const onLoad = function () { const script = document.createElement("script"); script.src = "https://www.chatbase.co/embed.min.js"; script.id = "JvjdjMkUsOiaeayyZoCnX"; script.domain = "www.chatbase.co"; document.body.appendChild(script) }; if (document.readyState === "complete") { onLoad() } else { window.addEventListener("load", onLoad) } })();
-    </script>
-
 </head>
 <body>
-   
+    <!-- Header dynamique -->
     <header id="header-placeholder"></header>
 
+    <!-- Bouton Panier Fixe -->
+    <button class="btn-panier" onclick="ouvrirPanier()">
+        🛒 Panier
+        <span class="compteur-panier">0</span>
+    </button>
 
+    <!-- Sous-entête -->
     <div id="sous-entete">
         <section id="section1">
-            <h2>  Boutique EcoRevive </h2>
-            <p> Vêtements et accessoires de seconde main </p>
+            <h2>Boutique EcoRevive</h2>
+            <p>Vêtements et accessoires de seconde main</p>
         </section>
 
         <section class="actions-entete">
-            <button class="btn-panier" onclick="ouvrirPanier()">
-                🛒 Panier
-                <span class="compteur-panier">0</span>
-            </button>
-
             <button class="btn-menu-mobile" onclick="basculerMenuMobile()">☰</button>
         </section>
-
-
     </div>
 
-
-
-
-    <!-- Section Héro -->
+    <!-- Section Hero -->
     <section id="accueil" class="hero">
         <div class="conteneur contenu-hero">
             <div class="texte-hero">
                 <div id="entete-hero">
-                    <img src="images/logo2.png" alt="logo2" 
-                         height="25">
+                    <img src="images/logo2.png" alt="EcoRevive" height="25">
                     <h2>Chaque achat fait la différence</h2>
                 </div>
-
                 <p class="sous-texte-hero">
-                    En achetant les articles de seconde main, vous réduisez l'
-                    impact environnemental tout en soutenant l'économie circulaire de
-                    <br>Saguenay.
+                    En achetant les articles de seconde main, vous réduisez l'impact environnemental
+                    tout en soutenant l'économie circulaire de Saguenay.
                 </p>
-
             </div>
-
         </div>
     </section>
-
 
     <!-- Section Boutique -->
     <section id="boutique" class="boutique">
@@ -70,7 +56,6 @@
         </div>
     </section>
 
-   
     <!-- Modal Panier -->
     <div id="modalPanier" class="modal">
         <div class="contenu-modal">
@@ -203,7 +188,7 @@
         </div>
     </div>
 
-    <!-- CTA Section -->
+    <!-- Section CTA -->
     <section class="cta">
         <div class="conteneur">
             <h2>Rejoignez la Révolution Durable</h2>
@@ -212,13 +197,12 @@
         </div>
     </section>
 
-    <!-- Footer sera inséré ici dynamiquement -->
-    <footer id="footer-placeholder"> </footer>
-   
+    <!-- Footer dynamique -->
+    <footer id="footer-placeholder"></footer>
 
+    <!-- Scripts -->
     <script src="js/components.js"></script>
-    <script src="js/reparation.js"></script>
-
     <script src="js/boutique.js"></script>
+    <script src="js/chatbot.js"></script>
 </body>
 </html>
