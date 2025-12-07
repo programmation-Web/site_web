@@ -9,7 +9,7 @@ Via la page d'acceuil, on peut accéder à l'un de nos services en selectionnant
 ### Page d'acceuil :
 * Réparation : Redirige dans la page des réparations
 * Recycler : Redirrige vers la page de recyclage
-* Magasiner : Redirrrige vers la page de la boutique
+* Magasiner : Redirrige vers la page de la boutique
 * En pointant le curseur sur l'option A propos, un menu déroulant s'ouvre. On peut alors choisir Lune des trois options
   * notre mission
   * notre impact
