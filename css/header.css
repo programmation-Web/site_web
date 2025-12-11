@@ -226,30 +226,28 @@
    RESPONSIVE - TABLETTE & MOBILE
    ======================================== */
 @media screen and (max-width: 768px) {
+
     .mobile-menu-toggle {
         display: flex;
     }
 
+    /* Menu qui glisse depuis la droite */
     .main-nav {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 75%;
+        height: 100%;
         background-color: var(--white);
-        border-top: 1px solid var(--border-color);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        box-shadow: -4px 0 12px rgba(0,0,0,0.1);
         flex-direction: column;
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: all 0.3s ease;
+        padding-top: 70px;
+        transition: right 0.3s ease;
         z-index: 999;
     }
 
         .main-nav.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
+            right: 0;
         }
 
     .nav-list {
@@ -267,14 +265,13 @@
         padding: 1rem 2rem;
         width: 100%;
         display: block;
+        color: var(--text-dark);
     }
 
+    /* Dropdowns mobile */
     .dropdown-menu {
         display: none;
-        position: static;
-        box-shadow: none;
-        opacity: 1;
-        visibility: visible;
+        position: relative;
         background-color: #f9f9f9;
         padding-left: 0;
     }
@@ -285,29 +282,26 @@
 
     .dropdown-menu a {
         padding: 0.75rem 3rem;
+        color: var(--text-dark);
     }
 
+    /* Header actions */
     .header-actions {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 75%;
+        height: 100%;
         flex-direction: column;
         gap: 0.75rem;
-        padding: 1rem 2rem;
+        padding: 70px 2rem 2rem;
         background-color: var(--white);
-        border-top: 1px solid var(--border-color);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: all 0.3s ease;
+        transition: right 0.3s ease;
         z-index: 998;
     }
 
         .header-actions.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
+            right: 0;
         }
 
     .btn {

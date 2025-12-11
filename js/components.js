@@ -148,7 +148,6 @@ const footerTemplate = `
     </div>
 </footer>
 `;
-
 // ====== MOBILE MENU INIT ======
 function initMobileMenu() {
     const mobileToggle = document.querySelector('.mobile-menu-toggle');
@@ -162,7 +161,7 @@ function initMobileMenu() {
     mobileToggle.addEventListener('click', (e) => {
         e.stopPropagation();
         mobileToggle.classList.toggle('active');
-        mainNav?.classList.toggle('active');
+        mainNav?.classList.toggle('active');      // slide depuis la droite
         headerActions?.classList.toggle('active');
     });
 
@@ -199,8 +198,6 @@ function initMobileMenu() {
             }
         });
     });
-
-    console.log('✅ Menu mobile initialisé');
 }
 
 // ====== LOAD COMPONENTS ======
@@ -227,3 +224,4 @@ if (document.readyState === 'loading') {
 } else {
     loadComponents();
 }
+
