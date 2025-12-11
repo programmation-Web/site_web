@@ -10,7 +10,6 @@
     --text-light: #666;
     --white: #fff;
     --border-color: #e0e0e0;
-
 }
 
 /* Header principal */
@@ -232,25 +231,25 @@
         display: flex;
     }
 
-    /* Menu mobile qui défile par le haut */
+    /* Menu mobile : juste la liste */
     .main-nav {
         position: fixed;
         top: 70px;
         left: 0;
         width: 100%;
-        height: 75%;
+        height: auto;
         background-color: var(--white);
         flex-direction: column;
         padding: 0;
         margin: 0;
-        transition: max-height 0.35s ease-in-out;
         overflow: hidden;
         max-height: 0;
+        transition: max-height 0.35s ease-in-out;
         z-index: 999;
     }
 
         .main-nav.active {
-            max-height: 500px; 
+            max-height: 500px; /* ajustable */
         }
 
     .nav-list {
@@ -277,7 +276,6 @@
 
     /* Dropdown mobile */
     .dropdown {
-        position: relative;
         width: 100%;
     }
 
@@ -318,30 +316,19 @@
             padding-left: 2.25rem;
         }
 
-    /* Header actions mobile */
+    /* Header actions mobile : boutons toujours visibles */
     .header-actions {
         position: relative;
-        top: auto;
-        right: auto;
-        width: 100%;
-        box-sizing: border-box;
-        flex-direction: column;
-        gap: 0.75rem;
-        padding: 1.5rem 1.5rem;
+        flex-direction: row; /* boutons sur la même ligne */
+        gap: 0.5rem;
+        padding: 0;
         margin: 0;
-        background-color: var(--white);
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.35s ease-in-out;
-        z-index: 999; 
+        background-color: transparent;
+        max-height: none; /* plus de limitation */
     }
 
-        .header-actions.active {
-            max-height: 500px; 
-        }
-
         .header-actions .btn {
-            width: 100%;
+            width: auto;
             text-align: center;
         }
 }
@@ -350,7 +337,7 @@
 @media screen and (max-width: 480px) {
     .header-container {
         padding: 0 1rem;
-        height: 140px; /* doublé sur mobile */
+        height: 70px; /* on garde la barre normale */
     }
 
     .logo-text {
@@ -363,10 +350,6 @@
     }
 
     .main-nav {
-        top: 140px;
-    }
-
-    .header-actions {
-        top: auto;
+        top: 70px;
     }
 }
