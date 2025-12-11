@@ -5,12 +5,12 @@
 /* Reset et variables */
 :root {
     --primary-green: #4CAF50;
+    --hover-green: #45a049;
     --dark-bg: #1a1a1a;
     --text-dark: #333;
     --text-light: #666;
     --white: #ffffff;
     --border-color: #e0e0e0;
-    --hover-green: #45a049;
 }
 
 /* Header principal */
@@ -226,9 +226,8 @@
     }
 
 /* ========================================
-   RESPONSIVE - MOBILE
+   RESPONSIVE - TABLETTE & MOBILE
    ======================================== */
-
 @media screen and (max-width: 968px) {
     .header-container {
         padding: 0 1.5rem;
@@ -265,6 +264,7 @@
         visibility: hidden;
         transform: translateY(-10px);
         transition: all 0.3s ease;
+        z-index: 999;
     }
 
         .main-nav.active {
@@ -297,17 +297,18 @@
     .dropdown-menu {
         position: static;
         transform: none;
-        margin-top: 0;
+        margin: 0;
         border: none;
         box-shadow: none;
         opacity: 1;
         visibility: visible;
-        background-color: #f9f9f9;
         display: none;
+        background-color: #f9f9f9;
+        padding-left: 0;
     }
 
     .dropdown.active .dropdown-menu {
-        display: block;
+        display: block !important;
     }
 
     .dropdown-menu a {
@@ -328,6 +329,7 @@
         visibility: hidden;
         transform: translateY(-10px);
         transition: all 0.3s ease;
+        z-index: 998;
     }
 
         .header-actions.active {
