@@ -13,6 +13,11 @@ const headerTemplate = `
       </a>
     </div>
 
+    <div class="header-actions">
+      <a href="#signup" class="btn btn-signup">Sign Up</a>
+      <a href="#login" class="btn btn-login">Login</a>
+    </div>
+
     <nav class="main-nav">
       <ul class="nav-list">
         <li><a href="reparation.html" class="nav-link">Reparation</a></li>
@@ -35,10 +40,7 @@ const headerTemplate = `
       </ul>
     </nav>
 
-    <div class="header-actions">
-      <a href="#signup" class="btn btn-signup">Sign Up</a>
-      <a href="#login" class="btn btn-login">Login</a>
-    </div>
+    
 
     <button class="mobile-menu-toggle" aria-label="Menu">
       <span></span><span></span><span></span>

@@ -373,12 +373,6 @@
         height: 28px;
     }
 
-    .main-nav {
-        top: 60px;
-        height: calc(100% - 60px);
-    }
+   
 
-    .header-actions {
-        top: 60px;
-    }
 }
