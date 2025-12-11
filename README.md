@@ -76,7 +76,7 @@ Pour faire un don :
 
 - Gestion du panier et import de photos réalisés en JavaScript pur, sans frameworks externes.  
 - Site hébergé sur GitHub.  
-- Supabase sera utilisé pour la gestion de la base de données dans une prochaine version.  
+- Nous avons utilisé superbase pour la gestion des bases de données et  des connexions.  
 
 ---
 
