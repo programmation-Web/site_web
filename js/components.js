@@ -146,59 +146,72 @@ const footerTemplate = `
 </footer>
 `;
 
+
 // ====== MOBILE MENU INIT ======
 function initMobileMenu() {
-    const mobileToggle = document.querySelector('.mobile-menu-toggle');
-    const mainNav = document.querySelector('.main-nav');
-    const headerActions = document.querySelector('.header-actions');
-    const dropdowns = document.querySelectorAll('.dropdown');
 
-    if (!mobileToggle) return;
+    const headerRoot = document.getElementById("header-placeholder");
+    if (!headerRoot) return;
 
-    // Toggle menu mobile
-    mobileToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        mobileToggle.classList.toggle('active');
-        mainNav?.classList.toggle('active');
-        headerActions?.classList.toggle('active');
-    });
+    const header = headerRoot.querySelector(".main-header");
+    const toggle = header.querySelector(".mobile-menu-toggle");
+    const nav = header.querySelector(".main-nav");
+    const actions = header.querySelector(".header-actions");
+    const dropdowns = header.querySelectorAll(".dropdown");
 
-    // Dropdowns mobile
-    dropdowns.forEach(dropdown => {
-        const toggle = dropdown.querySelector('.dropdown-toggle');
-        toggle.addEventListener('click', (e) => {
-            if (window.innerWidth <= 768) {
-                e.preventDefault();
-                // fermer les autres dropdowns
-                dropdowns.forEach(d => {
-                    if (d !== dropdown) d.classList.remove('active');
-                });
-                dropdown.classList.toggle('active');
-            }
-        });
-    });
+    if (!toggle || !nav || !actions) return;
 
-    // Fermer le menu si clic en dehors
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.main-header')) {
-            mobileToggle.classList.remove('active');
-            mainNav?.classList.remove('active');
-            headerActions?.classList.remove('active');
-            dropdowns.forEach(d => d.classList.remove('active'));
+    // ====== Déplacer actions dans le panneau mobile si mobile ======
+    function relocateActions() {
+        if (window.innerWidth <= 768) {
+            if (!nav.contains(actions)) nav.appendChild(actions);
+        } else {
+            const container = header.querySelector(".header-container");
+            if (!container.contains(actions)) container.appendChild(actions);
         }
+    }
+    relocateActions();
+    window.addEventListener("resize", relocateActions);
+
+    // ====== Ouvrir / fermer menu mobile ======
+    function openMenu() {
+        toggle.classList.add("active");
+        nav.classList.add("active");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeMenu() {
+        toggle.classList.remove("active");
+        nav.classList.remove("active");
+        dropdowns.forEach(d => d.classList.remove("active"));
+        document.body.style.overflow = "";
+    }
+
+    toggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (toggle.classList.contains("active")) closeMenu();
+        else openMenu();
     });
 
-    // Fermer menu au clic sur un lien (sauf dropdown)
-    const navLinks = document.querySelectorAll('.nav-link:not(.dropdown-toggle)');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-                mobileToggle.classList.remove('active');
-                mainNav?.classList.remove('active');
-                headerActions?.classList.remove('active');
-                dropdowns.forEach(d => d.classList.remove('active'));
-            }
+    // ====== Dropdown mobile ======
+    dropdowns.forEach(drop => {
+        const t = drop.querySelector(".dropdown-toggle");
+        if (!t) return;
+        t.addEventListener("click", (ev) => {
+            if (window.innerWidth > 768) return;
+            ev.preventDefault();
+            drop.classList.toggle("active");
         });
+    });
+
+    // ====== Fermer menu si clic en dehors ======
+    document.addEventListener("click", (e) => {
+        if (!e.target.closest(".main-header")) closeMenu();
+    });
+
+    // ====== Fermer menu avec ESC ======
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeMenu();
     });
 }
 
