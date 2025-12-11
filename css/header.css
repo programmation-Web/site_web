@@ -1,19 +1,22 @@
 ﻿/* ==============================
-   HEADER CSS - COMPLET
+   HEADER CSS - COMPLET FINAL
    ============================== */
 
 :root {
-    --couleur-primaire: #10b981;
-    --couleur-secondaire: #0ea568;
-    --couleur-texte: #ffffff;
-    --header-height: 80px; /* hauteur desktop */
+    --primary-green: #4CAF50;
+    --hover-green: #45a049;
+    --text-dark: #333;
+    --text-light: #666;
+    --white: #fff;
+    --border-color: #e0e0e0;
+    --header-height: 80px; /* Desktop */
 }
 
 /* HEADER GLOBAL */
 .main-header {
     width: 100%;
-    background: var(--couleur-primaire);
-    color: var(--couleur-texte);
+    background: var(--primary-green);
+    color: var(--white);
     position: fixed;
     top: 0;
     left: 0;
@@ -58,17 +61,40 @@
     }
 
 .nav-link {
-    color: white;
+    color: var(--white);
     font-weight: 500;
 }
 
 /* DROPDOWN */
-.dropdown-menu {
-    display: none;
+.dropdown {
+    position: relative;
 }
 
-.dropdown:hover .dropdown-menu {
-    display: block;
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background: var(--white);
+    color: var(--text-dark);
+    top: 35px;
+    left: 0;
+    list-style: none;
+    padding: 12px 0;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    min-width: 180px;
+}
+
+    .dropdown-menu li {
+        padding: 8px 15px;
+    }
+
+        .dropdown-menu li a {
+            color: var(--text-dark);
+            font-size: 14px;
+        }
+
+.dropdown.active .dropdown-menu {
+    display: block; /* se déploie uniquement sur clic */
 }
 
 /* ACTIONS (Sign Up + Login) */
@@ -77,22 +103,20 @@
     gap: 15px;
 }
 
-    /* réduction taille conteneur des boutons */
     .header-actions .btn {
-        padding: 6px 12px; /* réduit 50% */
+        padding: 6px 12px; /* 50% plus petit */
         font-size: 13px;
         border-radius: 6px;
     }
 
-/* bouton design */
 .btn-signup {
-    background: white;
-    color: var(--couleur-primaire);
+    background: var(--white);
+    color: var(--primary-green);
 }
 
 .btn-login {
-    border: 1px solid white;
-    color: white;
+    border: 1px solid var(--white);
+    color: var(--white);
 }
 
 /* =======================
@@ -101,7 +125,7 @@
 @media (max-width: 768px) {
 
     :root {
-        --header-height: 140px; /* double hauteur sur mobile */
+        --header-height: 140px; /* Double hauteur */
     }
 
     .header-container {
@@ -126,7 +150,7 @@
         .mobile-menu-toggle span {
             height: 4px;
             width: 100%;
-            background: white;
+            background: var(--white);
             border-radius: 4px;
         }
 
@@ -139,7 +163,7 @@
         height: 0;
         max-height: 0;
         overflow: hidden;
-        background: var(--couleur-secondaire);
+        background: var(--hover-green);
         transition: max-height 0.4s ease, height 0.4s ease;
         display: block;
         z-index: 1001;
@@ -151,23 +175,32 @@
             gap: 18px;
         }
 
-        /* NAV MOBILE OUVERT : occupe 80% hauteur écran */
+        /* NAV OUVERT : 80% hauteur écran */
         .main-nav.active {
             height: 80vh;
             max-height: 80vh !important;
             overflow-y: auto;
         }
 
-    /* ACTIONS MOBILE */
+    /* ACTIONS MOBILE (boutons) */
     .header-actions {
         width: 100%;
         justify-content: center;
         gap: 10px;
-        /* réduit de 50 % */
-        transform: scale(0.8);
+        transform: scale(0.8); /* réduit de 50% */
     }
 
         .header-actions.active {
             margin-top: 10px;
         }
+
+    /* Dropdown mobile */
+    .dropdown-menu {
+        position: relative;
+        top: 0;
+        background: var(--white);
+        border-radius: 5px;
+        border: 1px solid var(--border-color);
+        margin-top: 5px;
+    }
 }
