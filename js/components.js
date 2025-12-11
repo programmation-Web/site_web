@@ -146,7 +146,7 @@ const footerTemplate = `
 </footer>
 `;
 
-// ====== MOBILE MENU ======
+// ====== INITIALISATION DU MENU MOBILE ======
 function initMobileMenu() {
     const mobileToggle = document.querySelector('.mobile-menu-toggle');
     if (!mobileToggle) return;
@@ -167,7 +167,9 @@ function initMobileMenu() {
         toggle.addEventListener('click', (e) => {
             if (window.innerWidth <= 768) {
                 e.preventDefault();
-                dropdowns.forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
+                dropdowns.forEach(d => {
+                    if (d !== dropdown) d.classList.remove('active');
+                });
                 dropdown.classList.toggle('active');
             }
         });
@@ -195,43 +197,36 @@ function initMobileMenu() {
     });
 }
 
-// ====== AUTH BUTTONS ======
+// ====== INITIALISATION BOUTONS AUTH SUPABASE ======
 async function initAuthButtons(supabase) {
-    const loginBtn = document.getElementById('loginBtn');
-    const signupBtn = document.getElementById('signupBtn');
-    const logoutBtn = document.getElementById('logoutBtn');
+    const btnLogin = document.querySelector('.btn-login');
+    const btnSignup = document.querySelector('.btn-signup');
+    const btnLogout = document.querySelector('.btn-logout');
 
-    if (!loginBtn || !signupBtn || !logoutBtn) return;
+    // Vérifie si l'utilisateur est connecté
+    const { data: { session } } = await supabase.auth.getSession();
 
-    async function updateAuthState() {
-        const { data } = await supabase.auth.getUser();
-        const user = data.user;
-        if (user) {
-            loginBtn.style.display = 'none';
-            signupBtn.style.display = 'none';
-            logoutBtn.style.display = 'inline-block';
-        } else {
-            loginBtn.style.display = 'inline-block';
-            signupBtn.style.display = 'inline-block';
-            logoutBtn.style.display = 'none';
-        }
+    if (session) {
+        btnLogin.style.display = 'none';
+        btnSignup.style.display = 'none';
+        btnLogout.style.display = 'inline-block';
+    } else {
+        btnLogin.style.display = 'inline-block';
+        btnSignup.style.display = 'inline-block';
+        btnLogout.style.display = 'none';
     }
 
-    logoutBtn.addEventListener('click', async () => {
+    btnLogout?.addEventListener('click', async () => {
         const { error } = await supabase.auth.signOut();
-        if (error) {
-            console.error("Erreur déconnexion :", error.message);
-            alert("Erreur lors de la déconnexion !");
-        } else {
-            await updateAuthState();
+        if (!error) {
             window.location.href = "index.html";
+        } else {
+            console.error("Erreur de déconnexion:", error.message);
         }
     });
-
-    await updateAuthState();
 }
 
-// ====== LOAD COMPONENTS ======
+// ====== CHARGEMENT DES COMPOSANTS ======
 async function loadComponents(supabase) {
     const headerPlaceholder = document.getElementById('header-placeholder');
     const footerPlaceholder = document.getElementById('footer-placeholder');
@@ -239,17 +234,19 @@ async function loadComponents(supabase) {
     if (headerPlaceholder) {
         headerPlaceholder.innerHTML = headerTemplate;
         initMobileMenu();
-        await initAuthButtons(supabase); // ATTENTION : supabase doit être initialisé
+        await initAuthButtons(supabase);
     }
 
-    if (footerPlaceholder) footerPlaceholder.innerHTML = footerTemplate;
+    if (footerPlaceholder) {
+        footerPlaceholder.innerHTML = footerTemplate;
+    }
 }
 
 // ====== AUTO LOAD ======
 document.addEventListener('DOMContentLoaded', async () => {
-    if (typeof supabase === "undefined") {
-        console.error("Supabase non initialisé avant loadComponents !");
+    if (!window.supabase) {
+        console.error("Supabase non initialisé !");
         return;
     }
-    await loadComponents(supabase);
+    await loadComponents(window.supabase);
 });
