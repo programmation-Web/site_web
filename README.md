@@ -1,75 +1,77 @@
 # EcoRevive
 
-## Description du site Web 
+## Description du site Web
 
+**EcoRevive** est un site Web dont l’objectif est de favoriser le recyclage et la réutilisation des articles usagés.  
+Depuis la page d’accueil, l’utilisateur peut accéder à nos services en sélectionnant l’une des options suivantes :
 
-Notre site Web se nomme EcoRevive, il a pour objectif de favoriser le recyclage des articles utilisés. 
-Via la page d'acceuil, on peut accéder à l'un de nos services en selectionnant l'une des options suivantes : 
+---
 
-### Page d'acceuil :
-* Réparation : Redirige dans la page des réparations
-* Recycler : Redirrige vers la page de recyclage
-* Magasiner : Redirrige vers la page de la boutique
-* En pointant le curseur sur l'option A propos, un menu déroulant s'ouvre. On peut alors choisir Lune des trois options
-  * notre mission
-  * notre impact
-  * nous contacter
-* Si vous le souhaitez, vous pouvez vous identifier en selectionnant login, ou vous inscrire en selectionnant sign up.
-  Dans tous les cas, pour les besoins de sécurité, le site vous fera passer par une passerelle d'authentification avant de vous permettre d'accéder à votre compte.
+## Page d'accueil
 
-* vers le bas de la page, on a l'option Reserver une réparation. qui est un racourci vers la page de réparations (Le lien n'est pas encore fonctionnel)
-* De mème, l'option magasiner les articles est un racourcis vers la page des boutiques. (le lien n'est pas encore fonctionnel)
-* Étant sur n'importe quelle page, on a la possibilit de revenir vers la page d'acceuil en cliquant sur notre logo qui se trouve en haut à gauche.
-  Il s'agit d'une fleur verte, dans un fond blanc, suivant du mot EcoRevive
-* Finalement, nous avons intégré un chatbot dans notre site, dans le but de répondre aux questions régulièrement posées par les usagers
+- **Réparation** : Redirige vers la page des réparations.  
+- **Recycler** : Redirige vers la page de recyclage, où l’utilisateur peut faire un don.  
+- **Magasiner** : Redirige vers la page de la boutique. Le panier est accessible à tout moment pour suivre les achats.  
+- **A propos** : Un menu déroulant apparaît au survol, permettant de choisir parmi trois options :  
+  - Notre mission  
+  - Notre impact  
+  - Nous contacter  
 
+- **Login / Sign up** : Les utilisateurs peuvent se connecter ou s’inscrire. Pour des raisons de sécurité, l’accès au compte nécessite une authentification. Les actions telles que les réparations ou les dons nécessitent également une authentification préalable.  
 
+- **Raccourcis** :  
+  - Vers le bas de la page, “Réserver une réparation” renvoie directement à la page de réparations.  
+  - “Magasiner les articles” renvoie directement à la boutique.  
+- **Navigation** : Depuis n’importe quelle page, cliquer sur le logo en haut à gauche (une fleur verte sur fond blanc suivie du mot EcoRevive) permet de revenir à la page d’accueil.  
+- **Chatbot** : Un agent virtuel intégré répond aux questions fréquemment posées par les utilisateurs.  
 
-### Page de réparation
-Dans cette page, le client renseigne sur le service dont il souhaite bénéficier en fonction de sonlieu de résidence et de la disponibilité de nos employés.
-Il détermine l'urgence de son besoin, puis entre ses informations personnelles et procède au payement.
-Une fois la passerelle de vérification passée avec succès, il reçoit une confirmation de sa commande
+---
 
-### Page de recyclage
+## Page de réparation
 
-Le client qui souhaite faire un don est la bienvenue. Il doit
-* Renseigner sur le produit qu'il souhaite offrir en donnant une brève description
-* Il peut téléverser quelques photos s'il le souhaite
-* Choisir une plage horaire qui lui convient
-* Il peut aussi choisir d'apporter son article à l'un de nos points de service, ou de demander qu'on envoie un de nos employé
-  chez lui pour le rammassage
-* Le tout se fait gratuitement
-*  Si la valeur de son don est égale ou supérieure à 20$, il peut solliciter un reçu pour ses déclarations fiscales
+Le client renseigne le service souhaité en fonction de son lieu de résidence et de la disponibilité de nos employés.  
+Les étapes sont les suivantes :  
 
+1. Déterminer l’urgence du service.  
+2. Saisir les informations personnelles.  
+3. Procéder au paiement.  
+4. Après vérification réussie via la passerelle de paiement, le client reçoit une confirmation de sa commande.  
 
-### Page magasiner : Boutique
+---
 
-* Le client peut magasiner pour selectionner un ou plusieurs articles dans  la liste des articles disponibles en rajoutant ou en retirant des éléments dans son paniers
-* Une fois les achats terminés, il peut finaliser la transaction en rentrant les informations de sa carte bancaaire
-* il peut prendre rendez-vous avec l'un de nos techniciens pour solliciter des services de réparation
-* S'il le souhaite, il peut faire un don pour encourager nos activités, cette option va le rediriger vers la page des dons
-* Il peut aussi rejoindre notre communaute en cliquant sur le boutton Commencer tout au bas de la page
+## Page de recyclage
 
+Le client souhaitant faire un don doit :  
 
+- Décrire le produit qu’il souhaite offrir.  
+- Téléverser éventuellement des photos.  
+- Choisir une plage horaire pour la récupération.  
+- Choisir entre apporter l’article à un point de service ou demander un ramassage à domicile par nos employés.  
+- Tous les dons sont gratuits.  
+- Pour les dons d’une valeur égale ou supérieure à 20 $, le client peut demander un reçu fiscal.  
 
-## Technologies utilisées 
+---
 
-#### HTML5 , java script, Css
-#### PHP 8.2 (à venir)
-#### MySQL 8.2 (à venir)
-#### git 
+## Page Magasiner : Boutique
 
-* Finalement, toutes les fonctionnalités en dehors de chatbase qui a été utilisé pour intégrer un agent virtuel, aucun package externe, ni cadriciel n'a été utilisé.
-* Quant à Chatbase, nous utilisons la version gratuite qui nous permet d'utiliser ses fonctionnalités de base : entrainement de l'agent avec le lien de notre site web,
-  prise en charge d'un maximum de 300 questions réponses par mois, design de l'interface du Chat.
-  Quand l'entreprise sera mieux implantée, nous passerons à la version payante, où nous pourrons
-  *  ajouter des foires aux questions pour améliorer ses réponses
-  *  augmenter le nombre d'interaction mensuelles
-  *  paramétrer le style de réponse pour avoir des réponses plus précises et concises
-* La gestion du panier a été et l'import des photos pour la boutique ont été généré directement avec du javascript.  Nous avons entièrement utilisés les API's intégrées par le compilateur
-* Le site a été hébergé directement sur git hub.
-*  Ce n'est pas encore fait à l'état actuel des choses, mais nous utiliserons Superbase pour gérer notre base des données.
-  
+- Le client peut sélectionner un ou plusieurs articles, ajouter ou retirer des éléments de son panier.  
+- Une fois les achats terminés, il finalise la transaction en saisissant les informations de sa carte bancaire.  
+- Il peut prendre rendez-vous avec un technicien pour un service de réparation.  
+- Il peut également faire un don, ce qui le redirige vers la page de recyclage.  
+- Il peut rejoindre notre communauté en cliquant sur le bouton **Commencer** en bas de la page.  
 
+---
 
+## Technologies utilisées
 
+- **HTML5, CSS, JavaScript**  
+- **PostgreSQL 8.2**  
+- **Git**  
+- **Chatbase** (version gratuite) : utilisé pour intégrer un agent virtuel capable de répondre aux questions des utilisateurs.  
+  - Fonctionnalités actuelles : entraînement de l’agent via le lien du site, prise en charge jusqu’à 300 questions-réponses par mois, personnalisation du design du chat.  
+  - Version payante future : ajouter des FAQs, augmenter le nombre d’interactions mensuelles, paramétrer le style des réponses pour plus de précision et concision.  
+
+- **Notes supplémentaires :**  
+  - La gestion du panier et l’import des photos ont été implémentés en JavaScript pur, sans frameworks externes.  
+  - Le site est actuellement hébergé sur GitHub.  
+  - Dans une prochaine version, nous utiliserons **Supabase** pour gérer la base de données.
