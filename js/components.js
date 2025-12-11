@@ -146,15 +146,66 @@ const footerTemplate = `
 </footer>
 `;
 
+// ====== MOBILE MENU ======
+function initMobileMenu() {
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    if (!mobileToggle) return;
 
-// ====== LOGIN / LOGOUT ======
-function initAuthButtons(supabase) {
+    const mainNav = document.querySelector('.main-nav');
+    const headerActions = document.querySelector('.header-actions');
+    const dropdowns = document.querySelectorAll('.dropdown');
+
+    mobileToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        mobileToggle.classList.toggle('active');
+        mainNav?.classList.toggle('active');
+        headerActions?.classList.toggle('active');
+    });
+
+    dropdowns.forEach(dropdown => {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+        toggle.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                dropdowns.forEach(d => { if (d !== dropdown) d.classList.remove('active'); });
+                dropdown.classList.toggle('active');
+            }
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.main-header')) {
+            mobileToggle.classList.remove('active');
+            mainNav?.classList.remove('active');
+            headerActions?.classList.remove('active');
+            dropdowns.forEach(d => d.classList.remove('active'));
+        }
+    });
+
+    const navLinks = document.querySelectorAll('.nav-link:not(.dropdown-toggle)');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                mobileToggle.classList.remove('active');
+                mainNav?.classList.remove('active');
+                headerActions?.classList.remove('active');
+                dropdowns.forEach(d => d.classList.remove('active'));
+            }
+        });
+    });
+}
+
+// ====== AUTH BUTTONS ======
+async function initAuthButtons(supabase) {
     const loginBtn = document.getElementById('loginBtn');
     const signupBtn = document.getElementById('signupBtn');
     const logoutBtn = document.getElementById('logoutBtn');
 
+    if (!loginBtn || !signupBtn || !logoutBtn) return;
+
     async function updateAuthState() {
-        const user = supabase.auth.getUser ? (await supabase.auth.getUser()).data.user : null;
+        const { data } = await supabase.auth.getUser();
+        const user = data.user;
         if (user) {
             loginBtn.style.display = 'none';
             signupBtn.style.display = 'none';
@@ -177,25 +228,28 @@ function initAuthButtons(supabase) {
         }
     });
 
-    updateAuthState();
+    await updateAuthState();
 }
 
 // ====== LOAD COMPONENTS ======
-function loadComponents(supabase) {
+async function loadComponents(supabase) {
     const headerPlaceholder = document.getElementById('header-placeholder');
+    const footerPlaceholder = document.getElementById('footer-placeholder');
+
     if (headerPlaceholder) {
         headerPlaceholder.innerHTML = headerTemplate;
         initMobileMenu();
-        initAuthButtons(supabase); // attacher auth après injection
+        await initAuthButtons(supabase); // ATTENTION : supabase doit être initialisé
     }
 
-    const footerPlaceholder = document.getElementById('footer-placeholder');
     if (footerPlaceholder) footerPlaceholder.innerHTML = footerTemplate;
 }
 
 // ====== AUTO LOAD ======
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => loadComponents(supabase));
-} else {
-    loadComponents(supabase);
-} 
+document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof supabase === "undefined") {
+        console.error("Supabase non initialisé avant loadComponents !");
+        return;
+    }
+    await loadComponents(supabase);
+});
