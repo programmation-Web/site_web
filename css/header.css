@@ -230,20 +230,24 @@
 
 @media screen and (max-width: 768px) {
     .mobile-menu-toggle {
-        display: flex;
+        display: flex !important;
+        
     }
 
     /* Menu mobile qui glisse depuis la droite */
     .main-nav {
-        position: fixed;
-        top: 0;
-        right: -100%;
+        position: static;
+        top: auto;
+        right: auto;
+        width: auto;
+        flex-direction: row;
         width: 50%;
         height: calc(100% - 70px);
-        background-color: var(--hover-green);
+        background-color: var(--mobile-background-nav);
         box-shadow: -4px 0 12px rgba(0,0,0,0.1);
         flex-direction: column;
         padding: 0;
+        border:none;
         margin: 0;
         transition: right 0.3s ease;
         z-index: 999;
@@ -346,8 +350,10 @@
         }
 
         .header-actions .btn {
-            width: 100%;
+            width: auto;
             text-align: center;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
         }
 }
 
