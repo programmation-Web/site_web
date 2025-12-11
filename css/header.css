@@ -26,11 +26,11 @@
 .header-container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0.25rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
+    height: 80px;
 }
 
 /* Logo */
@@ -123,8 +123,8 @@
     min-width: 200px;
     padding: 0.5rem 0;
     list-style: none;
-    max-height: 80vh; /* hauteur max 80% de la page */
-    overflow-y: auto; /* permet de scroller si le contenu dépasse */
+    max-height: 80vh; 
+    overflow-y: auto;
 }
 
 .dropdown:hover .dropdown-menu {
@@ -153,19 +153,19 @@
         padding-left: 1.75rem;
     }
 
-/* Header actions : boutons réduits */
+/* Header actions (boutons) */
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 0.5rem; /* réduit légèrement l'espacement */
+    gap: 1rem;
 }
 
 .btn {
-    padding: 0.3125rem 0.75rem; /* moitié du padding initial */
+    padding: 0.25rem 0.5rem; 
     border-radius: 6px;
     text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
+    font-size: 0.85rem; 
+    font-weight: 300;
     border: none;
     cursor: pointer;
     display: inline-block;
@@ -233,32 +233,31 @@
         display: flex;
     }
 
+    /* Menu mobile déroulé */
     .main-nav {
         position: fixed;
         top: 70px;
         left: 0;
         width: 100%;
-        background-color: var(--white);
+        height: 80vh; 
         flex-direction: column;
+        background-color: var(--white);
         padding: 0;
         margin: 0;
-        overflow: hidden;
-        max-height: 0;
-        transition: max-height 0.35s ease-in-out;
+        overflow-y: auto;
+        transition: all 0.35s ease-in-out;
         z-index: 999;
     }
 
         .main-nav.active {
-            max-height: 80vh; /* 80% de la hauteur de la page */
-            overflow-y: auto; /* scroll si nécessaire */
+            /* déjà 80% donc rien à changer */
         }
 
     .nav-list {
         flex-direction: column;
+        width: 100%;
         gap: 0;
         padding: 0;
-        margin: 0;
-        width: 100%;
         align-items: flex-start;
     }
 
@@ -269,18 +268,19 @@
         }
 
     .nav-link {
-        padding: 1rem 1.5rem;
+        padding: 0.5rem 1rem;
         width: 100%;
         display: block;
         color: var(--text-dark);
     }
 
+    /* Dropdown mobile */
     .dropdown {
         width: 100%;
     }
 
     .dropdown-toggle {
-        padding: 1rem 1.5rem;
+        padding: 0.5rem 1rem;
         width: 100%;
     }
 
@@ -305,15 +305,31 @@
     }
 
     .dropdown-menu a {
-        padding: 0.75rem 2rem;
-        color: var(--text-dark);
+        padding: 0.5rem 1.5rem;
         display: block;
+        color: var(--text-dark);
         background-color: rgba(255,255,255,0.5);
     }
 
         .dropdown-menu a:hover {
             background-color: rgba(255,255,255,0.8);
-            padding-left: 2.25rem;
+            padding-left: 1.75rem;
+        }
+
+    /* Header actions (boutons) */
+    .header-actions {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 1rem 1rem;
+        box-sizing: border-box;
+    }
+
+        .header-actions .btn {
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem; /* plus petit */
+            padding: 0.25rem 0.5rem; /* moitié de l’original */
         }
 }
 
