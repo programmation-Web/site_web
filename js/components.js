@@ -152,6 +152,10 @@ const footerTemplate = `
 
 
 // ====== MOBILE MENU INIT ======
+
+
+
+// ====== MOBILE MENU INIT ======
 function initMobileMenu() {
     const mobileToggle = document.querySelector('.mobile-menu-toggle');
     if (!mobileToggle) return;
