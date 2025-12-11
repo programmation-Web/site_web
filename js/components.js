@@ -46,6 +46,7 @@ const headerTemplate = `
   </div>
 </header>
 `;
+
 // ========== TEMPLATE FOOTER ==========
 const footerTemplate = `
 <footer class="main-footer">
@@ -198,55 +199,67 @@ function initMobileMenu() {
 }
 
 // ====== INITIALISATION BOUTONS AUTH SUPABASE ======
-async function initAuthButtons(supabase) {
-    const btnLogin = document.querySelector('.btn-login');
-    const btnSignup = document.querySelector('.btn-signup');
-    const btnLogout = document.querySelector('.btn-logout');
-
-    // Vérifie si l'utilisateur est connecté
-    const { data: { session } } = await supabase.auth.getSession();
-
-    if (session) {
-        btnLogin.style.display = 'none';
-        btnSignup.style.display = 'none';
-        btnLogout.style.display = 'inline-block';
-    } else {
-        btnLogin.style.display = 'inline-block';
-        btnSignup.style.display = 'inline-block';
-        btnLogout.style.display = 'none';
+async function initAuthButtons() {
+    // Vérifier si Supabase est disponible
+    if (!window.supabase) {
+        console.warn("Supabase non disponible - boutons auth non initialisés");
+        return;
     }
 
-    btnLogout?.addEventListener('click', async () => {
-        const { error } = await supabase.auth.signOut();
-        if (!error) {
-            window.location.href = "index.html";
+    try {
+        const btnLogin = document.querySelector('.btn-login');
+        const btnSignup = document.querySelector('.btn-signup');
+        const btnLogout = document.querySelector('.btn-logout');
+
+        // Vérifie si l'utilisateur est connecté
+        const { data: { session } } = await window.supabase.auth.getSession();
+
+        if (session) {
+            if (btnLogin) btnLogin.style.display = 'none';
+            if (btnSignup) btnSignup.style.display = 'none';
+            if (btnLogout) btnLogout.style.display = 'inline-block';
         } else {
-            console.error("Erreur de déconnexion:", error.message);
+            if (btnLogin) btnLogin.style.display = 'inline-block';
+            if (btnSignup) btnSignup.style.display = 'inline-block';
+            if (btnLogout) btnLogout.style.display = 'none';
         }
-    });
+
+        btnLogout?.addEventListener('click', async () => {
+            const { error } = await window.supabase.auth.signOut();
+            if (!error) {
+                window.location.href = "index.html";
+            } else {
+                console.error("Erreur de déconnexion:", error.message);
+            }
+        });
+    } catch (error) {
+        console.error("Erreur lors de l'initialisation des boutons auth:", error);
+    }
 }
 
-// ====== CHARGEMENT DES COMPOSANTS ======
-async function loadComponents(supabase) {
+// ====== CHARGEMENT DES COMPOSANTS (INDÉPENDANT DE SUPABASE) ======
+function loadComponents() {
     const headerPlaceholder = document.getElementById('header-placeholder');
     const footerPlaceholder = document.getElementById('footer-placeholder');
 
+    // Charger le header
     if (headerPlaceholder) {
         headerPlaceholder.innerHTML = headerTemplate;
         initMobileMenu();
-        await initAuthButtons(supabase);
     }
 
+    // Charger le footer (TOUJOURS, peu importe Supabase)
     if (footerPlaceholder) {
         footerPlaceholder.innerHTML = footerTemplate;
+        console.log("✅ Footer chargé avec succès");
     }
+
+    // Initialiser l'authentification séparément
+    initAuthButtons();
 }
 
-// ====== AUTO LOAD ======
-document.addEventListener('DOMContentLoaded', async () => {
-    if (!window.supabase) {
-        console.error("Supabase non initialisé !");
-        return;
-    }
-    await loadComponents(window.supabase);
+// ====== AUTO LOAD (NE DÉPEND PLUS DE SUPABASE) ======
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("🚀 Chargement des composants...");
+    loadComponents();
 });
