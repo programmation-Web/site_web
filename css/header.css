@@ -123,6 +123,8 @@
     min-width: 200px;
     padding: 0.5rem 0;
     list-style: none;
+    max-height: 80vh; /* hauteur max 80% de la page */
+    overflow-y: auto; /* permet de scroller si le contenu dépasse */
 }
 
 .dropdown:hover .dropdown-menu {
@@ -151,15 +153,15 @@
         padding-left: 1.75rem;
     }
 
-/* Header actions : toujours visibles, alignés à droite */
+/* Header actions : boutons réduits */
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem; /* réduit légèrement l'espacement */
 }
 
 .btn {
-    padding: 0.625rem 1.5rem;
+    padding: 0.3125rem 0.75rem; /* moitié du padding initial */
     border-radius: 6px;
     text-decoration: none;
     font-size: 0.95rem;
@@ -231,7 +233,6 @@
         display: flex;
     }
 
-    /* Menu mobile : liste uniquement */
     .main-nav {
         position: fixed;
         top: 70px;
@@ -248,7 +249,8 @@
     }
 
         .main-nav.active {
-            max-height: 500px; 
+            max-height: 80vh; /* 80% de la hauteur de la page */
+            overflow-y: auto; /* scroll si nécessaire */
         }
 
     .nav-list {
@@ -273,7 +275,6 @@
         color: var(--text-dark);
     }
 
-    /* Dropdown mobile */
     .dropdown {
         width: 100%;
     }
