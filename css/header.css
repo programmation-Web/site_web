@@ -1,6 +1,8 @@
-/* ========================================
-   FAIRE UN DON - STYLES OPTIMISÉS
-   ======================================== */
+ï»¿/* ========================================
+   FAIRE UN DON
+   ========================================
+
+*/
 
 /* Reset et styles de base */
 * {
@@ -108,7 +110,7 @@ section {
     margin-bottom: 1rem;
 }
 
-/* Section Fonctionnalités */
+/* Section FonctionnalitÃ©s */
 .features {
     background-color: #f8f9fa;
 }
@@ -151,7 +153,7 @@ section {
     }
 
         .feature-card1 li:before {
-            content: "•";
+            content: "â€¢";
             position: absolute;
             left: 0;
             color: #00A63E;
@@ -189,7 +191,7 @@ section {
     }
 
         .feature-card2 li:before {
-            content: "•";
+            content: "â€¢";
             position: absolute;
             left: 0;
             color: #BA803F;
@@ -227,7 +229,7 @@ section {
     }
 
         .feature-card3 li:before {
-            content: "•";
+            content: "â€¢";
             position: absolute;
             left: 0;
             color: #335CE8;
@@ -265,14 +267,14 @@ section {
     }
 
         .feature-card4 li:before {
-            content: "•";
+            content: "â€¢";
             position: absolute;
             left: 0;
             color: #7D12BF;
             font-weight: bold;
         }
 
-/* Section Reçu Fiscal */
+/* Section ReÃ§u Fiscal */
 .tax-receipt {
     background: linear-gradient(135deg, #2982FF 0%, #AC46ff 100%);
     color: white;
@@ -427,7 +429,7 @@ footer {
 }
 
     .select-wrapper::after {
-        content: "?";
+        content: "â–¼";
         position: absolute;
         right: 1rem;
         top: 50%;
@@ -490,7 +492,7 @@ select {
     }
 
     .upload-btn::before {
-        content: "??";
+        content: "ðŸ“·";
         font-size: 1.2rem;
     }
 
@@ -594,7 +596,7 @@ select {
         color: white;
     }
 
-/* Séparateur */
+/* SÃ©parateur */
 .separator {
     height: 1px;
     background: linear-gradient(to right, transparent, #e9ecef, transparent);
@@ -743,7 +745,7 @@ select {
     color: #e74c3c;
 }
 
-/* Section Reçu Fiscal */
+/* Section ReÃ§u Fiscal */
 .tax-section {
     background-color: #f8f9fa;
     padding: 3rem 0;
@@ -826,7 +828,7 @@ select {
     color: #343a40;
 }
 
-/* Cases à cocher finales */
+/* Cases Ã  cocher finales */
 .final-checkboxes {
     display: flex;
     flex-direction: column;
@@ -855,7 +857,7 @@ select {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
-/* Séparateur Final */
+/* SÃ©parateur Final */
 .final-separator {
     background-color: #f8f9fa;
     padding: 1rem 0;
@@ -909,7 +911,7 @@ select {
    RESPONSIVE DESIGN
    ======================================== */
 
-/* Tablettes et petits écrans */
+/* Tablettes et petits Ã©crans */
 @media (max-width: 1024px) {
     .container {
         width: 95%;
