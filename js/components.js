@@ -71,7 +71,7 @@ const footerTemplate = `
             <h4>Navigation</h4>
             <ul>
                 <li><a href="reparation.html">Réparation</a></li>
-                <li><a href="recyclage.html">Recycler</a></li>
+                <li><a href="faire-un-don.html">Recycler</a></li>
                 <li><a href="boutique.html">Magasiner</a></li>
             </ul>
         </div>
@@ -97,7 +97,6 @@ document.getElementById("header-placeholder").innerHTML = headerTemplate;
 document.getElementById("footer-placeholder").innerHTML = footerTemplate;
 
 
-// ========== MENU MOBILE (Version robuste & stable) ==========
 function initMobileMenu() {
 
     const headerRoot = document.getElementById("header-placeholder");
@@ -109,21 +108,35 @@ function initMobileMenu() {
     const actions = header.querySelector(".header-actions");
     const dropdowns = header.querySelectorAll(".dropdown");
 
-    if (!toggle || !nav) return;
+    if (!toggle || !nav || !actions) return;
+
+    // ========== PLACE ACTIONS INSIDE NAV ON MOBILE ==========
+    function relocateActions() {
+        if (window.innerWidth <= 768) {
+            if (!nav.contains(actions)) {
+                nav.appendChild(actions);
+            }
+        } else {
+            // Reposition actions back to the right on desktop
+            const container = header.querySelector(".header-container");
+            if (!container.contains(actions)) {
+                container.appendChild(actions);
+            }
+        }
+    }
+    relocateActions();
+    window.addEventListener("resize", relocateActions);
 
     // ========== OPEN / CLOSE PANEL ==========
-
     function openMenu() {
         toggle.classList.add("active");
         nav.classList.add("active");
-        actions.classList.add("active");
         document.body.style.overflow = "hidden";
     }
 
     function closeMenu() {
         toggle.classList.remove("active");
         nav.classList.remove("active");
-        actions.classList.remove("active");
         dropdowns.forEach(d => d.classList.remove("active"));
         document.body.style.overflow = "";
     }
@@ -134,19 +147,19 @@ function initMobileMenu() {
         else openMenu();
     });
 
-    // ========== DROPDOWNS (mobile uniquement) ==========
+    // ========== DROPDOWNS (mobile click only) ==========
     dropdowns.forEach(drop => {
         const t = drop.querySelector(".dropdown-toggle");
         if (!t) return;
 
         t.addEventListener("click", (ev) => {
-            if (window.innerWidth > 768) return; // Desktop : hover only
+            if (window.innerWidth > 768) return;
             ev.preventDefault();
             drop.classList.toggle("active");
         });
     });
 
-    // ========== CLOSE WHEN CLICK OUTSIDE ==========
+    // ========== OUTSIDE CLICK CLOSE ==========
     document.addEventListener("click", (e) => {
         if (!e.target.closest(".main-header")) closeMenu();
     });
@@ -155,6 +168,8 @@ function initMobileMenu() {
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") closeMenu();
     });
+}
+
 
     // ========== AUTO-RESET ON RESIZE ==========
     let timer;
