@@ -250,7 +250,7 @@
     }
 
         .main-nav.active {
-            max-height: 500px; /* ajustable selon le contenu */
+            max-height: 500px; 
         }
 
     .nav-list {
@@ -333,7 +333,7 @@
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.35s ease-in-out;
-        z-index: 1001; 
+        z-index: 999; 
     }
 
         .header-actions.active {
