@@ -83,11 +83,11 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-    .btn-panier:hover {
-        background-color: var(--couleur-secondaire);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-    }
+.btn-panier:hover {
+    background-color: var(--couleur-secondaire);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
 
 .compteur-panier {
     background-color: var(--couleur-danger);
@@ -114,10 +114,10 @@ body {
     transition: all 0.3s;
 }
 
-    .btn-menu-mobile:hover {
-        border-color: var(--couleur-primaire);
-        color: var(--couleur-primaire);
-    }
+.btn-menu-mobile:hover {
+    border-color: var(--couleur-primaire);
+    color: var(--couleur-primaire);
+}
 
 /* Section Hero */
 .hero {
@@ -133,17 +133,9 @@ body {
 }
 
 @keyframes gradientAnim {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .contenu-hero {
@@ -159,10 +151,10 @@ body {
     margin-bottom: 1rem;
 }
 
-    #entete-hero h2 {
-        font-size: 2.5rem;
-        margin: 0;
-    }
+#entete-hero h2 {
+    font-size: 2.5rem;
+    margin: 0;
+}
 
 .sous-texte-hero {
     font-size: 1.1rem;
@@ -198,10 +190,10 @@ body {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-    .carte-produit:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
+.carte-produit:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
 
 .image-produit {
     width: 100%;
@@ -210,12 +202,12 @@ body {
     background-color: var(--gris-clair);
 }
 
-    .image-produit img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.3s;
-    }
+.image-produit img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
 
 .carte-produit:hover .image-produit img {
     transform: scale(1.05);
@@ -297,10 +289,10 @@ body {
     transition: all 0.3s;
 }
 
-    .btn-ajouter:hover {
-        background-color: var(--couleur-secondaire);
-        transform: translateY(-2px);
-    }
+.btn-ajouter:hover {
+    background-color: var(--couleur-secondaire);
+    transform: translateY(-2px);
+}
 
 .btn-favori {
     background: white;
@@ -313,10 +305,10 @@ body {
     transition: all 0.3s;
 }
 
-    .btn-favori:hover {
-        border-color: var(--couleur-danger);
-        color: var(--couleur-danger);
-    }
+.btn-favori:hover {
+    border-color: var(--couleur-danger);
+    color: var(--couleur-danger);
+}
 
 /* Modals */
 .modal {
@@ -332,11 +324,11 @@ body {
     padding: 2rem 0;
 }
 
-    .modal.actif {
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-    }
+.modal.actif {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
 
 .contenu-modal {
     background: white;
@@ -365,10 +357,10 @@ body {
     z-index: 10;
 }
 
-    .entete-modal h2 {
-        color: var(--couleur-sombre);
-        font-size: 1.8rem;
-    }
+.entete-modal h2 {
+    color: var(--couleur-sombre);
+    font-size: 1.8rem;
+}
 
 .btn-fermer {
     background: none;
@@ -380,9 +372,9 @@ body {
     line-height: 1;
 }
 
-    .btn-fermer:hover {
-        color: var(--couleur-danger);
-    }
+.btn-fermer:hover {
+    color: var(--couleur-danger);
+}
 
 /* Contenu du panier */
 .contenu-panier {
@@ -396,9 +388,9 @@ body {
     color: var(--couleur-texte);
 }
 
-    .panier-vide p {
-        font-size: 1.2rem;
-    }
+.panier-vide p {
+    font-size: 1.2rem;
+}
 
 .article-panier {
     display: grid;
@@ -409,9 +401,9 @@ body {
     align-items: center;
 }
 
-    .article-panier:last-child {
-        border-bottom: none;
-    }
+.article-panier:last-child {
+    border-bottom: none;
+}
 
 .image-article-panier {
     width: 100px;
@@ -421,11 +413,11 @@ body {
     background-color: var(--gris-clair);
 }
 
-    .image-article-panier img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+.image-article-panier img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
 .info-article-panier {
     display: flex;
@@ -467,9 +459,9 @@ body {
     transition: background-color 0.3s;
 }
 
-    .btn-quantite:hover {
-        background-color: var(--couleur-bordure);
-    }
+.btn-quantite:hover {
+    background-color: var(--couleur-bordure);
+}
 
 .affichage-quantite {
     min-width: 30px;
@@ -502,9 +494,9 @@ body {
     transition: opacity 0.3s;
 }
 
-    .btn-retirer:hover {
-        opacity: 0.8;
-    }
+.btn-retirer:hover {
+    opacity: 0.8;
+}
 
 /* Total du panier */
 .total-panier {
@@ -546,10 +538,10 @@ body {
     transition: all 0.3s;
 }
 
-    .btn-continuer:hover {
-        background-color: var(--gris-clair);
-        border-color: var(--couleur-sombre);
-    }
+.btn-continuer:hover {
+    background-color: var(--gris-clair);
+    border-color: var(--couleur-sombre);
+}
 
 .btn-checkout {
     flex: 1;
@@ -563,10 +555,10 @@ body {
     transition: all 0.3s;
 }
 
-    .btn-checkout:hover {
-        background-color: var(--couleur-secondaire);
-        transform: translateY(-2px);
-    }
+.btn-checkout:hover {
+    background-color: var(--couleur-secondaire);
+    transform: translateY(-2px);
+}
 
 /* Formulaire Checkout */
 .contenu-checkout {
@@ -586,28 +578,28 @@ body {
     margin-bottom: 1.5rem;
 }
 
-    .groupe-formulaire label {
-        display: block;
-        margin-bottom: 0.5rem;
-        color: var(--couleur-sombre);
-        font-weight: 500;
-    }
+.groupe-formulaire label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--couleur-sombre);
+    font-weight: 500;
+}
 
-    .groupe-formulaire input,
-    .groupe-formulaire select {
-        width: 100%;
-        padding: 0.9rem;
-        border: 2px solid var(--couleur-bordure);
-        border-radius: 8px;
-        font-size: 1rem;
-        transition: border-color 0.3s;
-    }
+.groupe-formulaire input,
+.groupe-formulaire select {
+    width: 100%;
+    padding: 0.9rem;
+    border: 2px solid var(--couleur-bordure);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
 
-        .groupe-formulaire input:focus,
-        .groupe-formulaire select:focus {
-            outline: none;
-            border-color: var(--couleur-primaire);
-        }
+.groupe-formulaire input:focus,
+.groupe-formulaire select:focus {
+    outline: none;
+    border-color: var(--couleur-primaire);
+}
 
 .rangee-formulaire {
     display: grid;
@@ -634,10 +626,10 @@ body {
     transition: all 0.3s;
 }
 
-    .btn-confirmer-commande:hover {
-        background-color: var(--couleur-secondaire);
-        transform: translateY(-2px);
-    }
+.btn-confirmer-commande:hover {
+    background-color: var(--couleur-secondaire);
+    transform: translateY(-2px);
+}
 
 .recapitulatif-checkout {
     background-color: var(--gris-clair);
@@ -648,10 +640,10 @@ body {
     top: 100px;
 }
 
-    .recapitulatif-checkout h3 {
-        color: var(--couleur-sombre);
-        margin-bottom: 1.5rem;
-    }
+.recapitulatif-checkout h3 {
+    color: var(--couleur-sombre);
+    margin-bottom: 1.5rem;
+}
 
 .liste-articles-checkout {
     margin-bottom: 1.5rem;
@@ -745,9 +737,9 @@ body {
     transition: background-color 0.3s;
 }
 
-    .btn-fermer-confirmation:hover {
-        background-color: var(--couleur-secondaire);
-    }
+.btn-fermer-confirmation:hover {
+    background-color: var(--couleur-secondaire);
+}
 
 /* Notifications */
 .notification {
@@ -765,10 +757,10 @@ body {
     transition: all 0.3s;
 }
 
-    .notification.afficher {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.notification.afficher {
+    opacity: 1;
+    transform: translateY(0);
+}
 
 .notification-erreur {
     background-color: var(--couleur-danger);
@@ -800,21 +792,20 @@ body {
     align-items: center;
 }
 
-    .modal-image-contenu img {
-        max-width: 100%;
-        max-height: 95vh;
-        object-fit: contain;
-        border-radius: 8px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-        animation: zoomIn 0.3s ease;
-    }
+.modal-image-contenu img {
+    max-width: 100%;
+    max-height: 95vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    animation: zoomIn 0.3s ease;
+}
 
 @keyframes zoomIn {
     from {
         transform: scale(0.8);
         opacity: 0;
     }
-
     to {
         transform: scale(1);
         opacity: 1;
@@ -840,10 +831,10 @@ body {
     line-height: 1;
 }
 
-    .btn-fermer-image:hover {
-        background-color: white;
-        transform: rotate(90deg);
-    }
+.btn-fermer-image:hover {
+    background-color: white;
+    transform: rotate(90deg);
+}
 
 .image-produit {
     cursor: zoom-in;
@@ -859,18 +850,18 @@ body {
     border-radius: 12px;
 }
 
-    .cta h2 {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-    }
+.cta h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
 
-    .cta p {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-        max-width: 700px;
-        margin-left: auto;
-        margin-right: auto;
-    }
+.cta p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 .btn-primaire {
     background-color: white;
@@ -884,10 +875,10 @@ body {
     transition: all 0.3s;
 }
 
-    .btn-primaire:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
+.btn-primaire:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
 
 .btn-large {
     font-size: 1.2rem;
@@ -942,9 +933,9 @@ body {
         text-align: center;
     }
 
-        #section1 h2 {
-            font-size: 1.5rem;
-        }
+    #section1 h2 {
+        font-size: 1.5rem;
+    }
 
     .btn-menu-mobile {
         display: block;
@@ -959,9 +950,9 @@ body {
         flex-direction: column;
     }
 
-        #entete-hero h2 {
-            font-size: 2rem;
-        }
+    #entete-hero h2 {
+        font-size: 2rem;
+    }
 
     .titre-section {
         font-size: 2rem;

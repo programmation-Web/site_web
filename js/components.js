@@ -28,7 +28,7 @@ const headerTemplate = `
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="index.html#services">Nos services </a></li>
-                        <li><a href="index.html#impact">Notre Impact</a></li>
+                          <li><a href="faire_un_don.html">Faire un don</a></li>
                         <li><a href="#footer">Nous Contacter</a></li>
                         <li><a href="index.html#Avis">Avis</a></li>
                     </ul>
@@ -159,6 +159,16 @@ function initMobileMenu() {
         console.warn('⚠️ Bouton menu mobile non trouvé');
         return;
     }
+
+    // Gestion du dropdown en mobile
+    document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            const parent = toggle.closest('.dropdown');
+            parent.classList.toggle('active');
+        });
+    });
+
 
     // Toggle du menu principal
     mobileToggle.addEventListener('click', (e) => {

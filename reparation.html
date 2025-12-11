@@ -17,7 +17,8 @@
 </head>
 <body>
     <!-- Header sera inséré ici dynamiquement -->
-    <header id="header-placeholder"></header>
+    <div id="header-placeholder"></div>
+
 
     <main class="reparation-page">
         <!-- Hero Section -->
@@ -86,7 +87,7 @@
         <section class="form-section">
             <div class="container">
                 <form id="reparationForm" class="reparation-form">
-                    
+
                     <!-- Question 1: Type d'objet -->
                     <div class="form-group">
                         <div class="question-header">
@@ -107,15 +108,13 @@
                     <!-- Question 2: Description du problème -->
                     <div class="form-group">
                         <h2>2. Décrivez le problème en détail</h2>
-                        
+
                         <label for="description">Description du problème *</label>
-                        <textarea 
-                            id="description" 
-                            name="description" 
-                            rows="5" 
-                            placeholder="Ex: Fermeture éclair cassée, trou dans le tissu, courroie de la machine défectueuse..."
-                            required
-                        ></textarea>
+                        <textarea id="description"
+                                  name="description"
+                                  rows="5"
+                                  placeholder="Ex: Fermeture éclair cassée, trou dans le tissu, courroie de la machine défectueuse..."
+                                  required></textarea>
 
                         <div class="urgence-group">
                             <label>Niveau d'urgence</label>

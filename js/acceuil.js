@@ -19,49 +19,6 @@ function animateServiceCards() {
     });
 }
 
-// Animation des statistiques (compteur animé)
-function animateNumbers() {
-    const numbers = document.querySelectorAll('.impact-number');
-
-    numbers.forEach(stat => {
-        if (isElementInViewport(stat) && !stat.classList.contains('animated')) {
-            const text = stat.innerText;
-            const finalNumber = parseFloat(text.replace(/[^0-9.]/g, ''));
-
-            // Déterminer le format de la statistique
-            const isTonnes = text.includes('tonnes');
-            const isDollar = text.includes('$');
-            const isPercent = text.includes('%');
-
-            let currentNumber = 0;
-            const duration = 2000; // 2 secondes
-            const interval = 50; // Mise à jour toutes les 50ms
-            const steps = duration / interval;
-            const increment = finalNumber / steps;
-
-            const counter = setInterval(() => {
-                currentNumber += increment;
-
-                if (currentNumber >= finalNumber) {
-                    currentNumber = finalNumber;
-                    clearInterval(counter);
-                    stat.classList.add('animated');
-                }
-
-                // Formater selon le type de statistique
-                if (isTonnes) {
-                    stat.innerText = currentNumber.toFixed(1) + ' tonnes';
-                } else if (isDollar) {
-                    stat.innerText = Math.round(currentNumber) + '$';
-                } else if (isPercent) {
-                    stat.innerText = Math.round(currentNumber) + '%';
-                } else {
-                    stat.innerText = Math.round(currentNumber).toLocaleString();
-                }
-            }, interval);
-        }
-    });
-}
 
 // Gestion du header au scroll (masquer/afficher)
 let lastScroll = 0;
