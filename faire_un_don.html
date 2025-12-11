@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/faire_un_don.css">
     <script src="js/chatbot.js" defer></script>
+        <!-- Bibliothèque Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="css/auth.css">
 </head>
 <body>
         <!-- Header sera inséré ici dynamiquement -->
@@ -293,51 +296,7 @@
                 </div>
             </div>
         </section>
-
-        <!-- Section Informations de Contact -->
-        <section class="contact-section">
-            <div class="container">
-                <div class="section-container">
-                    <h2>3. Vos informations de contact</h2>
-
-                    <div class="contact-form">
-                        <div class="form-row">
-                            <div class="form-group-half">
-                                <label for="firstName" class="required-field">Prénom</label>
-                                <input type="text" id="firstName" name="firstName" required>
-                            </div>
-
-                            <div class="form-group-half">
-                                <label for="lastName" class="required-field">Nom</label>
-                                <input type="text" id="lastName" name="lastName" required>
-                            </div>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group-half">
-                                <label for="email" class="required-field">Adresse email</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-
-                            <div class="form-group-half">
-                                <label for="phone" class="required-field">Téléphone</label>
-                                <input type="tel" id="phone" name="phone" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group-full">
-                            <label for="address" class="required-field">Adresse complète</label>
-                            <input type="text" id="address" name="address" placeholder="Numéro, rue, ville, code postal" required>
-                        </div>
-
-                        <div class="form-group-full">
-                            <label for="instructions">Instructions spéciales pour la collecte</label>
-                            <textarea id="instructions" name="instructions" rows="3" placeholder="Ex: Sonner à l'interphone, code de porte, etc."></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        
 
         <!-- Section Reçu Fiscal -->
         <section class="tax-section">
@@ -424,7 +383,10 @@
 
         <!-- Footer sera inséré ici dynamiquement -->
         <footer id="footer-placeholder"> </footer>
-
+        <!-- Scripts Supabase -->
+        <script src="js/supabase-config.js"></script>
+        <script src="js/database.js"></script>
+        <script src="js/auth.js"></script>
 
         <script src="js/components.js"></script>
 

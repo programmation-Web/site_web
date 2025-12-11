@@ -1,15 +1,32 @@
 /* ========================================
-   PAGE RÉPARATION - JAVASCRIPT
+   PAGE RÉPARATION - JAVASCRIPT - 
    ======================================== */
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Vérifier que l'utilisateur est connecté
+    checkUserAuthentication();
     
     // Initialiser les fonctionnalités
     initPhotoUpload();
     initFormValidation();
     initDateRestrictions();
-    
 });
+
+/* ========================================
+   VÉRIFIER L'AUTHENTIFICATION
+   ======================================== */
+async function checkUserAuthentication() {
+    const user = await getCurrentUser();
+    
+    if (!user) {
+        // Afficher un message et rediriger vers l'accueil
+        if (confirm('Vous devez être connecté pour accéder à cette page. Voulez-vous vous connecter maintenant?')) {
+            showAuthModal('login');
+        } else {
+            window.location.href = 'index.html';
+        }
+    }
+}
 
 /* ========================================
    UPLOAD DE PHOTOS
@@ -22,20 +39,20 @@ function initPhotoUpload() {
     // Drag and drop
     uploadArea.addEventListener('dragover', (e) => {
         e.preventDefault();
-        uploadArea.style.borderColor = '#2ecc71';
-        uploadArea.style.background = 'rgba(46, 204, 113, 0.1)';
+        uploadArea.style.borderColor = '#4CAF50';
+        uploadArea.style.background = 'rgba(76, 175, 80, 0.1)';
     });
     
     uploadArea.addEventListener('dragleave', (e) => {
         e.preventDefault();
         uploadArea.style.borderColor = '#e0e0e0';
-        uploadArea.style.background = '#ffffff';
+        uploadArea.style.background = '#fafafa';
     });
     
     uploadArea.addEventListener('drop', (e) => {
         e.preventDefault();
         uploadArea.style.borderColor = '#e0e0e0';
-        uploadArea.style.background = '#ffffff';
+        uploadArea.style.background = '#fafafa';
         
         const files = e.dataTransfer.files;
         handleFiles(files);
@@ -131,27 +148,24 @@ function initDateRestrictions() {
 function initFormValidation() {
     const form = document.getElementById('reparationForm');
     
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', async function(e) {
         e.preventDefault();
+        
+        // Vérifier que l'utilisateur est connecté
+        const user = await getCurrentUser();
+        if (!user) {
+            showAuthModal('login');
+            return;
+        }
         
         // Validation personnalisée
         if (validateForm()) {
             // Collecter les données
             const formData = collectFormData();
             
-            // Afficher confirmation
-            showConfirmation(formData);
-            
-            // Réinitialiser le formulaire
-            form.reset();
-            document.getElementById('photoPreview').innerHTML = '';
+            // Afficher confirmation et soumettre
+            await submitReparation(formData);
         }
-    });
-    
-    // Validation en temps réel du téléphone
-    const telephoneInput = document.getElementById('telephone');
-    telephoneInput.addEventListener('input', function(e) {
-        formatPhoneNumber(e.target);
     });
 }
 
@@ -194,51 +208,6 @@ function validateForm() {
         clearError(heureInput);
     }
     
-    // Validation prénom
-    const prenom = document.getElementById('prenom');
-    if (prenom.value.trim().length < 2) {
-        showError(prenom, 'Le prénom doit contenir au moins 2 caractères');
-        isValid = false;
-    } else {
-        clearError(prenom);
-    }
-    
-    // Validation nom
-    const nom = document.getElementById('nom');
-    if (nom.value.trim().length < 2) {
-        showError(nom, 'Le nom doit contenir au moins 2 caractères');
-        isValid = false;
-    } else {
-        clearError(nom);
-    }
-    
-    // Validation courriel
-    const courriel = document.getElementById('courriel');
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(courriel.value)) {
-        showError(courriel, 'Veuillez entrer une adresse courriel valide');
-        isValid = false;
-    } else {
-        clearError(courriel);
-    }
-    
-    // Validation téléphone
-    const telephone = document.getElementById('telephone');
-    const phoneRegex = /^\(\d{3}\)\s\d{3}-\d{4}$/;
-    if (!phoneRegex.test(telephone.value)) {
-        showError(telephone, 'Format attendu: (418) 543-4567');
-        isValid = false;
-    } else {
-        clearError(telephone);
-    }
-    
-    // Validation conditions
-    const conditions = document.querySelector('input[name="conditions"]');
-    if (!conditions.checked) {
-        alert('Vous devez accepter les conditions d\'utilisation');
-        isValid = false;
-    }
-    
     return isValid;
 }
 
@@ -266,22 +235,6 @@ function clearError(input) {
     }
 }
 
-function formatPhoneNumber(input) {
-    let value = input.value.replace(/\D/g, '');
-    
-    if (value.length > 0) {
-        if (value.length <= 3) {
-            value = `(${value}`;
-        } else if (value.length <= 6) {
-            value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
-        } else {
-            value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
-        }
-    }
-    
-    input.value = value;
-}
-
 /* ========================================
    COLLECTE DES DONNÉES DU FORMULAIRE
    ======================================== */
@@ -292,51 +245,308 @@ function collectFormData() {
         urgence: document.querySelector('input[name="urgence"]:checked').value,
         lieu: document.querySelector('input[name="lieu"]:checked').value,
         date: document.getElementById('date').value,
-        heure: document.getElementById('heure').value,
-        prenom: document.getElementById('prenom').value,
-        nom: document.getElementById('nom').value,
-        courriel: document.getElementById('courriel').value,
-        telephone: document.getElementById('telephone').value,
-        newsletter: document.querySelector('input[name="newsletter"]').checked
+        heure: document.getElementById('heure').value
     };
 }
 
 /* ========================================
-   AFFICHAGE DE LA CONFIRMATION
+   SOUMETTRE LA RÉPARATION - VERSION CORRIGÉE
    ======================================== */
-function showConfirmation(data) {
-    const formattedDate = new Date(data.date).toLocaleDateString('fr-CA', {
+async function submitReparation(formData) {
+    // Bouton de soumission - état de chargement
+    const submitBtn = document.querySelector('.btn-submit');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+    submitBtn.disabled = true;
+    
+    try {
+        // Vérifier l'utilisateur
+        const user = await getCurrentUser();
+        if (!user) {
+            throw new Error('Vous devez être connecté pour soumettre une réparation');
+        }
+        
+        console.log('👤 User authentifié:', user);
+        
+        // CORRECTION 1: Récupérer l'idUser depuis userAccount en utilisant le bon champ
+        // La table userAccount utilise 'idUser' comme clé primaire qui correspond à auth.users.id
+        const { data: userAccount, error: userError } = await supabaseClient
+            .from('userAccount')
+            .select('idUser, email, firstName, lastName')
+            .eq('idUser', user.id)  
+            .single();
+        
+        if (userError) {
+            console.error('❌ Erreur requête userAccount:', userError);
+            
+            // Si l'utilisateur n'existe pas dans userAccount, le créer
+            if (userError.code === 'PGRST116') { // Aucune ligne trouvée
+                console.log('⚠️ Utilisateur non trouvé dans userAccount, création...');
+                
+                const { data: newUser, error: createError } = await supabaseClient
+                    .from('userAccount')
+                    .insert([{
+                        idUser: user.id,
+                        email: user.email,
+                        firstName: user.user_metadata?.firstName || user.email.split('@')[0],
+                        lastName: user.user_metadata?.lastName || ''
+                    }])
+                    .select()
+                    .single();
+                
+                if (createError) {
+                    console.error('❌ Erreur création userAccount:', createError);
+                    throw new Error('Erreur lors de la création de votre profil');
+                }
+                
+                console.log('✅ UserAccount créé:', newUser);
+                
+                // Utiliser le nouvel utilisateur créé
+                const userId = newUser.idUser;
+                await insertReparation(userId, formData);
+            } else {
+                throw new Error('Erreur lors de la récupération de votre profil: ' + userError.message);
+            }
+        } else if (!userAccount) {
+            throw new Error('Votre profil n\'a pas été trouvé');
+        } else {
+            // Utilisateur trouvé, procéder à l'insertion
+            console.log('✅ UserAccount trouvé:', userAccount);
+            await insertReparation(userAccount.idUser, formData);
+        }
+        
+        // Afficher message de succès
+        showSuccessNotification(formData);
+        
+        // Réinitialiser le formulaire
+        document.getElementById('reparationForm').reset();
+        document.getElementById('photoPreview').innerHTML = '';
+        
+        // Retour en haut de la page
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+    } catch (error) {
+        console.error('❌ Erreur:', error);
+        showErrorNotification(error.message);
+    } finally {
+        // Restaurer le bouton
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+}
+
+/* ========================================
+   FONCTION AUXILIAIRE POUR INSÉRER LA RÉPARATION
+   ======================================== */
+async function insertReparation(userId, formData) {
+    // Préparer les données pour Supabase
+    const reparationData = {
+        idUser: userId,
+        typeObjet: formData.typeObjet,
+        descProbleme: formData.description,
+        niveauUrgence: formData.urgence,
+        lieuRep: formData.lieu,
+        date_heure: `${formData.date}T${formData.heure}:00`
+    };
+    
+    console.log('📤 Envoi de la réparation:', reparationData);
+    
+    // Insérer dans Supabase
+    const { data, error } = await supabaseClient
+        .from('reparation')
+        .insert([reparationData])
+        .select();
+    
+    if (error) {
+        console.error('❌ Erreur Supabase:', error);
+        throw new Error('Erreur lors de l\'enregistrement: ' + error.message);
+    }
+    
+    console.log('✅ Réparation enregistrée:', data);
+    return data;
+}
+
+/* ========================================
+   NOTIFICATIONS
+   ======================================== */
+function showSuccessNotification(formData) {
+    const formattedDate = new Date(formData.date).toLocaleDateString('fr-CA', {
         weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     });
     
-    const lieuText = data.lieu === 'atelier' 
+    const lieuText = formData.lieu === 'atelier' 
         ? 'En atelier (1234 rue des roitelets, Saguenay)' 
         : 'À domicile (frais de déplacement: 20$)';
     
-    const message = `
-✅ Demande de réparation soumise avec succès!
-
-📋 Résumé de votre demande:
-• Type d'objet: ${data.typeObjet}
-• Niveau d'urgence: ${data.urgence}
-• Lieu: ${lieuText}
-• Date: ${formattedDate} à ${data.heure}
-
-👤 Contact: ${data.prenom} ${data.nom}
-📧 Courriel: ${data.courriel}
-📞 Téléphone: ${data.telephone}
-
-Vous recevrez une confirmation par courriel dans les 24h.
-Un technicien vous contactera pour confirmer les détails.
+    // Créer la notification
+    const notification = document.createElement('div');
+    notification.className = 'success-notification';
+    notification.innerHTML = `
+        <div class="notification-content">
+            <div class="notification-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="notification-body">
+                <h3>✅ Demande enregistrée avec succès!</h3>
+                <div class="notification-details">
+                    <p><strong>Type d'objet:</strong> ${formData.typeObjet}</p>
+                    <p><strong>Urgence:</strong> ${formData.urgence}</p>
+                    <p><strong>Date:</strong> ${formattedDate} à ${formData.heure}</p>
+                    <p><strong>Lieu:</strong> ${lieuText}</p>
+                </div>
+                <p class="notification-footer">
+                    Vous recevrez une confirmation par courriel dans les 24h.<br>
+                    Un technicien vous contactera pour confirmer les détails.
+                </p>
+            </div>
+            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
     `;
     
-    alert(message);
+    // Ajouter les styles
+    const style = document.createElement('style');
+    style.textContent = `
+        .success-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            max-width: 500px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            z-index: 10000;
+            animation: slideIn 0.3s ease-out;
+            border-left: 5px solid #4CAF50;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .notification-content {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+        }
+        
+        .notification-icon {
+            font-size: 32px;
+            color: #4CAF50;
+            flex-shrink: 0;
+        }
+        
+        .notification-body h3 {
+            margin: 0 0 15px 0;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        
+        .notification-details {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .notification-details p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        .notification-footer {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .notification-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 20px;
+            padding: 5px;
+            transition: color 0.2s;
+        }
+        
+        .notification-close:hover {
+            color: #333;
+        }
+        
+        @media (max-width: 640px) {
+            .success-notification {
+                left: 10px;
+                right: 10px;
+                max-width: none;
+            }
+        }
+    `;
     
-    // Retour en haut de la page
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.head.appendChild(style);
+    document.body.appendChild(notification);
+    
+    // Auto-fermer après 10 secondes
+    setTimeout(() => {
+        notification.style.animation = 'slideOut 0.3s ease-in';
+        setTimeout(() => notification.remove(), 300);
+    }, 10000);
+}
+
+function showErrorNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'error-notification';
+    notification.innerHTML = `
+        <div class="notification-content">
+            <div class="notification-icon" style="color: #e74c3c;">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <div class="notification-body">
+                <h3>❌ Erreur lors de l'envoi</h3>
+                <p>${message}</p>
+                <p class="notification-footer">Veuillez réessayer ou nous contacter si le problème persiste.</p>
+            </div>
+            <button class="notification-close" onclick="this.parentElement.parentElement.remove()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    `;
+    
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        max-width: 500px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        z-index: 10000;
+        animation: slideIn 0.3s ease-out;
+        border-left: 5px solid #e74c3c;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Auto-fermer après 8 secondes
+    setTimeout(() => {
+        notification.remove();
+    }, 8000);
 }
 
 /* ========================================

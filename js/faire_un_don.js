@@ -1,512 +1,513 @@
-// Gestion de la section articles
+/* ========================================
+   PAGE FAIRE UN DON - AVEC SUPABASE
+   ======================================== */
+
+let articleCount = 1;
+
 document.addEventListener('DOMContentLoaded', function() {
-    const articlesContainer = document.getElementById('articlesContainer');
-    const addArticleBtn = document.getElementById('addArticleBtn');
-    let articleCount = 1;
-
-    // Fonction pour créer un formulaire d'article
-    function createArticleForm(number) {
-        return `
-        <div class="article-form-container new-article" data-article="${number}">
-            <form class="article-form">
-                <div class="article-header">
-                    <span class="article-number">Article ${number}</span>
-                    <h2>Décrivez votre article</h2>
-                </div>
-                
-                <div class="article-content">
-                    <div class="form-row">
-                        <div class="form-group-half">
-                            <label for="category-${number}" class="required-field">Catégorie</label>
-                            <div class="select-wrapper">
-                                <select id="category-${number}" name="category" required>
-                                    <option value="">Sélectionnez une catégorie</option>
-                                    <option value="vetements">Vêtements</option>
-                                    <option value="chaussures">Chaussures</option>
-                                    <option value="accessoires">Accessoires</option>
-                                    <option value="textiles">Textiles de maison</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group-half">
-                            <label for="condition-${number}" class="required-field">État</label>
-                            <div class="select-wrapper">
-                                <select id="condition-${number}" name="condition" required>
-                                    <option value="">État de l'article</option>
-                                    <option value="neuf">Neuf avec étiquette</option>
-                                    <option value="tres-bon">Très bon état</option>
-                                    <option value="bon">Bon état</option>
-                                    <option value="correct">État correct</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="separator"></div>
-                    
-                    <div class="form-group-full">
-                        <label for="description-${number}">Description détaillée</label>
-                        <textarea 
-                            id="description-${number}" 
-                            name="description" 
-                            placeholder="Ex: Manteau d'hiver noir, taille M, marque XYZ, très peu porté..." 
-                            required
-                        ></textarea>
-                    </div>
-                    
-                    <div class="separator"></div>
-                    
-                    <div class="form-row">
-                        <div class="form-group-half">
-                            <label for="quantity-${number}">Quantité</label>
-                            <input 
-                                type="number" 
-                                id="quantity-${number}" 
-                                name="quantity" 
-                                value="1" 
-                                min="1" 
-                                max="100"
-                            >
-                        </div>
-                        
-                        <div class="form-group-half">
-                            <label for="estimated-value-${number}">Valeur estimée (CAD)</label>
-                            <input 
-                                type="number" 
-                                id="estimated-value-${number}" 
-                                name="estimated-value" 
-                                placeholder="Ex: 25" 
-                                min="0" 
-                                step="0.01"
-                            >
-                        </div>
-                    </div>
-                    
-                    <div class="separator"></div>
-                    
-                    <div class="photos-section">
-                        <h3>Photos des articles (optionnel)</h3>
-                        <button type="button" class="upload-btn" data-article="${number}">
-                            Ajouter des photos
-                        </button>
-                        <p class="upload-hint">Cliquez pour sélectionner des photos depuis votre appareil</p>
-                        
-                        <div class="photo-preview-container" id="photo-preview-${number}">
-                            <div class="photo-preview-grid" id="photo-grid-${number}">
-                                <!-- Les prévisualisations de photos apparaîtront ici -->
-                            </div>
-                        </div>
-                    </div>
-                    
-                    ${number > 1 ? `
-                    <button type="button" class="remove-article-btn" data-article="${number}">
-                        Supprimer cet article
-                    </button>
-                    ` : ''}
-                </div>
-            </form>
-        </div>
-        `;
-    }
-
-    // Gestion du bouton "Ajouter un autre article"
-    addArticleBtn.addEventListener('click', function() {
-        articleCount++;
-        const newArticleHTML = createArticleForm(articleCount);
-        articlesContainer.insertAdjacentHTML('beforeend', newArticleHTML);
-        
-        // Faire défiler jusqu'au nouvel article
-        const newArticle = articlesContainer.lastElementChild;
-        newArticle.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    });
-
-    // Gestion de la suppression d'article (déléguation d'événement)
-    articlesContainer.addEventListener('click', function(e) {
-        if (e.target.classList.contains('remove-article-btn')) {
-            const articleNumber = e.target.getAttribute('data-article');
-            const articleToRemove = document.querySelector(`[data-article="${articleNumber}"]`);
-            
-            if (articleToRemove) {
-                articleToRemove.style.opacity = '0';
-                articleToRemove.style.transform = 'translateX(-100%)';
-                
-                setTimeout(() => {
-                    articleToRemove.remove();
-                    // Réorganiser les numéros d'articles restants
-                    reorganizeArticleNumbers();
-                }, 300);
-            }
-        }
-    });
-
-    // Gestion de l'upload de photos (déléguation d'événement)
-    articlesContainer.addEventListener('click', function(e) {
-        if (e.target.classList.contains('upload-btn')) {
-            const articleNumber = e.target.getAttribute('data-article');
-            const fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.multiple = true;
-            fileInput.accept = 'image/*';
-            
-            fileInput.addEventListener('change', function(event) {
-                handlePhotoUpload(event, articleNumber);
-            });
-            
-            fileInput.click();
-        }
-    });
-
-    // Gestion de la suppression de photos (déléguation d'événement)
-    articlesContainer.addEventListener('click', function(e) {
-        if (e.target.classList.contains('remove-photo')) {
-            e.target.closest('.photo-preview').remove();
-        }
-    });
-
-    // Fonction pour gérer l'upload de photos
-    function handlePhotoUpload(event, articleNumber) {
-        const files = event.target.files;
-        const photoGrid = document.getElementById(`photo-grid-${articleNumber}`);
-        
-        for (let file of files) {
-            if (file.type.startsWith('image/')) {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    const photoPreview = document.createElement('div');
-                    photoPreview.className = 'photo-preview';
-                    photoPreview.innerHTML = `
-                        <img src="${e.target.result}" alt="Preview">
-                        <button type="button" class="remove-photo">&times;</button>
-                    `;
-                    photoGrid.appendChild(photoPreview);
-                };
-                
-                reader.readAsDataURL(file);
-            }
-        }
-    }
-
-    // Fonction pour réorganiser les numéros d'articles après suppression
-    function reorganizeArticleNumbers() {
-        const articles = articlesContainer.querySelectorAll('.article-form-container');
-        let currentNumber = 1;
-        
-        articles.forEach(article => {
-            const articleNumber = article.querySelector('.article-number');
-            const header = article.querySelector('.article-header h2');
-            const uploadBtn = article.querySelector('.upload-btn');
-            const removeBtn = article.querySelector('.remove-article-btn');
-            
-            // Mettre à jour le numéro
-            articleNumber.textContent = `Article ${currentNumber}`;
-            article.setAttribute('data-article', currentNumber);
-            
-            if (uploadBtn) {
-                uploadBtn.setAttribute('data-article', currentNumber);
-            }
-            
-            if (removeBtn && currentNumber === 1) {
-                removeBtn.remove();
-            } else if (removeBtn) {
-                removeBtn.setAttribute('data-article', currentNumber);
-            }
-            
-            currentNumber++;
-        });
-        
-        articleCount = currentNumber - 1;
-    }
+    console.log("🎁 faire_un_don.js chargé");
+    
+    // Vérifier l'authentification
+    checkUserAuthentication();
+    
+    // Initialiser
+    initArticles();
+    initCollectionMethod();
+    initFormSubmission();
+    initDateRestrictions();
 });
 
-// Gestion des sections supplémentaires
-document.addEventListener('DOMContentLoaded', function() {
-    // Définir la date minimale (aujourd'hui + 2 jours)
+/* ========================================
+   VÉRIFIER L'AUTHENTIFICATION
+   ======================================== */
+async function checkUserAuthentication() {
+    if (typeof getCurrentUser === 'undefined') {
+        console.warn("⚠️ getCurrentUser non disponible");
+        return;
+    }
+    
+    const user = await getCurrentUser();
+    
+    if (!user) {
+        if (confirm('Vous devez être connecté pour faire un don. Voulez-vous vous connecter maintenant?')) {
+            showAuthModal('login');
+        } else {
+            window.location.href = 'index.html';
+        }
+    }
+}
+
+/* ========================================
+   INITIALISER LES ARTICLES
+   ======================================== */
+function initArticles() {
+    const addArticleBtn = document.getElementById('addArticleBtn');
+    const articlesContainer = document.getElementById('articlesContainer');
+    
+    if (addArticleBtn) {
+        addArticleBtn.addEventListener('click', function() {
+            articleCount++;
+            const newArticleHTML = createArticleForm(articleCount);
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = newArticleHTML;
+            articlesContainer.appendChild(tempDiv.firstElementChild);
+            
+            setTimeout(() => {
+                const newArticle = articlesContainer.lastElementChild;
+                newArticle.classList.remove('new-article');
+            }, 50);
+        });
+    }
+    
+    // Gestion upload photos
+    document.addEventListener('change', function(e) {
+        if (e.target.matches('input[type="file"][name="photos"]')) {
+            handlePhotoUpload(e.target);
+        }
+    });
+}
+
+function createArticleForm(number) {
+    return `
+    <div class="article-form-container new-article" data-article="${number}">
+        <form class="article-form">
+            <div class="article-header">
+                <span class="article-number">Article ${number}</span>
+                <h2>Décrivez votre article</h2>
+            </div>
+            
+            <div class="article-content">
+                <div class="form-row">
+                    <div class="form-group-half">
+                        <label for="category-${number}" class="required-field">Catégorie</label>
+                        <div class="select-wrapper">
+                            <select id="category-${number}" name="category" required>
+                                <option value="">Sélectionnez une catégorie</option>
+                                <option value="Vêtements">Vêtements</option>
+                                <option value="Chaussures">Chaussures</option>
+                                <option value="Accessoires">Accessoires</option>
+                                <option value="Textiles">Textiles de maison</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group-half">
+                        <label for="condition-${number}" class="required-field">État</label>
+                        <div class="select-wrapper">
+                            <select id="condition-${number}" name="condition" required>
+                                <option value="">État de l'article</option>
+                                <option value="Neuf avec étiquette">Neuf avec étiquette</option>
+                                <option value="Très bon état">Très bon état</option>
+                                <option value="Bon état">Bon état</option>
+                                <option value="État correct">État correct</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="form-group-full">
+                    <label for="description-${number}">Description détaillée</label>
+                    <textarea 
+                        id="description-${number}" 
+                        name="description" 
+                        rows="3" 
+                        placeholder="Décrivez votre article (couleur, matière, particularités...)"
+                    ></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group-half">
+                        <label for="quantity-${number}">Quantité</label>
+                        <input type="number" id="quantity-${number}" name="quantity" min="1" value="1">
+                    </div>
+                    <div class="form-group-half">
+                        <label for="estimated-value-${number}">Valeur estimée (CAD)</label>
+                        <input type="number" id="estimated-value-${number}" name="estimated-value" min="0" step="0.01" placeholder="Ex: 25">
+                    </div>
+                </div>
+            </div>
+            
+            ${number > 1 ? `
+            <button type="button" class="remove-article-btn" onclick="removeArticle(${number})">
+                🗑️ Supprimer cet article
+            </button>
+            ` : ''}
+        </form>
+    </div>
+    `;
+}
+
+function handlePhotoUpload(input) {
+    const files = input.files;
+    const articleNumber = input.id.split('-')[1];
+    const previewContainer = document.getElementById(`preview-${articleNumber}`);
+    
+    if (!previewContainer) return;
+    
+    previewContainer.innerHTML = '';
+    
+    Array.from(files).forEach((file, index) => {
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const photoPreview = document.createElement('div');
+                photoPreview.className = 'photo-preview-item';
+                photoPreview.innerHTML = `
+                    <img src="${e.target.result}" alt="Preview ${index + 1}">
+                    <button type="button" class="remove-photo-btn" onclick="removePhoto(this)">×</button>
+                `;
+                previewContainer.appendChild(photoPreview);
+            };
+            
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
+function removeArticle(number) {
+    const articleContainer = document.querySelector(`[data-article="${number}"]`);
+    if (articleContainer) {
+        articleContainer.style.opacity = '0';
+        articleContainer.style.transform = 'scale(0.9)';
+        setTimeout(() => {
+            articleContainer.remove();
+        }, 300);
+    }
+}
+
+function removePhoto(button) {
+    const photoItem = button.closest('.photo-preview-item');
+    if (photoItem) {
+        photoItem.style.opacity = '0';
+        setTimeout(() => {
+            photoItem.remove();
+        }, 300);
+    }
+}
+
+/* ========================================
+   INITIALISER MODE DE COLLECTE
+   ======================================== */
+function initCollectionMethod() {
+    const collectionRadios = document.querySelectorAll('input[name="collection-method"]');
+    
+    collectionRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            // Masquer tous les champs spécifiques
+            document.querySelectorAll('.schedule-fields').forEach(field => {
+                field.style.display = 'none';
+            });
+            
+            // Afficher les champs correspondants
+            if (this.value === 'home') {
+                const homeFields = document.querySelector('.home-schedule');
+                if (homeFields) homeFields.style.display = 'block';
+            } else if (this.value === 'dropoff') {
+                const dropoffFields = document.querySelector('.dropoff-schedule');
+                if (dropoffFields) dropoffFields.style.display = 'block';
+            }
+        });
+    });
+}
+
+/* ========================================
+   INITIALISER RESTRICTIONS DE DATE
+   ======================================== */
+function initDateRestrictions() {
     const today = new Date();
-    const minDate = new Date(today);
-    minDate.setDate(today.getDate() + 2);
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const minDate = `${yyyy}-${mm}-${dd}`;
     
-    const minDateString = minDate.toISOString().split('T')[0];
-    
-    // Appliquer la date minimale aux champs de date
     const dateInputs = document.querySelectorAll('input[type="date"]');
     dateInputs.forEach(input => {
-        input.min = minDateString;
-        input.value = minDateString; // Date par défaut
+        input.setAttribute('min', minDate);
     });
-    
-    // Gestion des options de collecte
-    const collectionOptions = document.querySelectorAll('.collection-option input[type="radio"]');
-    
-    collectionOptions.forEach(option => {
-        option.addEventListener('change', function() {
-            // Retirer la sélection visuelle de toutes les options
-            document.querySelectorAll('.option-card').forEach(card => {
-                card.style.borderColor = '#e9ecef';
-                card.style.background = 'white';
-            });
-            
-            // Appliquer la sélection visuelle à l'option choisie
-            if (this.checked) {
-                const card = this.closest('.collection-option').querySelector('.option-card');
-                card.style.borderColor = 'var(--accent-color)';
-                card.style.background = 'rgba(143, 185, 150, 0.05)';
-            }
-        });
-    });
-    
-    // Validation des champs de date
-    const dateFields = document.querySelectorAll('input[type="date"]');
-    dateFields.forEach(field => {
-        field.addEventListener('change', function() {
-            validateDateField(this);
-        });
-    });
-    
-    function validateDateField(field) {
-        const selectedDate = new Date(field.value);
-        const minDate = new Date(field.min);
-        
-        clearFieldError(field);
-        
-        if (selectedDate < minDate) {
-            showFieldError(field, `Veuillez choisir une date à partir du ${formatDate(minDate)}`);
-            return false;
-        }
-        
-        // Vérifier si c'est un week-end
-        const dayOfWeek = selectedDate.getDay();
-        if (dayOfWeek === 0 || dayOfWeek === 6) {
-            showFieldError(field, 'Les collectes ne sont pas disponibles les week-ends');
-            return false;
-        }
-        
-        return true;
-    }
-    
-    function formatDate(date) {
-        return date.toLocaleDateString('fr-CA', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric'
-        });
-    }
-    
-    function showFieldError(field, message) {
-        field.style.borderColor = '#e74c3c';
-        
-        let errorElement = field.parentNode.querySelector('.field-error');
-        if (!errorElement) {
-            errorElement = document.createElement('div');
-            errorElement.className = 'field-error';
-            field.parentNode.appendChild(errorElement);
-        }
-        
-        errorElement.textContent = message;
-        errorElement.style.color = '#e74c3c';
-        errorElement.style.fontSize = '0.8rem';
-        errorElement.style.marginTop = '0.5rem';
-    }
-    
-    function clearFieldError(field) {
-        field.style.borderColor = '#e9ecef';
-        const errorElement = field.parentNode.querySelector('.field-error');
-        if (errorElement) {
-            errorElement.remove();
-        }
-    }
-    
-    // Validation du formulaire de contact
-    const contactForm = document.querySelector('.contact-form');
-    const inputs = contactForm.querySelectorAll('input, textarea');
-    
-    inputs.forEach(input => {
-        input.addEventListener('blur', function() {
-            validateField(this);
-        });
-        
-        input.addEventListener('input', function() {
-            clearFieldError(this);
-        });
-    });
-    
-    function validateField(field) {
-        const value = field.value.trim();
-        clearFieldError(field);
-        
-        if (field.hasAttribute('required') && !value) {
-            showFieldError(field, 'Ce champ est obligatoire');
-            return false;
-        }
-        
-        if (field.type === 'email' && value) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(value)) {
-                showFieldError(field, 'Veuillez entrer une adresse email valide');
-                return false;
-            }
-        }
-        
-        if (field.type === 'tel' && value) {
-            const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-            const cleanPhone = value.replace(/[\s\-\(\)]/g, '');
-            if (!phoneRegex.test(cleanPhone)) {
-                showFieldError(field, 'Veuillez entrer un numéro de téléphone valide');
-                return false;
-            }
-        }
-        
-        return true;
-    }
-});
-// Gestion de la soumission finale
-document.addEventListener('DOMContentLoaded', function() {
-    const finalSubmitBtn = document.getElementById('finalSubmitBtn');
-    const termsCheckbox = document.getElementById('terms-conditions');
+}
 
-    finalSubmitBtn.addEventListener('click', function(e) {
+/* ========================================
+   INITIALISER SOUMISSION DU FORMULAIRE
+   ======================================== */
+function initFormSubmission() {
+    const submitBtn = document.getElementById('finalSubmitBtn');
+    
+    if (!submitBtn) {
+        console.error("❌ Bouton de soumission non trouvé");
+        return;
+    }
+    
+    submitBtn.addEventListener('click', async function(e) {
         e.preventDefault();
+        console.log("📝 Soumission du don");
         
-        // Validation des conditions obligatoires
-        if (!termsCheckbox.checked) {
-            alert('Veuillez accepter les conditions d\'utilisation pour soumettre votre don.');
-            termsCheckbox.focus();
+        // Vérifier l'utilisateur
+        const user = await getCurrentUser();
+        if (!user) {
+            alert("Vous devez être connecté pour faire un don");
+            showAuthModal('login');
             return;
         }
         
-        // Validation du mode de collecte
-        const collectionMethod = document.querySelector('input[name="collection-method"]:checked');
-        if (!collectionMethod) {
-            alert('Veuillez sélectionner un mode de collecte.');
+        // Collecter les données
+        const donData = collectDonData();
+        
+        // Valider
+        if (!validateDonData(donData)) {
             return;
         }
         
-        // Validation des champs de date et horaire selon le mode choisi
-        if (collectionMethod.value === 'home') {
-            const collectionDate = document.getElementById('collection-date');
-            const timeSlot = document.getElementById('time-slot');
-            
-            if (!collectionDate.value || !timeSlot.value) {
-                alert('Veuillez remplir la date et le créneau horaire pour la collecte à domicile.');
-                return;
-            }
-        } else if (collectionMethod.value === 'dropoff') {
-            const dropoffLocation = document.getElementById('dropoff-location');
-            const dropoffDate = document.getElementById('dropoff-date');
-            const dropoffTime = document.getElementById('dropoff-time');
-            
-            if (!dropoffLocation.value || !dropoffDate.value || !dropoffTime.value) {
-                alert('Veuillez remplir tous les champs pour le dépôt en point de collecte.');
-                return;
-            }
-        }
-        
-        // Validation des articles
-        const articles = document.querySelectorAll('.article-form-container');
-        if (articles.length === 0) {
-            alert('Veuillez ajouter au moins un article à donner.');
-            return;
-        }
-        
-        // Validation des informations de contact
-        const requiredContactFields = ['firstName', 'lastName', 'email', 'phone', 'address'];
-        let contactValid = true;
-        
-        requiredContactFields.forEach(fieldName => {
-            const field = document.getElementById(fieldName);
-            if (!field.value.trim()) {
-                contactValid = false;
-                showFieldError(field, 'Ce champ est obligatoire');
-            }
-        });
-        
-        if (!contactValid) {
-            alert('Veuillez remplir tous les champs obligatoires des informations de contact.');
-            return;
-        }
-        
-        // Si tout est valide, soumettre le formulaire
-        submitDonation();
+        // Soumettre
+        await submitDon(donData, user);
     });
+}
 
-    function submitDonation() {
-        // Afficher l'animation de chargement
-        finalSubmitBtn.innerHTML = 'Soumission en cours...';
-        finalSubmitBtn.disabled = true;
+/* ========================================
+   SOUMETTRE LE DON
+   ======================================== */
+async function submitDon(donData, user) {
+    const submitBtn = document.getElementById('finalSubmitBtn');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
+    submitBtn.disabled = true;
+    
+    try {
+        console.log("=== DÉBUT SOUMISSION DON ===");
         
-        // Simuler l'envoi des données
-        setTimeout(() => {
-            showSuccessMessage();
-            finalSubmitBtn.innerHTML = 'Soumettre mon don';
-            finalSubmitBtn.disabled = false;
-        }, 2000);
+        // Vérifier/créer userAccount
+        let { data: userAccount } = await supabaseClient
+            .from('userAccount')
+            .select('*')
+            .eq('idUser', user.id)
+            .maybeSingle();
+        
+        if (!userAccount) {
+            console.log("⚠️ Création userAccount");
+            const { data: newAccount } = await supabaseClient
+                .from('userAccount')
+                .insert([{
+                    idUser: user.id,
+                    userName: user.email,
+                    email: user.email,
+                    firstName: user.user_metadata?.firstName || user.email.split('@')[0],
+                    lastName: user.user_metadata?.lastName || ''
+                }])
+                .select()
+                .single();
+            userAccount = newAccount;
+        }
+        
+        const userId = userAccount.idUser;
+        console.log("✅ UserId:", userId);
+        
+        // Calculer valeur estimée totale
+        const estimatedValue = calculateEstimatedValue(donData.articles);
+        
+        // Préparer les données pour la base de données
+        const donRecord = {
+            idUser: userId,
+            catObjet: donData.articles[0]?.category || 'Vêtements',  // Catégorie principale
+            etatObjet: donData.articles[0]?.condition || 'Bon état',  // État principal
+            qteObjet: donData.articles.reduce((sum, a) => sum + parseInt(a.quantity || 1), 0),  // Quantité totale
+            valeurEstime: estimatedValue,
+            lieuCollecte: donData.collectionMethod === 'home' ? 'Domicile' : (donData.dropoffLocation || 'Point de collecte'),
+            dateCollecte: donData.collectionDate ? new Date(donData.collectionDate).toISOString() : null
+        };
+        
+        console.log("📤 Données don:", donRecord);
+        
+        // Insérer dans Supabase
+        const { data, error } = await supabaseClient
+            .from('don')
+            .insert([donRecord])
+            .select()
+            .single();
+        
+        if (error) {
+            console.error("❌ Erreur Supabase:", error);
+            throw new Error("Erreur lors de l'enregistrement: " + error.message);
+        }
+        
+        console.log("✅ Don enregistré:", data);
+        
+        // Message de succès
+        showDonSuccessNotification(donData, estimatedValue);
+        
+        // Réinitialiser le formulaire
+        resetForm();
+        
+        // Retour en haut
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+    } catch (error) {
+        console.error("=== ERREUR ===");
+        console.error(error);
+        showErrorNotification(error.message);
+    } finally {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
     }
+}
 
-    function showSuccessMessage() {
-        // Créer un overlay de succès
-        const successOverlay = document.createElement('div');
-        successOverlay.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-        `;
+/* ========================================
+   COLLECTER LES DONNÉES
+   ======================================== */
+function collectDonData() {
+    // Collecter les articles
+    const articles = [];
+    const articleForms = document.querySelectorAll('.article-form');
+    
+    articleForms.forEach((form, index) => {
+        const category = form.querySelector('[name="category"]')?.value;
+        const condition = form.querySelector('[name="condition"]')?.value;
+        const description = form.querySelector('[name="description"]')?.value || '';
+        const quantity = form.querySelector('[name="quantity"]')?.value || '1';
+        const estimatedValue = form.querySelector('[name="estimated-value"]')?.value || '0';
         
-        successOverlay.innerHTML = `
-            <div style="
-                background: white;
-                padding: 3rem;
-                border-radius: 16px;
-                text-align: center;
-                max-width: 500px;
-                margin: 2rem;
-                border: 3px solid var(--accent-color);
-            ">
-                <div style="
-                    width: 80px;
-                    height: 80px;
-                    background: var(--accent-color);
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 2.5rem;
-                    color: white;
-                    margin: 0 auto 1.5rem;
-                ">✓</div>
-                <h2 style="color: var(--primary-color); margin-bottom: 1rem;">Don Soumis avec Succès !</h2>
-                <p style="margin-bottom: 2rem; line-height: 1.6; color: var(--dark-color);">
-                    Merci pour votre générosité ! Votre don a été enregistré et notre équipe 
-                    vous contactera dans les 24 heures pour organiser la collecte.
-                </p>
-                <button onclick="this.closest('div').parentElement.remove()" style="
-                    background: var(--primary-color);
-                    color: white;
-                    border: none;
-                    padding: 1rem 2rem;
-                    border-radius: 8px;
-                    font-size: 1.1rem;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                " onmouseover="this.style.background='var(--secondary-color)'" 
-                   onmouseout="this.style.background='var(--primary-color)'">Fermer</button>
-            </div>
-        `;
-        
-        document.body.appendChild(successOverlay);
-        
-        // Fermer en cliquant à l'extérieur
-        successOverlay.addEventListener('click', function(e) {
-            if (e.target === successOverlay) {
-                document.body.removeChild(successOverlay);
-            }
-        });
+        if (category && condition) {
+            articles.push({ 
+                category, 
+                condition, 
+                description, 
+                quantity,
+                estimatedValue: parseFloat(estimatedValue) || 0
+            });
+        }
+    });
+    
+    // Mode de collecte
+    const collectionMethod = document.querySelector('input[name="collection-method"]:checked')?.value;
+    const collectionDate = document.getElementById('collection-date')?.value || document.getElementById('dropoff-date')?.value;
+    const timeSlot = document.getElementById('time-slot')?.value || document.getElementById('dropoff-time')?.value;
+    const dropoffLocation = document.getElementById('dropoff-location')?.value;
+    
+    // Reçu fiscal
+    const wantsTaxReceipt = document.getElementById('tax-receipt')?.checked || false;
+    
+    // Cases à cocher finales
+    const termsAccepted = document.getElementById('terms-conditions')?.checked || false;
+    const newsletter = document.getElementById('newsletter')?.checked || false;
+    
+    return {
+        articles,
+        collectionMethod,
+        collectionDate,
+        timeSlot,
+        dropoffLocation,
+        wantsTaxReceipt,
+        termsAccepted,
+        newsletter
+    };
+}
+
+/* ========================================
+   VALIDER LES DONNÉES
+   ======================================== */
+function validateDonData(donData) {
+    if (donData.articles.length === 0) {
+        alert('❌ Veuillez ajouter au moins un article');
+        return false;
     }
-});
+    
+    if (!donData.collectionMethod) {
+        alert('❌ Veuillez sélectionner un mode de collecte (domicile ou point de collecte)');
+        return false;
+    }
+    
+    if (!donData.collectionDate) {
+        alert('❌ Veuillez sélectionner une date de collecte');
+        return false;
+    }
+    
+    if (!donData.termsAccepted) {
+        alert('❌ Vous devez accepter les conditions d\'utilisation');
+        return false;
+    }
+    
+    return true;
+}
+
+/* ========================================
+   CALCULER VALEUR ESTIMÉE
+   ======================================== */
+function calculateEstimatedValue(articles) {
+    // Utiliser les valeurs saisies par l'utilisateur ou valeurs par défaut
+    const defaultValues = {
+        'Neuf avec étiquette': 30,
+        'Très bon état': 20,
+        'Bon état': 15,
+        'État correct': 10
+    };
+    
+    return articles.reduce((total, article) => {
+        // Utiliser la valeur saisie ou la valeur par défaut
+        const value = article.estimatedValue > 0 
+            ? article.estimatedValue 
+            : (defaultValues[article.condition] || 10);
+        const quantity = parseInt(article.quantity) || 1;
+        return total + (value * quantity);
+    }, 0);
+}
+
+/* ========================================
+   RÉINITIALISER LE FORMULAIRE
+   ======================================== */
+function resetForm() {
+    // Réinitialiser tous les formulaires d'articles
+    const articleForms = document.querySelectorAll('.article-form');
+    articleForms.forEach(form => form.reset());
+    
+    // Décocher les radios
+    const radios = document.querySelectorAll('input[type="radio"]');
+    radios.forEach(radio => radio.checked = false);
+    
+    // Décocher les checkboxes
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(checkbox => checkbox.checked = false);
+    
+    // Masquer les champs de planification
+    document.querySelectorAll('.schedule-fields').forEach(field => {
+        field.style.display = 'none';
+    });
+}
+
+/* ========================================
+   NOTIFICATIONS
+   ======================================== */
+function showDonSuccessNotification(donData, estimatedValue) {
+    const collectionText = donData.collectionMethod === 'home' 
+        ? 'Collecte à domicile' 
+        : `Dépôt au point de collecte`;
+    
+    const formattedDate = new Date(donData.collectionDate).toLocaleDateString('fr-CA', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    
+    alert(`✅ Don enregistré avec succès!
+
+🎁 Nombre d'articles: ${donData.articles.length}
+💰 Valeur estimée: ${estimatedValue.toFixed(2)} $
+📦 Mode de collecte: ${collectionText}
+📅 Date: ${formattedDate}
+⏰ Créneau: ${donData.timeSlot}
+
+Merci pour votre générosité! 🌱
+Vous recevrez une confirmation par courriel dans les 24h.
+Notre équipe vous contactera pour organiser la collecte.`);
+}
+
+function showErrorNotification(message) {
+    alert(`❌ Erreur lors de l'enregistrement
+
+${message}
+
+Veuillez réessayer ou nous contacter si le problème persiste.`);
+}
+
+console.log("✅ faire_un_don.js chargé avec support Supabase");

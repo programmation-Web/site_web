@@ -372,42 +372,280 @@ function afficherRecapitulatifCheckout() {
         </div>
     `;
 }
+// ========== TRAITER LA COMMANDE AVEC SUPABASE ==========
+async function traiterCommande(e) {
+    e.preventDefault();
 
-function traiterCommande(event) {
-    event.preventDefault();
+    const formulaire = e.target;
 
-    const formulaire = event.target;
-    const donneesFormulaire = new FormData(formulaire);
-    const donnees = Object.fromEntries(donneesFormulaire);
+    // Collecter les données du formulaire
+    const donnees = {
+        prenom: formulaire.prenom.value,
+        nom: formulaire.nom.value,
+        email: formulaire.email.value,
+        telephone: formulaire.telephone.value,
+        adresse: formulaire.adresse.value,
+        ville: formulaire.ville.value,
+        province: formulaire.province.value,
+        codePostal: formulaire.codePostal.value,
+        modePaiement: formulaire.querySelector('input[name="modePaiement"]:checked').value
+    };
 
-    // Validation
-    if (!validerEmail(donnees.email)) {
-        afficherNotification('Veuillez entrer une adresse courriel valide', 'erreur');
-        return;
+    // Calculer le total
+    const total = panier.reduce((acc, item) => acc + (item.prix * item.quantite), 0);
+
+    // Désactiver le bouton de soumission
+    const submitBtn = formulaire.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Traitement en cours...';
+    submitBtn.disabled = true;
+
+    try {
+        console.log("=== DÉBUT TRAITEMENT COMMANDE ===");
+        
+        // Vérifier l'utilisateur
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (!session) {
+            throw new Error("Vous devez être connecté pour passer une commande");
+        }
+        
+        const user = session.user;
+        const userId = user.id;
+        
+        console.log("✅ Utilisateur:", user.email);
+        
+        // Vérifier/créer userAccount
+        let { data: userAccount } = await supabaseClient
+            .from('userAccount')
+            .select('*')
+            .eq('idUser', userId)
+            .maybeSingle();
+        
+        if (!userAccount) {
+            console.log("⚠️ Création userAccount");
+            const { data: newAccount } = await supabaseClient
+                .from('userAccount')
+                .insert([{
+                    idUser: userId,
+                    userName: user.email,
+                    email: user.email,
+                    firstName: donnees.prenom,
+                    lastName: donnees.nom,
+                    phone: donnees.telephone,
+                    addresse: `${donnees.adresse}, ${donnees.ville}, ${donnees.province} ${donnees.codePostal}`
+                }])
+                .select()
+                .single();
+            userAccount = newAccount;
+        }
+        
+        console.log("✅ UserAccount ID:", userAccount.idUser);
+        
+        // Créer la commande dans la table 'commande'
+        const commandeData = {
+            idUser: userAccount.idUser,
+            modePaiement: donnees.modePaiement
+        };
+        
+        console.log("📤 Création commande:", commandeData);
+        
+        const { data: commande, error: commandeError } = await supabaseClient
+            .from('commande')
+            .insert([commandeData])
+            .select()
+            .single();
+        
+        if (commandeError) {
+            console.error("❌ Erreur commande:", commandeError);
+            throw new Error("Erreur lors de la création de la commande: " + commandeError.message);
+        }
+        
+        console.log("✅ Commande créée:", commande);
+        
+        const idCommande = commande.idCommande;
+        
+        // Pour chaque article du panier, créer un articleCommande
+        // Note: Les articles du panier doivent d'abord exister dans la table 'article'
+        // Pour ce démo, on va créer les articles puis les lier à la commande
+        
+        for (const item of panier) {
+            // Vérifier si l'article existe déjà dans la BD
+            let { data: existingArticle } = await supabaseClient
+                .from('article')
+                .select('idArticle')
+                .eq('catArticle', 'Vêtement')  // Vous pouvez adapter selon vos catégories
+                .eq('prix', item.prix)
+                .eq('taille', item.taille || 'M')
+                .maybeSingle();
+            
+            let idArticle;
+            
+            if (!existingArticle) {
+                // Créer l'article dans la table 'article'
+                const articleData = {
+                    catArticle: 'Vêtement',  // À adapter selon votre logique
+                    prix: parseFloat(item.prix),
+                    taille: item.taille || 'M'
+                };
+                
+                const { data: newArticle, error: articleError } = await supabaseClient
+                    .from('article')
+                    .insert([articleData])
+                    .select()
+                    .single();
+                
+                if (articleError) {
+                    console.error("❌ Erreur création article:", articleError);
+                    throw new Error("Erreur lors de la création de l'article");
+                }
+                
+                idArticle = newArticle.idArticle;
+                console.log("✅ Article créé:", idArticle);
+            } else {
+                idArticle = existingArticle.idArticle;
+                console.log("✅ Article existant:", idArticle);
+            }
+            
+            // Créer l'entrée dans articleCommande
+            const articleCommandeData = {
+                idCommande: idCommande,
+                idArticle: idArticle,
+                qte: item.quantite
+            };
+            
+            const { error: acError } = await supabaseClient
+                .from('articleCommande')
+                .insert([articleCommandeData]);
+            
+            if (acError) {
+                console.error("❌ Erreur articleCommande:", acError);
+                throw new Error("Erreur lors de l'ajout de l'article à la commande");
+            }
+            
+            console.log("✅ Article ajouté à la commande");
+        }
+        
+        console.log("=== COMMANDE COMPLÈTE ===");
+        
+        // Afficher la confirmation
+        afficherConfirmationCommande(donnees, total, idCommande);
+
+        // Vider le panier
+        panier = [];
+        sauvegarderPanier();
+        mettreAJourCompteurPanier();
+
+        formulaire.reset();
+        
+    } catch (error) {
+        console.error("=== ERREUR COMMANDE ===");
+        console.error(error);
+        
+        alert(`❌ Erreur lors du traitement de la commande
+
+${error.message}
+
+Veuillez réessayer ou nous contacter si le problème persiste.`);
+        
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
     }
-
-    if (!validerTelephone(donnees.telephone)) {
-        afficherNotification('Veuillez entrer un numéro de téléphone valide', 'erreur');
-        return;
-    }
-
-    const { total } = calculerTotal();
-
-    console.log('Commande traitée:', {
-        client: donnees,
-        articles: panier,
-        total: total
-    });
-
-    afficherConfirmationCommande(donnees, total);
-
-    // Vider le panier
-    panier = [];
-    sauvegarderPanier();
-    mettreAJourCompteurPanier();
-
-    formulaire.reset();
 }
+
+function afficherConfirmationCommande(donnees, total, idCommande) {
+    fermerCheckout();
+
+    const modal = document.createElement('div');
+    modal.className = 'modal-confirmation';
+    modal.innerHTML = `
+        <div class="contenu-modal-confirmation">
+            <div class="icone-succes">✓</div>
+            <h2>Commande confirmée!</h2>
+            <p>Merci ${donnees.prenom} pour votre achat!</p>
+            <p>Un courriel de confirmation a été envoyé à <strong>${donnees.email}</strong></p>
+            <p>Montant total: <strong>${total.toFixed(2)}$</strong></p>
+            <p>Numéro de commande: <strong>#${idCommande}</strong></p>
+            <div style="margin-top: 20px; padding: 15px; background: #f0f9ff; border-radius: 8px; border-left: 4px solid #3b82f6;">
+                <p style="margin: 0; font-size: 0.9rem; color: #1e40af;">
+                    🎉 Votre commande a été enregistrée avec succès dans notre système!
+                </p>
+            </div>
+            <button onclick="this.parentElement.parentElement.remove()" class="btn-fermer-confirmation">Fermer</button>
+        </div>
+    `;
+    
+    // Styles pour le modal
+    const style = document.createElement('style');
+    style.textContent = `
+        .modal-confirmation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .contenu-modal-confirmation {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        .icone-succes {
+            width: 80px;
+            height: 80px;
+            background: #10b981;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            margin: 0 auto 20px;
+        }
+        .contenu-modal-confirmation h2 {
+            color: #1f2937;
+            margin-bottom: 15px;
+        }
+        .contenu-modal-confirmation p {
+            color: #6b7280;
+            margin: 10px 0;
+        }
+        .btn-fermer-confirmation {
+            margin-top: 20px;
+            padding: 12px 32px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-fermer-confirmation:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+    `;
+    document.head.appendChild(style);
+
+    document.body.appendChild(modal);
+
+    setTimeout(() => {
+        modal.style.opacity = '1';
+    }, 10);
+}
+
+console.log("✅ Fonction traiterCommande() avec Supabase chargée");
 
 function afficherConfirmationCommande(donnees, total) {
     fermerCheckout();
@@ -587,3 +825,34 @@ window.addEventListener('resize', function () {
         menuNav.style.display = 'flex';
     }
 });
+
+async function passerCommande(panier) {
+    // Vérifier que l'utilisateur est connecté
+    const user = await getCurrentUser();
+    
+    if (!user) {
+        // Afficher le modal de connexion
+        showAuthModal('login');
+        return;
+    }
+    
+    // Préparer les données de la commande
+    const commandeData = {
+        modePaiement: 'carte', // ou récupérer du formulaire
+        articles: panier.map(item => ({
+            idArticle: item.idArticle,
+            quantite: item.quantite
+        }))
+    };
+    
+    // Créer la commande
+    const result = await createCommande(commandeData);
+    
+    if (result.success) {
+        alert('✅ Commande passée avec succès!');
+        // Vider le panier
+        // Rediriger vers page de confirmation
+    } else {
+        alert(`❌ Erreur: ${result.error}`);
+    }
+}

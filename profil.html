@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - EcoRevive</title>
+    
+    <!-- Bibliothèque Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Styles CSS -->
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/profil.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header sera inséré ici dynamiquement -->
+    <header id="header-placeholder"></header>
+
+    <main class="profil-page">
+        <!-- Section Hero -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="user-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h1 id="userName">Chargement...</h1>
+                    <p id="userEmail"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs -->
+        <section class="tabs-section">
+            <div class="container">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="profil">
+                        <i class="fas fa-user"></i>
+                        Mon Profil
+                    </button>
+                    <button class="tab-btn" data-tab="reparations">
+                        <i class="fas fa-tools"></i>
+                        Mes Réparations
+                        <span class="badge" id="repairsBadge">0</span>
+                    </button>
+                    <button class="tab-btn" data-tab="commandes">
+                        <i class="fas fa-shopping-bag"></i>
+                        Mes Commandes
+                        <span class="badge" id="ordersBadge">0</span>
+                    </button>
+                    <button class="tab-btn" data-tab="dons">
+                        <i class="fas fa-gift"></i>
+                        Mes Dons
+                        <span class="badge" id="donsBadge">0</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tab Content -->
+        <section class="content-section">
+            <div class="container">
+                <!-- ONGLET PROFIL -->
+                <div class="tab-content active" id="profil">
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h2>Informations personnelles</h2>
+                            <button class="btn-edit" id="editProfileBtn">
+                                <i class="fas fa-edit"></i>
+                                Modifier
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="info-grid">
+                                <div class="info-item">
+                                    <label>Prénom</label>
+                                    <p id="profileFirstName">-</p>
+                                </div>
+                                <div class="info-item">
+                                    <label>Nom</label>
+                                    <p id="profileLastName">-</p>
+                                </div>
+                                <div class="info-item">
+                                    <label>Email</label>
+                                    <p id="profileEmail">-</p>
+                                </div>
+                                <div class="info-item">
+                                    <label>Téléphone</label>
+                                    <p id="profilePhone">-</p>
+                                </div>
+                                <div class="info-item full-width">
+                                    <label>Adresse</label>
+                                    <p id="profileAddress">-</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Statistiques -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon green">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalRepairs">0</h3>
+                                <p>Réparations</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon blue">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalOrders">0</h3>
+                                <p>Commandes</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon yellow">
+                                <i class="fas fa-gift"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="totalDons">0</h3>
+                                <p>Dons</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon purple">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="impactCO2">0 kg</h3>
+                                <p>CO2 évité</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ONGLET RÉPARATIONS -->
+                <div class="tab-content" id="reparations">
+                    <div class="list-header">
+                        <h2>Mes Réparations</h2>
+                        <a href="reparation.html" class="btn-add">
+                            <i class="fas fa-plus"></i>
+                            Nouvelle réparation
+                        </a>
+                    </div>
+                    <div id="reparationsList" class="items-list">
+                        <!-- Les réparations seront insérées ici -->
+                    </div>
+                </div>
+
+                <!-- ONGLET COMMANDES -->
+                <div class="tab-content" id="commandes">
+                    <div class="list-header">
+                        <h2>Mes Commandes</h2>
+                        <a href="boutique.html" class="btn-add">
+                            <i class="fas fa-plus"></i>
+                            Nouvelle commande
+                        </a>
+                    </div>
+                    <div id="commandesList" class="items-list">
+                        <!-- Les commandes seront insérées ici -->
+                    </div>
+                </div>
+
+                <!-- ONGLET DONS -->
+                <div class="tab-content" id="dons">
+                    <div class="list-header">
+                        <h2>Mes Dons</h2>
+                        <a href="faire_un_don.html" class="btn-add">
+                            <i class="fas fa-plus"></i>
+                            Nouveau don
+                        </a>
+                    </div>
+                    <div id="donsList" class="items-list">
+                        <!-- Les dons seront insérés ici -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer sera inséré ici dynamiquement -->
+    <footer id="footer-placeholder"></footer>
+
+    <!-- Scripts -->
+    <script src="js/supabase-config.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/profil.js"></script>
+</body>
+</html>

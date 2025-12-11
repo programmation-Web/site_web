@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service de Réparation - EcoRevive</title>
+    
+    <!-- Bibliothèque Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Styles CSS -->
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/reparation.css">
+    <link rel="stylesheet" href="css/auth.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="js/chatbot.js" defer></script>
 </head>
 <body>
     <!-- Header sera inséré ici dynamiquement -->
     <header id="header-placeholder"></header>
-
 
     <main class="reparation-page">
         <!-- Hero Section -->
@@ -91,12 +95,12 @@
                         </div>
                         <select id="typeObjet" name="typeObjet" required>
                             <option value="">Sélectionnez un objet</option>
-                            <option value="vetement">Vêtement</option>
-                            <option value="chaussure">Chaussure</option>
-                            <option value="meuble">Meuble</option>
-                            <option value="electromenager">Électroménager</option>
-                            <option value="accessoire">Accessoire</option>
-                            <option value="autre">Autre</option>
+                            <option value="Vêtement">Vêtement</option>
+                            <option value="Chaussure">Chaussure</option>
+                            <option value="Meuble">Meuble</option>
+                            <option value="Électroménager">Électroménager</option>
+                            <option value="Accessoire">Accessoire</option>
+                            <option value="Autre">Autre</option>
                         </select>
                     </div>
 
@@ -117,22 +121,22 @@
                             <label>Niveau d'urgence</label>
                             <div class="radio-group">
                                 <label class="radio-label">
-                                    <input type="radio" name="urgence" value="pas-urgent">
+                                    <input type="radio" name="urgence" value="Pas urgent">
                                     <span>Pas urgent</span>
                                 </label>
                                 <label class="radio-label">
-                                    <input type="radio" name="urgence" value="normal" checked>
+                                    <input type="radio" name="urgence" value="Normal" checked>
                                     <span>Normal</span>
                                 </label>
                                 <label class="radio-label">
-                                    <input type="radio" name="urgence" value="urgent">
+                                    <input type="radio" name="urgence" value="Urgent">
                                     <span>Urgent</span>
                                 </label>
                             </div>
                         </div>
 
                         <div class="photo-upload">
-                            <label>Photos</label>
+                            <label>Photos (optionnel)</label>
                             <div class="upload-area" id="uploadArea">
                                 <i class="fas fa-camera"></i>
                                 <p>Ajoutez une photo pour mieux illustrer le problème</p>
@@ -166,11 +170,11 @@
 
                         <div class="date-time-group">
                             <div class="input-wrapper">
-                                <label for="date">Date</label>
+                                <label for="date">Date *</label>
                                 <input type="date" id="date" name="date" required>
                             </div>
                             <div class="input-wrapper">
-                                <label for="heure">Heure</label>
+                                <label for="heure">Heure *</label>
                                 <select id="heure" name="heure" required>
                                     <option value="">Sélectionnez une heure</option>
                                     <option value="08:00">08:00</option>
@@ -184,47 +188,6 @@
                                     <option value="17:00">17:00</option>
                                 </select>
                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Question 4: Informations de contact -->
-                    <div class="form-group">
-                        <div class="question-header">
-                            <i class="fas fa-user"></i>
-                            <h2>4. Vos informations de contact</h2>
-                        </div>
-
-                        <div class="contact-grid">
-                            <div class="input-wrapper">
-                                <label for="prenom">Prénom *</label>
-                                <input type="text" id="prenom" name="prenom" required>
-                            </div>
-                            <div class="input-wrapper">
-                                <label for="nom">Nom *</label>
-                                <input type="text" id="nom" name="nom" required>
-                            </div>
-                        </div>
-
-                        <div class="contact-grid">
-                            <div class="input-wrapper">
-                                <label for="courriel">Courriel *</label>
-                                <input type="email" id="courriel" name="courriel" required>
-                            </div>
-                            <div class="input-wrapper">
-                                <label for="telephone">Téléphone *</label>
-                                <input type="tel" id="telephone" name="telephone" placeholder="(418) 543-4567" required>
-                            </div>
-                        </div>
-
-                        <div class="checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="conditions" required>
-                                <span>J'accepte les <a href="#">conditions d'utilisation</a> et la <a href="#">politique de confidentialité</a> d'EcoRevive. *</span>
-                            </label>
-                            <label class="checkbox-label">
-                                <input type="checkbox" name="newsletter">
-                                <span>Je souhaite recevoir des informations sur les services d'EcoRevive et des conseils pour une consommation responsable.</span>
-                            </label>
                         </div>
                     </div>
 
@@ -251,9 +214,12 @@
     </main>
 
     <!-- Footer sera inséré ici dynamiquement -->
-    <footer id="footer-placeholder"> </footer>
-   
+    <footer id="footer-placeholder"></footer>
 
+    <!-- Scripts -->
+    <script src="js/supabase-config.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
     <script src="js/components.js"></script>
     <script src="js/reparation.js"></script>
 </body>
