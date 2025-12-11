@@ -3,8 +3,8 @@ const headerTemplate = `
 <header class="main-header">
     <div class="header-container">
         <div class="header-logo">
-            <a href="/">
-                <img src="logo.svg" alt="EcoRevive Logo" class="logo-img">
+            <a href="index.html">
+                <img src="images/logo.png" alt="EcoRevive Logo" class="logo-img">
                 <span class="logo-text">EcoRevive</span>
             </a>
         </div>
@@ -51,7 +51,7 @@ const footerTemplate = `
     <div style="max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
         <div>
             <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-                <img src="logo.svg" alt="EcoRevive" style="width: 32px; height: 32px;">
+                <img src="images/logo.png" alt="EcoRevive" style="width: 32px; height: 32px;">
                 <span style="font-size: 1.25rem; font-weight: 600;">EcoRevive</span>
             </div>
             <p style="color: #bdc3c7; line-height: 1.6;">Votre plateforme locale pour une mode durable à Saguenay. Réparez, recyclez, revendez en toute simplicité</p>
