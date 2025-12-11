@@ -146,79 +146,56 @@ const footerTemplate = `
 </footer>
 `;
 
-// ====== MOBILE MENU INIT ======
-function initMobileMenu() {
-    const mobileToggle = document.querySelector('.mobile-menu-toggle');
-    const mainNav = document.querySelector('.main-nav');
-    const headerActions = document.querySelector('.header-actions');
-    const dropdowns = document.querySelectorAll('.dropdown');
 
-    if (!mobileToggle) return;
+// ====== LOGIN / LOGOUT ======
+function initAuthButtons(supabase) {
+    const loginBtn = document.getElementById('loginBtn');
+    const signupBtn = document.getElementById('signupBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
 
-    // Toggle menu mobile
-    mobileToggle.addEventListener('click', (e) => {
-        e.stopPropagation();
-        mobileToggle.classList.toggle('active');
-        mainNav?.classList.toggle('active');
-        headerActions?.classList.toggle('active');
-    });
+    async function updateAuthState() {
+        const user = supabase.auth.getUser ? (await supabase.auth.getUser()).data.user : null;
+        if (user) {
+            loginBtn.style.display = 'none';
+            signupBtn.style.display = 'none';
+            logoutBtn.style.display = 'inline-block';
+        } else {
+            loginBtn.style.display = 'inline-block';
+            signupBtn.style.display = 'inline-block';
+            logoutBtn.style.display = 'none';
+        }
+    }
 
-    // Dropdowns mobile
-    dropdowns.forEach(dropdown => {
-        const toggle = dropdown.querySelector('.dropdown-toggle');
-        toggle.addEventListener('click', (e) => {
-            if (window.innerWidth <= 768) {
-                e.preventDefault();
-                // fermer les autres dropdowns
-                dropdowns.forEach(d => {
-                    if (d !== dropdown) d.classList.remove('active');
-                });
-                dropdown.classList.toggle('active');
-            }
-        });
-    });
-
-    // Fermer le menu si clic en dehors
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.main-header')) {
-            mobileToggle.classList.remove('active');
-            mainNav?.classList.remove('active');
-            headerActions?.classList.remove('active');
-            dropdowns.forEach(d => d.classList.remove('active'));
+    logoutBtn.addEventListener('click', async () => {
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+            console.error("Erreur déconnexion :", error.message);
+            alert("Erreur lors de la déconnexion !");
+        } else {
+            await updateAuthState();
+            window.location.href = "index.html";
         }
     });
 
-    // Fermer menu au clic sur un lien (sauf dropdown)
-    const navLinks = document.querySelectorAll('.nav-link:not(.dropdown-toggle)');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            if (window.innerWidth <= 768) {
-                mobileToggle.classList.remove('active');
-                mainNav?.classList.remove('active');
-                headerActions?.classList.remove('active');
-                dropdowns.forEach(d => d.classList.remove('active'));
-            }
-        });
-    });
+    updateAuthState();
 }
 
 // ====== LOAD COMPONENTS ======
-function loadComponents() {
+function loadComponents(supabase) {
     const headerPlaceholder = document.getElementById('header-placeholder');
     if (headerPlaceholder) {
         headerPlaceholder.innerHTML = headerTemplate;
         initMobileMenu();
+        initAuthButtons(supabase); // attacher auth après injection
     }
 
     const footerPlaceholder = document.getElementById('footer-placeholder');
-    if (footerPlaceholder) {
-        footerPlaceholder.innerHTML = footerTemplate;
-    }
+    if (footerPlaceholder) footerPlaceholder.innerHTML = footerTemplate;
 }
 
 // ====== AUTO LOAD ======
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadComponents);
+    document.addEventListener('DOMContentLoaded', () => loadComponents(supabase));
 } else {
-    loadComponents();
-}
+    loadComponents(supabase);
+} 
