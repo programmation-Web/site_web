@@ -9,7 +9,6 @@
     --text-dark: #333;
     --text-light: #666;
     --white: #fff;
-    --nav-bacground-color: rgb(255, 255, 255, 0,50);
     --border-color: #e0e0e0;
 }
 
@@ -240,7 +239,7 @@
         right: -100%;
         width: 50%;
         height: calc(100% - 70px);
-        background-color: var(--nav-bacground-color);
+        background-color: var(--hover-green);
         box-shadow: -4px 0 12px rgba(0,0,0,0.1);
         flex-direction: column;
         padding: 0;
