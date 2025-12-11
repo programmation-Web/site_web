@@ -9,7 +9,7 @@
     --text-dark: #333;
     --text-light: #666;
     --white: #fff;
-    --off-white-green: #f8fdf8;
+    --off-white-green: #a1cf6c;
     --border-color: #e0e0e0;
 }
 
@@ -238,7 +238,7 @@
         position: fixed;
         top: 0;
         right: -100%;
-        width: 50%;
+        width: 75%;
         height: calc(100% - 70px);
         background-color: var(--off-white-green);
         box-shadow: -4px 0 12px rgba(0,0,0,0.1);
