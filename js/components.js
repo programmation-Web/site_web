@@ -13,11 +13,6 @@ const headerTemplate = `
       </a>
     </div>
 
-    <div class="header-actions">
-      <a href="#signup" class="btn btn-signup">Sign Up</a>
-      <a href="#login" class="btn btn-login">Login</a>
-    </div>
-
     <nav class="main-nav">
       <ul class="nav-list">
         <li><a href="reparation.html" class="nav-link">Reparation</a></li>
@@ -40,7 +35,10 @@ const headerTemplate = `
       </ul>
     </nav>
 
-    
+    <div class="header-actions">
+      <a href="#signup" class="btn btn-signup">Sign Up</a>
+      <a href="#login" class="btn btn-login">Login</a>
+    </div>
 
     <button class="mobile-menu-toggle" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -48,6 +46,10 @@ const headerTemplate = `
   </div>
 </header>
 `;
+
+// ====== TEMPLATE FOOTER ======
+
+
 // ========== TEMPLATE FOOTER ==========
 const footerTemplate = `
 <footer class="main-footer">
@@ -149,71 +151,60 @@ const footerTemplate = `
 `;
 
 
+
 // ====== MOBILE MENU INIT ======
 function initMobileMenu() {
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const mainNav = document.querySelector('.main-nav');
+    const headerActions = document.querySelector('.header-actions');
+    const dropdowns = document.querySelectorAll('.dropdown');
 
-    const headerRoot = document.getElementById("header-placeholder");
-    if (!headerRoot) return;
+    if (!mobileToggle) return;
 
-    const header = headerRoot.querySelector(".main-header");
-    const toggle = header.querySelector(".mobile-menu-toggle");
-    const nav = header.querySelector(".main-nav");
-    const actions = header.querySelector(".header-actions");
-    const dropdowns = header.querySelectorAll(".dropdown");
-
-    if (!toggle || !nav || !actions) return;
-
-    // ====== Déplacer actions dans le panneau mobile si mobile ======
-    function relocateActions() {
-        if (window.innerWidth <= 768) {
-            if (!nav.contains(actions)) nav.appendChild(actions);
-        } else {
-            const container = header.querySelector(".header-container");
-            if (!container.contains(actions)) container.appendChild(actions);
-        }
-    }
-    relocateActions();
-    window.addEventListener("resize", relocateActions);
-
-    // ====== Ouvrir / fermer menu mobile ======
-    function openMenu() {
-        toggle.classList.add("active");
-        nav.classList.add("active");
-        document.body.style.overflow = "hidden";
-    }
-
-    function closeMenu() {
-        toggle.classList.remove("active");
-        nav.classList.remove("active");
-        dropdowns.forEach(d => d.classList.remove("active"));
-        document.body.style.overflow = "";
-    }
-
-    toggle.addEventListener("click", (e) => {
+    // Toggle menu mobile
+    mobileToggle.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (toggle.classList.contains("active")) closeMenu();
-        else openMenu();
+        mobileToggle.classList.toggle('active');
+        mainNav?.classList.toggle('active');
+        headerActions?.classList.toggle('active');
     });
 
-    // ====== Dropdown mobile ======
-    dropdowns.forEach(drop => {
-        const t = drop.querySelector(".dropdown-toggle");
-        if (!t) return;
-        t.addEventListener("click", (ev) => {
-            if (window.innerWidth > 768) return;
-            ev.preventDefault();
-            drop.classList.toggle("active");
+    // Dropdowns mobile
+    dropdowns.forEach(dropdown => {
+        const toggle = dropdown.querySelector('.dropdown-toggle');
+        toggle.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault();
+                // fermer les autres dropdowns
+                dropdowns.forEach(d => {
+                    if (d !== dropdown) d.classList.remove('active');
+                });
+                dropdown.classList.toggle('active');
+            }
         });
     });
 
-    // ====== Fermer menu si clic en dehors ======
-    document.addEventListener("click", (e) => {
-        if (!e.target.closest(".main-header")) closeMenu();
+    // Fermer le menu si clic en dehors
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.main-header')) {
+            mobileToggle.classList.remove('active');
+            mainNav?.classList.remove('active');
+            headerActions?.classList.remove('active');
+            dropdowns.forEach(d => d.classList.remove('active'));
+        }
     });
 
-    // ====== Fermer menu avec ESC ======
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") closeMenu();
+    // Fermer menu au clic sur un lien (sauf dropdown)
+    const navLinks = document.querySelectorAll('.nav-link:not(.dropdown-toggle)');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                mobileToggle.classList.remove('active');
+                mainNav?.classList.remove('active');
+                headerActions?.classList.remove('active');
+                dropdowns.forEach(d => d.classList.remove('active'));
+            }
+        });
     });
 }
 
