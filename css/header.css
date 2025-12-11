@@ -238,7 +238,7 @@
         position: fixed;
         top: 70px;
         right: -100%;
-        width: 75%;
+        width: 50%;
         height: calc(100% - 70px);
         background-color: var(--off-white-green);
         box-shadow: -4px 0 12px rgba(0,0,0,0.1);
