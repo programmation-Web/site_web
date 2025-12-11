@@ -36,7 +36,7 @@ const headerTemplate = `
     </nav>
 
     <div class="header-actions">
-      <a href="#sign" class="btn btn-signup">Sign Up</a>
+      <a href="#signup" class="btn btn-signup">Sign Up</a>
       <a href="#login" class="btn btn-login">Login</a>
     </div>
 
