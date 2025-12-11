@@ -151,15 +151,15 @@ const footerTemplate = `
 `;
 
 
-
 // ====== MOBILE MENU INIT ======
 function initMobileMenu() {
     const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    if (!mobileToggle) return;
+
+    // sélectionner les éléments **après** l'injection du header
     const mainNav = document.querySelector('.main-nav');
     const headerActions = document.querySelector('.header-actions');
     const dropdowns = document.querySelectorAll('.dropdown');
-
-    if (!mobileToggle) return;
 
     // Toggle menu mobile
     mobileToggle.addEventListener('click', (e) => {
@@ -213,7 +213,7 @@ function loadComponents() {
     const headerPlaceholder = document.getElementById('header-placeholder');
     if (headerPlaceholder) {
         headerPlaceholder.innerHTML = headerTemplate;
-        initMobileMenu();
+        initMobileMenu(); // important : initialiser après injection
     }
 
     const footerPlaceholder = document.getElementById('footer-placeholder');
