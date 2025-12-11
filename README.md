@@ -13,9 +13,10 @@ Depuis la page d’accueil, les utilisateurs peuvent accéder facilement à nos 
 - **Recycler** : Accès à la page de recyclage pour faire un don.  
 - **Magasiner** : Accès à la boutique avec panier disponible à tout moment.  
 - **À propos** : Menu déroulant contenant :  
-  - Notre mission  
-  - Notre impact  
-  - Nous contacter  
+  - Nos Services  
+  - Faire un don 
+  - Nous contacter
+  - Avis
 
 - **Connexion / Inscription** : Les utilisateurs peuvent se connecter ou créer un compte. Certaines actions (réparations, dons) nécessitent une authentification.  
 - **Raccourcis** :  
